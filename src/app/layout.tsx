@@ -5,6 +5,7 @@ import { ThemeProvider } from '@/provider/theme-provider';
 export const metadata: Metadata = {
     title: 'My Finances',
     description: 'powered by raslow',
+    icons: '/piggy-bank.svg',
 };
 
 export default function RootLayout({
@@ -14,7 +15,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR" suppressHydrationWarning>
-            <head />
+            <head>
+                <link rel="icon" href="/piggy-bank.svg" type="image/x-icon" />
+                <link
+                    rel="shortcut icon"
+                    href="/piggy-bank.svg"
+                    type="image/x-icon"
+                />
+            </head>
             <body>
                 <ThemeProvider
                     attribute="class"

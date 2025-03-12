@@ -27,14 +27,18 @@ export function ModeToggle({ hasText = false }: ModeToggleProps) {
     };
 
     return (
-        <Button onClick={handleTheme} variant={'ghost'} className="p-2">
-            <div className="flex items-center gap-4 text-primary hover:text-foreground">
+        <Button onClick={handleTheme} variant={'static'} className="p-2 group">
+            <div className="flex items-center gap-5 text-primary">
                 {theme === 'light' ? (
-                    <Sun className="text-primary" />
+                    <Sun className="text-muted-foreground group-hover:text-foreground transition-colors" />
                 ) : (
-                    <Moon className="text-primary" />
+                    <Moon className="text-muted-foreground group-hover:text-foreground transition-colors" />
                 )}
-                {hasText && <span>Alterar tema</span>}
+                {hasText && (
+                    <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                        Alterar tema
+                    </span>
+                )}
             </div>
         </Button>
     );

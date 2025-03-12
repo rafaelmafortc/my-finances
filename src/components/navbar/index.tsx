@@ -12,8 +12,8 @@ import {
 } from '@/components/ui/tooltip';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LogOutIcon, Menu } from 'lucide-react';
-import { navbarItems } from '@/utils/navbar';
+import { LogOutIcon, Menu, PiggyBank } from 'lucide-react';
+import { navbarItems } from '@/lib/navbar';
 import { ModeToggle } from '@/components/theme-switcher';
 
 export function Navbar() {
@@ -23,6 +23,10 @@ export function Navbar() {
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
                 <nav className="flex flex-col items-center gap-5 px-2 py-5">
                     <TooltipProvider>
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center bg-primary text-primary-foreground rounded-full">
+                            <PiggyBank className={'h-7 w-7'} />
+                            <span className="sr-only">Logo</span>
+                        </div>
                         {navbarItems.map(
                             ({ id, title, href, icon: Icon, color }) => (
                                 <Tooltip key={id}>
@@ -70,7 +74,7 @@ export function Navbar() {
                             <TooltipTrigger asChild>
                                 <Link
                                     href="#"
-                                    className="flex items-center gap-4 px-2.5 text-primary hover:text-foreground"
+                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                                     prefetch={false}
                                 >
                                     <LogOutIcon className="h-5 w-5 transition-all" />
@@ -103,7 +107,8 @@ export function Navbar() {
                             </Button>
                         </SheetTrigger>
                         <SheetContent className="sm:max-w-x" side="left">
-                            <SheetTitle className="p-2 px-2.5 text-2xl text-blue-800">
+                            <SheetTitle className="flex items-center gap-1 p-2 px-2.5 text-2xl ">
+                                <PiggyBank className={'h-8 w-8'} />
                                 MyFinances
                             </SheetTitle>
                             <nav className="grid gap-6 text-lg font-medium">
@@ -118,7 +123,7 @@ export function Navbar() {
                                         <Link
                                             key={id}
                                             href={href}
-                                            className="flex items-center gap-4 px-2.5 text-primary hover:text-foreground"
+                                            className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                                             prefetch={false}
                                         >
                                             <Icon
@@ -129,13 +134,13 @@ export function Navbar() {
                                     )
                                 )}
                             </nav>
-                            <nav className="mt-auto flex flex-col gap-4 px-2 py-5">
+                            <nav className="mt-auto flex flex-col gap-4 px-2 py-5 text-lg font-medium">
                                 <div>
                                     <ModeToggle hasText />
                                 </div>
                                 <Link
                                     href="#"
-                                    className="flex items-center gap-4 px-2.5 text-primary hover:text-foreground"
+                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                                     prefetch={false}
                                 >
                                     <LogOutIcon className="h-5 w-5 transition-all" />
