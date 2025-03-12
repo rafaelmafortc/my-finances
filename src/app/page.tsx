@@ -1,7 +1,9 @@
+import { ModeToggle } from '@/components/ui/theme-switcher';
+
 export default function Home() {
     return (
         <main>
-            <div>Hello world!</div>
+            <ModeToggle />
         </main>
     );
 }
