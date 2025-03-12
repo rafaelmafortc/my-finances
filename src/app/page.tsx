@@ -1,9 +1,9 @@
-import { ModeToggle } from '@/components/ui/theme-switcher';
+import { Navbar } from '@/components/navbar';
 
 export default function Home() {
     return (
         <main>
-            <ModeToggle />
+            <Navbar />
         </main>
     );
 }

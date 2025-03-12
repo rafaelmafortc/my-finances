@@ -6,7 +6,11 @@ import { useTheme } from 'next-themes';
 
 import { Button } from '@/components/ui/button';
 
-export function ModeToggle() {
+interface ModeToggleProps {
+    hasText?: boolean;
+}
+
+export function ModeToggle({ hasText = false }: ModeToggleProps) {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false);
 
@@ -23,12 +27,15 @@ export function ModeToggle() {
     };
 
     return (
-        <Button onClick={handleTheme} variant={'ghost'}>
-            {theme === 'light' ? (
-                <Sun className="text-primary" />
-            ) : (
-                <Moon className="text-primary" />
-            )}
+        <Button onClick={handleTheme} variant={'ghost'} className="p-2">
+            <div className="flex items-center gap-4 text-primary hover:text-foreground">
+                {theme === 'light' ? (
+                    <Sun className="text-primary" />
+                ) : (
+                    <Moon className="text-primary" />
+                )}
+                {hasText && <span>Alterar tema</span>}
+            </div>
         </Button>
     );
 }
