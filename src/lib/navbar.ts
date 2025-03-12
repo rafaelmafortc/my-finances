@@ -4,21 +4,19 @@ export const navbarItems = [
     {
         id: 1,
         title: 'Resumo',
-        href: '#',
+        href: '/',
         icon: Home,
     },
     {
         id: 2,
         title: 'Rendas',
-        href: '#',
+        href: '/income',
         icon: CircleDollarSign,
-        color: 'text-green-700',
     },
     {
         id: 3,
         title: 'Despesas',
-        href: '#',
+        href: '/expense',
         icon: TrendingDown,
-        color: 'text-red-700',
     },
 ];
