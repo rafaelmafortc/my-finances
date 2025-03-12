@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '@/styles/globals.css';
-import { ThemeProvider } from '@/components/theme-provider';
+import { ThemeProvider } from '@/provider/theme-provider';
 
 export const metadata: Metadata = {
     title: 'My Finances',
@@ -13,7 +13,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <html lang="en" suppressHydrationWarning>
+        <html lang="pt-BR" suppressHydrationWarning>
             <head />
             <body>
                 <ThemeProvider
