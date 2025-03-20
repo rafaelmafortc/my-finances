@@ -26,7 +26,10 @@ export function Navbar() {
         <div className="flex w-full flex-col bg-muted/40">
             {/* PC */}
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
-                <nav className="flex flex-col items-center gap-5 px-2 py-5">
+                <div className="flex flex-col items-center p-2">
+                    <PiggyBank className={'h-8 w-8 '} />
+                </div>
+                <nav className="flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
                     <TooltipProvider>
                         {navbarItems.map(({ id, title, href, icon: Icon }) => {
                             const isActive = pathname === href;
