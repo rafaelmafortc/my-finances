@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import {
     Sheet,
     SheetTrigger,
@@ -24,6 +25,8 @@ import { LanguageSwitcher } from '../language-switcher';
 export function Navbar() {
     const pathname = usePathname();
     const t = useTranslations('navbar');
+
+    const [openSheet, setOpenSheet] = useState(false);
 
     return (
         <div className="flex w-full flex-col bg-muted/40">
@@ -128,13 +131,14 @@ export function Navbar() {
                     className="sticky top-0 z-30 flex h-14 items-center px-4 border-b bg-background gap-4 sm:static 
                 sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
                 >
-                    <Sheet>
+                    <Sheet open={openSheet}>
                         <SheetTrigger asChild>
                             <div className="flex justify-between w-100">
                                 <Button
                                     size="icon"
                                     variant="ghost"
                                     className="sm:hidden"
+                                    onClick={() => setOpenSheet(true)}
                                 >
                                     <Menu className="w-5 h-5" />
                                     <span className="sr-only">
@@ -163,6 +167,9 @@ export function Navbar() {
                                             <Link
                                                 key={id}
                                                 href={href}
+                                                onClick={() =>
+                                                    setOpenSheet(false)
+                                                }
                                                 className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                                                 prefetch={false}
                                             >
