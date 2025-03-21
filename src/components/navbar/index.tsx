@@ -129,25 +129,31 @@ export function Navbar() {
                 >
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button
-                                size="icon"
-                                variant="ghost"
-                                className="sm:hidden"
-                            >
-                                <Menu className="w-5 h-5" />
-                                <span className="sr-only">
-                                    {t('open_close')}
-                                </span>
-                            </Button>
+                            <div className="flex justify-between w-100">
+                                <Button
+                                    size="icon"
+                                    variant="ghost"
+                                    className="sm:hidden"
+                                >
+                                    <Menu className="w-5 h-5" />
+                                    <span className="sr-only">
+                                        {t('open_close')}
+                                    </span>
+                                </Button>
+                                <PiggyBank className={'h-8 w-8 '} />
+                            </div>
                         </SheetTrigger>
                         <SheetContent className="sm:max-w-x" side="left">
-                            <SheetTitle className="flex items-center gap-1 p-2 px-2.5 text-2xl ">
-                                <PiggyBank className={'h-8 w-8'} />
-                                MyFinances
-                            </SheetTitle>
+                            <SheetTitle className="flex items-center gap-1 px-2.5 text-2xl "></SheetTitle>
                             <nav className="grid gap-6 text-lg font-medium">
                                 {navbarItems.map(
-                                    ({ id, title, href, icon: Icon }) => {
+                                    ({
+                                        id,
+                                        title,
+                                        href,
+                                        color,
+                                        icon: Icon,
+                                    }) => {
                                         const isActive = pathname === href;
                                         return (
                                             <Link
@@ -164,7 +170,7 @@ export function Navbar() {
                                                     }`}
                                                 >
                                                     <Icon
-                                                        className={`h-5 w-5 transition-all`}
+                                                        className={`h-5 w-5 ${!isActive ? color : ''}`}
                                                     />
                                                 </div>
                                                 <span
