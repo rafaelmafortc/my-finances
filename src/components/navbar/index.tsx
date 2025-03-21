@@ -31,6 +31,7 @@ export function Navbar() {
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
                 <div className="flex flex-col items-center p-2">
                     <PiggyBank className={'h-8 w-8 '} />
+                    <span className="sr-only">MyFinances</span>
                 </div>
                 <nav className="flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
                     <TooltipProvider>
@@ -140,7 +141,10 @@ export function Navbar() {
                                         {t('open_close')}
                                     </span>
                                 </Button>
-                                <PiggyBank className={'h-8 w-8 '} />
+                                <div>
+                                    <PiggyBank className={'h-8 w-8 '} />
+                                    <span className="sr-only">MyFinances</span>
+                                </div>
                             </div>
                         </SheetTrigger>
                         <SheetContent className="sm:max-w-x" side="left">
