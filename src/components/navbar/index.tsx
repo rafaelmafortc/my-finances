@@ -34,39 +34,41 @@ export function Navbar() {
                 </div>
                 <nav className="flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
                     <TooltipProvider>
-                        {navbarItems.map(({ id, title, href, icon: Icon }) => {
-                            const isActive = pathname === href;
-                            return (
-                                <Tooltip key={id}>
-                                    <TooltipTrigger asChild>
-                                        <Link
-                                            href={href}
-                                            key={id}
-                                            className="flex items-center gap-4 px-2.5 text-primary hover:text-foreground"
-                                            prefetch={false}
-                                        >
-                                            <div
-                                                className={`h-9 w-9 flex items-center justify-center transition-all ${
-                                                    isActive
-                                                        ? 'bg-primary text-primary-foreground rounded-full p-2'
-                                                        : ''
-                                                }`}
+                        {navbarItems.map(
+                            ({ id, title, href, color, icon: Icon }) => {
+                                const isActive = pathname === href;
+                                return (
+                                    <Tooltip key={id}>
+                                        <TooltipTrigger asChild>
+                                            <Link
+                                                href={href}
+                                                key={id}
+                                                className="flex items-center gap-4 px-2.5 text-primary hover:text-foreground"
+                                                prefetch={false}
                                             >
-                                                <Icon
-                                                    className={`h-5 w-5 transition-all`}
-                                                />
-                                            </div>
-                                            <span className="sr-only">
-                                                {t(title)}
-                                            </span>
-                                        </Link>
-                                    </TooltipTrigger>
-                                    <TooltipContent side="right">
-                                        {t(title)}
-                                    </TooltipContent>
-                                </Tooltip>
-                            );
-                        })}
+                                                <div
+                                                    className={`h-9 w-9 flex items-center justify-center transition-all ${
+                                                        isActive
+                                                            ? 'bg-primary text-primary-foreground rounded-full p-2'
+                                                            : ''
+                                                    }`}
+                                                >
+                                                    <Icon
+                                                        className={`h-5 w-5 ${!isActive ? color : ''}`}
+                                                    />
+                                                </div>
+                                                <span className="sr-only">
+                                                    {t(title)}
+                                                </span>
+                                            </Link>
+                                        </TooltipTrigger>
+                                        <TooltipContent side="right">
+                                            {t(title)}
+                                        </TooltipContent>
+                                    </Tooltip>
+                                );
+                            }
+                        )}
                     </TooltipProvider>
                 </nav>
                 <nav className="mt-auto flex flex-col items-center gap-5 px-2 py-5">
