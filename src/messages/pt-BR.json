@@ -2,6 +2,10 @@
     "navbar": {
         "resume": "Resumo",
         "income": "Renda",
-        "expense": "Despesa"
+        "expense": "Despesa",
+        "open_close": "abrir / fechar menu",
+        "change_lang": "Alterar linguagem",
+        "change_theme": "Alterar tema",
+        "logout": "Sair"
     }
 }

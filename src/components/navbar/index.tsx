@@ -76,12 +76,12 @@ export function Navbar() {
                                 <div>
                                     <LanguageSwitcher />
                                     <span className="sr-only">
-                                        Alterar tema
+                                        {t('change_lang')}
                                     </span>
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent side="right">
-                                Alterar tema
+                                {t('change_lang')}
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
@@ -89,12 +89,12 @@ export function Navbar() {
                                 <div>
                                     <ThemeSwitcher />
                                     <span className="sr-only">
-                                        Alterar tema
+                                        {t('change_theme')}
                                     </span>
                                 </div>
                             </TooltipTrigger>
                             <TooltipContent side="right">
-                                Alterar tema
+                                {t('change_theme')}
                             </TooltipContent>
                         </Tooltip>
                         <Tooltip>
@@ -105,11 +105,15 @@ export function Navbar() {
                                         className="p-2 group"
                                     >
                                         <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
-                                        <span className="sr-only">Sair</span>
+                                        <span className="sr-only">
+                                            {t('logout')}
+                                        </span>
                                     </Button>
                                 </Link>
                             </TooltipTrigger>
-                            <TooltipContent side="right">Sair</TooltipContent>
+                            <TooltipContent side="right">
+                                {t('logout')}
+                            </TooltipContent>
                         </Tooltip>
                     </TooltipProvider>
                 </nav>
@@ -130,7 +134,7 @@ export function Navbar() {
                             >
                                 <Menu className="w-5 h-5" />
                                 <span className="sr-only">
-                                    abrir / fechar menu
+                                    {t('open_close')}
                                 </span>
                             </Button>
                         </SheetTrigger>
@@ -177,6 +181,9 @@ export function Navbar() {
                             </nav>
                             <nav className="mt-auto flex flex-col gap-4 px-2 py-5 text-lg font-medium">
                                 <div>
+                                    <LanguageSwitcher hasText />
+                                </div>
+                                <div>
                                     <ThemeSwitcher hasText />
                                 </div>
                                 <Link
@@ -185,7 +192,7 @@ export function Navbar() {
                                     prefetch={false}
                                 >
                                     <LogOutIcon className="h-5 w-5 transition-all" />
-                                    Sair
+                                    {t('logout')}
                                 </Link>
                             </nav>
                         </SheetContent>

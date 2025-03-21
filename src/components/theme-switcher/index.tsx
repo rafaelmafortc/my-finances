@@ -1,7 +1,7 @@
 'use client';
-
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
@@ -10,6 +10,7 @@ interface ThemeSwitcherProps {
 }
 
 export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
+    const t = useTranslations('navbar');
     const { theme, setTheme } = useTheme();
 
     const handleTheme = () => {
@@ -30,7 +31,7 @@ export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
                 )}
                 {hasText && (
                     <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                        Alterar tema
+                        {t('change_theme')}
                     </span>
                 )}
             </div>

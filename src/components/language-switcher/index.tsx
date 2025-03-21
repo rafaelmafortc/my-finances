@@ -2,10 +2,16 @@
 
 import { useRouter } from 'next/navigation';
 import { Globe } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 
-export function LanguageSwitcher() {
+interface languageSwitcherProps {
+    hasText?: boolean;
+}
+
+export function LanguageSwitcher({ hasText = false }: languageSwitcherProps) {
+    const t = useTranslations('navbar');
     const router = useRouter();
 
     function handleLocaleChange() {
@@ -35,6 +41,11 @@ export function LanguageSwitcher() {
         >
             <div className="flex items-center gap-5 text-primary">
                 <Globe className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                {hasText && (
+                    <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                        {t('change_lang')}
+                    </span>
+                )}
             </div>
         </Button>
     );
