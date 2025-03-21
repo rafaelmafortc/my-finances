@@ -21,10 +21,10 @@ export function LanguageSwitcher({ hasText = false }: languageSwitcherProps) {
             ?.split('=')[1];
 
         let newLocale;
-        if (cookieLang === 'en') {
-            newLocale = 'pt-BR';
-        } else {
+        if (cookieLang === 'pt-BR') {
             newLocale = 'en';
+        } else {
+            newLocale = 'pt-BR';
         }
 
         console.log('newLocale', newLocale);
