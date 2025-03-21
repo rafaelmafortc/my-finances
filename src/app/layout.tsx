@@ -1,6 +1,9 @@
 import type { Metadata } from 'next';
-import '@/styles/globals.css';
+import { cookies } from 'next/headers';
+import { NextIntlClientProvider } from 'next-intl';
 import { ThemeProvider } from '@/provider/theme-provider';
+
+import '@/styles/globals.css';
 
 export const metadata: Metadata = {
     title: 'My Finances',
@@ -8,13 +11,16 @@ export const metadata: Metadata = {
     icons: '/piggy-bank.svg',
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const cookieStore = await cookies();
+    const lang = cookieStore.get('MF_LANGUAGE')?.value || 'en';
+
     return (
-        <html lang="pt-BR" suppressHydrationWarning>
+        <html lang={lang} suppressHydrationWarning>
             <head>
                 <link rel="icon" href="/piggy-bank.svg" type="image/x-icon" />
                 <link
@@ -24,14 +30,16 @@ export default function RootLayout({
                 />
             </head>
             <body>
-                <ThemeProvider
-                    attribute="class"
-                    defaultTheme="system"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    {children}
-                </ThemeProvider>
+                <NextIntlClientProvider>
+                    <ThemeProvider
+                        attribute="class"
+                        defaultTheme="system"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        {children}
+                    </ThemeProvider>
+                </NextIntlClientProvider>
             </body>
         </html>
     );

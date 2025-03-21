@@ -12,15 +12,18 @@ import {
     TooltipContent,
     TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LogOutIcon, Menu, PiggyBank } from 'lucide-react';
 import { navbarItems } from '@/lib/navbar';
-import { ModeToggle } from '@/components/theme-switcher';
+import { ThemeSwitcher } from '@/components/theme-switcher';
 import { usePathname } from 'next/navigation';
+import { LanguageSwitcher } from '../language-switcher';
 
 export function Navbar() {
     const pathname = usePathname();
+    const t = useTranslations('navbar');
 
     return (
         <div className="flex w-full flex-col bg-muted/40">
@@ -54,12 +57,12 @@ export function Navbar() {
                                                 />
                                             </div>
                                             <span className="sr-only">
-                                                {title}
+                                                {t(title)}
                                             </span>
                                         </Link>
                                     </TooltipTrigger>
                                     <TooltipContent side="right">
-                                        {title}
+                                        {t(title)}
                                     </TooltipContent>
                                 </Tooltip>
                             );
@@ -71,7 +74,7 @@ export function Navbar() {
                         <Tooltip>
                             <TooltipTrigger asChild>
                                 <div>
-                                    <ModeToggle />
+                                    <LanguageSwitcher />
                                     <span className="sr-only">
                                         Alterar tema
                                     </span>
@@ -81,17 +84,29 @@ export function Navbar() {
                                 Alterar tema
                             </TooltipContent>
                         </Tooltip>
-                    </TooltipProvider>
-                    <TooltipProvider>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Link
-                                    href="#"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                    prefetch={false}
-                                >
-                                    <LogOutIcon className="h-5 w-5 transition-all" />
-                                    <span className="sr-only">Sair</span>
+                                <div>
+                                    <ThemeSwitcher />
+                                    <span className="sr-only">
+                                        Alterar tema
+                                    </span>
+                                </div>
+                            </TooltipTrigger>
+                            <TooltipContent side="right">
+                                Alterar tema
+                            </TooltipContent>
+                        </Tooltip>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Link href="#" prefetch={false}>
+                                    <Button
+                                        variant={'static'}
+                                        className="p-2 group"
+                                    >
+                                        <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                                        <span className="sr-only">Sair</span>
+                                    </Button>
                                 </Link>
                             </TooltipTrigger>
                             <TooltipContent side="right">Sair</TooltipContent>
@@ -153,7 +168,7 @@ export function Navbar() {
                                                             : ''
                                                     }`}
                                                 >
-                                                    {title}
+                                                    {t(title)}
                                                 </span>
                                             </Link>
                                         );
@@ -162,7 +177,7 @@ export function Navbar() {
                             </nav>
                             <nav className="mt-auto flex flex-col gap-4 px-2 py-5 text-lg font-medium">
                                 <div>
-                                    <ModeToggle hasText />
+                                    <ThemeSwitcher hasText />
                                 </div>
                                 <Link
                                     href="#"
