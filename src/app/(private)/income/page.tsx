@@ -1,7 +1,11 @@
+import { useTranslations } from 'next-intl';
+
 export default function Income() {
+    const t = useTranslations('navbar');
+
     return (
         <main>
-            <div>Income</div>
+            <div>{t('income')}</div>
         </main>
     );
 }
