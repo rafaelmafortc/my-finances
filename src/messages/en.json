@@ -1,4 +1,7 @@
 {
+    "home": {
+        "get_started": "Get Started"
+    },
     "navbar": {
         "resume": "Resume",
         "income": "Income",

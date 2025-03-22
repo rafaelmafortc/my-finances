@@ -33,7 +33,9 @@ export function Navbar() {
             {/* PC */}
             <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
                 <div className="flex flex-col items-center p-2">
-                    <PiggyBank className={'h-8 w-8 '} />
+                    <Link href="/" prefetch={false}>
+                        <PiggyBank className={'h-8 w-8 '} />
+                    </Link>
                     <span className="sr-only">MyFinances</span>
                 </div>
                 <nav className="flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
@@ -105,7 +107,7 @@ export function Navbar() {
                         </Tooltip>
                         <Tooltip>
                             <TooltipTrigger asChild>
-                                <Link href="#" prefetch={false}>
+                                <Link href="/" prefetch={false}>
                                     <Button
                                         variant={'static'}
                                         className="p-2 group"
@@ -146,7 +148,9 @@ export function Navbar() {
                                     </span>
                                 </Button>
                                 <div>
-                                    <PiggyBank className={'h-8 w-8 '} />
+                                    <Link href="/" prefetch={false}>
+                                        <PiggyBank className={'h-8 w-8 '} />
+                                    </Link>
                                     <span className="sr-only">MyFinances</span>
                                 </div>
                             </div>
@@ -206,7 +210,7 @@ export function Navbar() {
                                     <ThemeSwitcher hasText />
                                 </div>
                                 <Link
-                                    href="#"
+                                    href="/"
                                     className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
                                     prefetch={false}
                                 >

@@ -1,4 +1,7 @@
 {
+    "home": {
+        "get_started": "Iniciar"
+    },
     "navbar": {
         "resume": "Resumo",
         "income": "Renda",
