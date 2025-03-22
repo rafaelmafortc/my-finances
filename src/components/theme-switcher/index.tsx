@@ -1,7 +1,9 @@
 'use client';
+
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
@@ -11,24 +13,30 @@ interface ThemeSwitcherProps {
 
 export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
     const t = useTranslations('navbar');
-    const { theme, setTheme } = useTheme();
+    const { resolvedTheme, setTheme } = useTheme();
+    const [isMounted, setIsMounted] = useState(false);
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     const handleTheme = () => {
-        if (theme === 'dark') {
-            setTheme('light');
-        } else {
-            setTheme('dark');
-        }
+        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
     };
 
     return (
         <Button onClick={handleTheme} variant={'static'} className="p-2 group">
             <div className="flex items-center gap-5 text-primary">
-                {theme === 'light' ? (
-                    <Sun className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                {isMounted ? (
+                    resolvedTheme === 'light' ? (
+                        <Sun className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                    ) : (
+                        <Moon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                    )
                 ) : (
-                    <Moon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                    <div className="w-[20px] h-[20px]" />
                 )}
+
                 {hasText && (
                     <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                         {t('change_theme')}

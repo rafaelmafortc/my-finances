@@ -1,37 +1,43 @@
 'use client';
 
 import { useRouter } from 'next/navigation';
-import { Globe } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import Image from 'next/image';
+import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 
-interface languageSwitcherProps {
+interface LanguageSwitcherProps {
     hasText?: boolean;
 }
 
-export function LanguageSwitcher({ hasText = false }: languageSwitcherProps) {
+export function LanguageSwitcher({ hasText = false }: LanguageSwitcherProps) {
     const t = useTranslations('navbar');
     const router = useRouter();
+    const [locale, setLocale] = useState<'pt-BR' | 'en' | null>(null);
 
-    function handleLocaleChange() {
+    useEffect(() => {
         const cookieLang = document.cookie
             .split('; ')
             .find((row) => row.startsWith('MF_LANGUAGE='))
-            ?.split('=')[1];
+            ?.split('=')[1] as 'pt-BR' | 'en' | undefined;
 
-        let newLocale;
-        if (cookieLang === 'pt-BR') {
-            newLocale = 'en';
+        if (cookieLang === 'en' || cookieLang === 'pt-BR') {
+            setLocale(cookieLang);
         } else {
-            newLocale = 'pt-BR';
+            setLocale('en');
         }
+    }, []);
 
-        console.log('newLocale', newLocale);
-
+    function handleLocaleChange() {
+        const newLocale = locale === 'pt-BR' ? 'en' : 'pt-BR';
         document.cookie = `MF_LANGUAGE=${newLocale}; path=/; max-age=31536000; SameSite=Lax`;
+        setLocale(newLocale);
         router.refresh();
     }
+
+    const flagSrc =
+        locale === 'pt-BR' ? '/assets/flags/br.svg' : '/assets/flags/us.svg';
 
     return (
         <Button
@@ -39,8 +45,18 @@ export function LanguageSwitcher({ hasText = false }: languageSwitcherProps) {
             variant={'static'}
             className="p-2 group"
         >
-            <div className="flex items-center gap-5 text-primary">
-                <Globe className="text-muted-foreground group-hover:text-foreground transition-colors" />
+            <div className="flex items-center gap-4 text-primary">
+                {locale ? (
+                    <Image
+                        className="text-muted-foreground group-hover:text-foreground"
+                        src={flagSrc}
+                        alt="us / br flag"
+                        width={20}
+                        height={20}
+                    />
+                ) : (
+                    <div className="w-[20px] h-[20px]" />
+                )}
                 {hasText && (
                     <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                         {t('change_lang')}
