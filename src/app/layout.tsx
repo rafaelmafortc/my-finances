@@ -6,7 +6,7 @@ import { ThemeProvider } from '@/provider/theme-provider';
 import '@/styles/globals.css';
 
 export const metadata: Metadata = {
-    title: 'My Finances',
+    title: 'MyFinances',
     description: 'powered by raslow',
     icons: '/piggy-bank.svg',
 };
