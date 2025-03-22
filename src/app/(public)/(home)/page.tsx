@@ -17,12 +17,7 @@ export default function SignIn() {
                         <PiggyBank className={'h-12 w-12 '} />
                         <h1 className="text-3xl">MyFinances</h1>
                     </div>
-                    <h2 className="text-xl">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                        Rerum nisi beatae illo veniam obcaecati eum possimus
-                        neque, quas placeat quos voluptatum distinctio sapiente
-                        impedit omnis fugiat, explicabo eos quis corporis.
-                    </h2>
+                    <h2 className="text-xl">{t('description')}</h2>
                 </div>
                 <div className="flex place-content-between items-center gap-2 mt-auto">
                     <Link href="/resume" prefetch={false}>

@@ -1,6 +1,7 @@
 {
     "home": {
-        "get_started": "Iniciar"
+        "get_started": "Iniciar",
+        "description": "Tudo o que você precisa para controlar suas finanças de forma simples, eficiente e bonita."
     },
     "navbar": {
         "resume": "Resumo",
