@@ -11,7 +11,7 @@ export default function SignIn() {
 
     return (
         <main className="flex items-center justify-center h-screen w-screen p-4">
-            <div className="flex flex-col lg:w-1/2 w-full xl:h-1/3 h-1/2 px-4 py-8 gap-4 border-2 shadow-lg border-s-foreground">
+            <div className="flex flex-col lg:w-1/2 w-full px-4 py-8 gap-8 border-2 shadow-lg border-s-foreground">
                 <div className="flex flex-col gap-4">
                     <div className="flex items-center gap-2">
                         <PiggyBank className={'h-12 w-12 '} />
