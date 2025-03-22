@@ -38,7 +38,7 @@ export function Navbar() {
                     </Link>
                     <span className="sr-only">MyFinances</span>
                 </div>
-                <nav className="flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
+                <nav className="absolute inset-0 m-auto h-1/2 flex flex-col items-center gap-5 px-2 py-5 flex-1 justify-center">
                     <TooltipProvider>
                         {navbarItems.map(
                             ({ id, title, href, color, icon: Icon }) => {
