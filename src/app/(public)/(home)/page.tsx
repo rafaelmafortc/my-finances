@@ -20,7 +20,7 @@ export default function SignIn() {
                     <h2 className="text-xl">{t('description')}</h2>
                 </div>
                 <div className="flex place-content-between items-center gap-2 mt-auto">
-                    <Link href="/resume" prefetch={false}>
+                    <Link href="/sign-in" prefetch={false}>
                         <Button variant={'secondary'}>
                             {t('get_started')}
                         </Button>

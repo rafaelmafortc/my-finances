@@ -3,6 +3,11 @@
         "get_started": "Iniciar",
         "description": "Tudo o que você precisa para controlar suas finanças de forma simples, eficiente e bonita."
     },
+    "signin": {
+        "welcome": "Bem vindo",
+        "login_description": "Entre com sua conta do Google",
+        "google_btn": "Entrar com o Google"
+    },
     "navbar": {
         "resume": "Resumo",
         "income": "Renda",

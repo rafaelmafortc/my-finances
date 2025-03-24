@@ -108,7 +108,7 @@ export function Navbar() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Link
-                                        href="/"
+                                        href="/sign-in"
                                         prefetch={false}
                                         className="w-full"
                                     >
@@ -242,7 +242,7 @@ export function Navbar() {
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <Link
-                                                    href="/"
+                                                    href="/sign-in"
                                                     prefetch={false}
                                                     className="w-full"
                                                 >
