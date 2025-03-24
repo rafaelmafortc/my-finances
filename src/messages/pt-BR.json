@@ -10,6 +10,7 @@
         "open_close": "abrir / fechar menu",
         "change_lang": "Alterar linguagem",
         "change_theme": "Alterar tema",
-        "logout": "Sair"
+        "logout": "Sair",
+        "settings": "Configurações"
     }
 }

@@ -25,9 +25,13 @@ export default function SignIn() {
                             {t('get_started')}
                         </Button>
                     </Link>
-                    <div>
-                        <ThemeSwitcher />
-                        <LanguageSwitcher />
+                    <div className="flex gap-2">
+                        <div>
+                            <ThemeSwitcher />
+                        </div>
+                        <div>
+                            <LanguageSwitcher />
+                        </div>
                     </div>
                 </div>
             </div>

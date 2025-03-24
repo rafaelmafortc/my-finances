@@ -43,7 +43,7 @@ export function LanguageSwitcher({ hasText = false }: LanguageSwitcherProps) {
         <Button
             onClick={handleLocaleChange}
             variant={'static'}
-            className="p-2 group"
+            className="p-2 group flex justify-start w-full"
         >
             <div className="flex items-center gap-4 text-primary">
                 {locale ? (
@@ -58,7 +58,7 @@ export function LanguageSwitcher({ hasText = false }: LanguageSwitcherProps) {
                     <div className="w-[20px] h-[20px]" />
                 )}
                 {hasText && (
-                    <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                         {t('change_lang')}
                     </span>
                 )}

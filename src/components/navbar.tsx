@@ -6,6 +6,7 @@ import {
     SheetTrigger,
     SheetContent,
     SheetTitle,
+    SheetDescription,
 } from '@/components/ui/sheet';
 import {
     TooltipProvider,
@@ -16,11 +17,20 @@ import {
 import { useTranslations } from 'next-intl';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { LogOutIcon, Menu, PiggyBank } from 'lucide-react';
+import { LogOutIcon, Menu, PiggyBank, Settings } from 'lucide-react';
 import { navbarItems } from '@/lib/navbar';
 import { ThemeSwitcher } from '@/components/theme-switcher';
 import { usePathname } from 'next/navigation';
-import { LanguageSwitcher } from '../language-switcher';
+import { LanguageSwitcher } from '@/components/language-switcher';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuGroup,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 
 export function Navbar() {
     const pathname = usePathname();
@@ -78,52 +88,46 @@ export function Navbar() {
                     </TooltipProvider>
                 </nav>
                 <nav className="mt-auto flex flex-col items-center gap-5 px-2 py-5">
-                    <TooltipProvider>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div>
-                                    <LanguageSwitcher />
-                                    <span className="sr-only">
-                                        {t('change_lang')}
-                                    </span>
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent side="right">
-                                {t('change_lang')}
-                            </TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <div>
-                                    <ThemeSwitcher />
-                                    <span className="sr-only">
-                                        {t('change_theme')}
-                                    </span>
-                                </div>
-                            </TooltipTrigger>
-                            <TooltipContent side="right">
-                                {t('change_theme')}
-                            </TooltipContent>
-                        </Tooltip>
-                        <Tooltip>
-                            <TooltipTrigger asChild>
-                                <Link href="/" prefetch={false}>
-                                    <Button
-                                        variant={'static'}
-                                        className="p-2 group"
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Settings
+                                className={'h-5 w-5 text-muted-foreground'}
+                            />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="w-56" side="top">
+                            <DropdownMenuLabel>
+                                {t('settings')}
+                            </DropdownMenuLabel>
+                            <DropdownMenuSeparator />
+                            <DropdownMenuGroup>
+                                <DropdownMenuItem>
+                                    <LanguageSwitcher hasText />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <ThemeSwitcher hasText />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Link
+                                        href="/"
+                                        prefetch={false}
+                                        className="w-full"
                                     >
-                                        <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
-                                        <span className="sr-only">
-                                            {t('logout')}
-                                        </span>
-                                    </Button>
-                                </Link>
-                            </TooltipTrigger>
-                            <TooltipContent side="right">
-                                {t('logout')}
-                            </TooltipContent>
-                        </Tooltip>
-                    </TooltipProvider>
+                                        <Button
+                                            variant={'static'}
+                                            className="p-2 group w-full flex justify-start"
+                                        >
+                                            <div className="flex items-center gap-5 text-primary">
+                                                <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                                                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                                                    {t('logout')}
+                                                </span>
+                                            </div>
+                                        </Button>
+                                    </Link>
+                                </DropdownMenuItem>
+                            </DropdownMenuGroup>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
                 </nav>
             </aside>
 
@@ -156,8 +160,9 @@ export function Navbar() {
                             </div>
                         </SheetTrigger>
                         <SheetContent className="sm:max-w-x" side="left">
-                            <SheetTitle className="flex items-center gap-1 px-2.5 text-2xl "></SheetTitle>
-                            <nav className="grid gap-6 text-lg font-medium">
+                            <SheetTitle></SheetTitle>
+                            <SheetDescription className="hidden"></SheetDescription>
+                            <nav className="grid gap-6">
                                 {navbarItems.map(
                                     ({
                                         id,
@@ -174,7 +179,7 @@ export function Navbar() {
                                                 onClick={() =>
                                                     setOpenSheet(false)
                                                 }
-                                                className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
+                                                className="flex items-center gap-2 px-2.5 text-muted-foreground hover:text-foreground"
                                                 prefetch={false}
                                             >
                                                 <div
@@ -189,9 +194,9 @@ export function Navbar() {
                                                     />
                                                 </div>
                                                 <span
-                                                    className={`transition-all ${
+                                                    className={`text-base font-medium transition-all ${
                                                         isActive
-                                                            ? 'text-foreground '
+                                                            ? 'text-foreground font-bold'
                                                             : ''
                                                     }`}
                                                 >
@@ -203,20 +208,62 @@ export function Navbar() {
                                 )}
                             </nav>
                             <nav className="mt-auto flex flex-col gap-4 px-2 py-5 text-lg font-medium">
-                                <div>
-                                    <LanguageSwitcher hasText />
-                                </div>
-                                <div>
-                                    <ThemeSwitcher hasText />
-                                </div>
-                                <Link
-                                    href="/"
-                                    className="flex items-center gap-4 px-2.5 text-muted-foreground hover:text-foreground"
-                                    prefetch={false}
-                                >
-                                    <LogOutIcon className="h-5 w-5 transition-all" />
-                                    {t('logout')}
-                                </Link>
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <div
+                                            onClick={() => setOpenSheet(false)}
+                                            className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
+                                        >
+                                            <div
+                                                className={`h-9 w-9 flex items-center justify-center transition-all`}
+                                            >
+                                                <Settings
+                                                    className={`h-5 w-5`}
+                                                />
+                                            </div>
+                                            <span
+                                                className={`text-base font-medium transition-all`}
+                                            >
+                                                {t('settings')}
+                                            </span>
+                                        </div>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent
+                                        className="w-56"
+                                        side="top"
+                                        align="start"
+                                    >
+                                        <DropdownMenuGroup>
+                                            <DropdownMenuItem>
+                                                <LanguageSwitcher hasText />
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <ThemeSwitcher hasText />
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Link
+                                                    href="/"
+                                                    prefetch={false}
+                                                    className="w-full"
+                                                >
+                                                    <Button
+                                                        variant={'static'}
+                                                        className="p-2 group w-full flex justify-start"
+                                                    >
+                                                        <div className="flex items-center gap-5 text-primary">
+                                                            <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                                                            <span
+                                                                className={`text-sm font-medium text-muted-foreground transition-all`}
+                                                            >
+                                                                {t('logout')}
+                                                            </span>
+                                                        </div>
+                                                    </Button>
+                                                </Link>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuGroup>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
                             </nav>
                         </SheetContent>
                     </Sheet>

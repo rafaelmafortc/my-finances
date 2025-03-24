@@ -25,7 +25,11 @@ export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
     };
 
     return (
-        <Button onClick={handleTheme} variant={'static'} className="p-2 group">
+        <Button
+            onClick={handleTheme}
+            variant={'static'}
+            className="p-2 group flex justify-start w-full"
+        >
             <div className="flex items-center gap-5 text-primary">
                 {isMounted ? (
                     resolvedTheme === 'light' ? (
@@ -36,9 +40,8 @@ export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
                 ) : (
                     <div className="w-[20px] h-[20px]" />
                 )}
-
                 {hasText && (
-                    <span className="text-lg font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
                         {t('change_theme')}
                     </span>
                 )}
