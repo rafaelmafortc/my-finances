@@ -3,49 +3,35 @@
 import { Moon, Sun } from 'lucide-react';
 import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
-import { useEffect, useState } from 'react';
 
 import { Button } from '@/components/ui/button';
-
 interface ThemeSwitcherProps {
     hasText?: boolean;
 }
 
 export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
     const t = useTranslations('navbar');
-    const { resolvedTheme, setTheme } = useTheme();
-    const [isMounted, setIsMounted] = useState(false);
 
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
+    const { theme, setTheme } = useTheme();
 
     const handleTheme = () => {
-        setTheme(resolvedTheme === 'dark' ? 'light' : 'dark');
+        setTheme(theme === 'dark' ? 'light' : 'dark');
     };
 
     return (
         <Button
             onClick={handleTheme}
             variant={'static'}
-            className="p-2 group flex justify-start w-full"
+            className="flex justify-start w-full gap-6 text-muted-foreground group-hover:text-foreground transition-colors"
         >
-            <div className="flex items-center gap-5 text-primary">
-                {isMounted ? (
-                    resolvedTheme === 'light' ? (
-                        <Sun className="text-muted-foreground group-hover:text-foreground transition-colors" />
-                    ) : (
-                        <Moon className="text-muted-foreground group-hover:text-foreground transition-colors" />
-                    )
-                ) : (
-                    <div className="w-[20px] h-[20px]" />
-                )}
-                {hasText && (
-                    <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                        {t('change_theme')}
-                    </span>
-                )}
+            <div className="relative flex items-center justify-center">
+                <Sun className="absolute w-5 h-5 scale-100 dark:scale-0 transition-transform" />
+                <Moon className="absolute w-5 h-5 scale-0 dark:scale-100 transition-transform" />
             </div>
+
+            {hasText && (
+                <span className="text-sm font-medium">{t('change_theme')}</span>
+            )}
         </Button>
     );
 }
