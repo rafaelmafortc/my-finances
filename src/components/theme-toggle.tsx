@@ -5,11 +5,11 @@ import { useTheme } from 'next-themes';
 import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
-interface ThemeSwitcherProps {
+interface ThemeToggleProps {
     hasText?: boolean;
 }
 
-export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
+export function ThemeToggle({ hasText = false }: ThemeToggleProps) {
     const t = useTranslations('navbar');
 
     const { theme, setTheme } = useTheme();

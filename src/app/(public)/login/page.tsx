@@ -1,5 +1,5 @@
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { PiggyBank } from 'lucide-react';
 import Link from 'next/link';
 import { LoginForm } from '@/components/login-form';
@@ -14,7 +14,7 @@ export default function Login() {
                 <LoginForm />
                 <div className="flex gap-2  justify-center">
                     <div>
-                        <ThemeSwitcher />
+                        <ThemeToggle />
                     </div>
                     <div>
                         <LanguageSwitcher />

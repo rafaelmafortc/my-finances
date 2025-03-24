@@ -1,5 +1,5 @@
 import { LanguageSwitcher } from '@/components/language-switcher';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { useTranslations } from 'next-intl';
 import { PiggyBank } from 'lucide-react';
 import Link from 'next/link';
@@ -27,7 +27,7 @@ export default function Home() {
                     </Link>
                     <div className="flex gap-2">
                         <div>
-                            <ThemeSwitcher />
+                            <ThemeToggle />
                         </div>
                         <div>
                             <LanguageSwitcher />

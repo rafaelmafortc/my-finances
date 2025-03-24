@@ -19,7 +19,7 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { LogOutIcon, Menu, PiggyBank, Settings } from 'lucide-react';
 import { navbarItems } from '@/lib/navbar';
-import { ThemeSwitcher } from '@/components/theme-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { usePathname } from 'next/navigation';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import {
@@ -104,7 +104,7 @@ export function Navbar() {
                                     <LanguageSwitcher hasText />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <ThemeSwitcher hasText />
+                                    <ThemeToggle hasText />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Link
@@ -241,7 +241,7 @@ export function Navbar() {
                                                 <LanguageSwitcher hasText />
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <ThemeSwitcher hasText />
+                                                <ThemeToggle hasText />
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <Link
