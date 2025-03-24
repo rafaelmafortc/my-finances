@@ -22,11 +22,11 @@ export function ThemeSwitcher({ hasText = false }: ThemeSwitcherProps) {
         <Button
             onClick={handleTheme}
             variant={'static'}
-            className="flex justify-start w-full gap-6 text-muted-foreground group-hover:text-foreground transition-colors"
+            className="flex justify-start w-full gap-6.5 text-muted-foreground group-hover:text-foreground transition-colors"
         >
             <div className="relative flex items-center justify-center">
-                <Sun className="absolute w-5 h-5 scale-100 dark:scale-0 transition-transform" />
-                <Moon className="absolute w-5 h-5 scale-0 dark:scale-100 transition-transform" />
+                <Sun className="absolute w-5 h-5 scale-100 dark:scale-0" />
+                <Moon className="absolute w-5 h-5 scale-0 dark:scale-100" />
             </div>
 
             {hasText && (

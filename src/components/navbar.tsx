@@ -251,12 +251,12 @@ export function Navbar() {
                                                 >
                                                     <Button
                                                         variant={'static'}
-                                                        className="p-2 group w-full flex justify-start"
+                                                        className="p-2 group flex justify-start w-full"
                                                     >
-                                                        <div className="flex items-center gap-5 text-primary">
-                                                            <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                                                        <div className="flex items-center gap-5 text-muted-foreground group-hover:text-foreground transition-colors">
+                                                            <LogOutIcon />
                                                             <span
-                                                                className={`text-sm font-medium text-muted-foreground transition-all`}
+                                                                className={`text-sm font-medium`}
                                                             >
                                                                 {t('logout')}
                                                             </span>
