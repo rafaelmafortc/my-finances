@@ -41,7 +41,7 @@ export function Navbar() {
     return (
         <div className="flex w-full flex-col bg-muted/40">
             {/* PC */}
-            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-background sm:flex flex-col">
+            <aside className="fixed inset-y-0 left-0 z-10 hidden w-14 border-r bg-sidebar sm:flex flex-col">
                 <div className="flex flex-col items-center p-2">
                     <Link href="/" prefetch={false}>
                         <PiggyBank className={'h-8 w-8 '} />
@@ -108,7 +108,7 @@ export function Navbar() {
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <Link
-                                        href="/sign-in"
+                                        href="/login"
                                         prefetch={false}
                                         className="w-full"
                                     >
@@ -159,7 +159,10 @@ export function Navbar() {
                                 </div>
                             </div>
                         </SheetTrigger>
-                        <SheetContent className="sm:max-w-x" side="left">
+                        <SheetContent
+                            className="sm:max-w-x bg-sidebar"
+                            side="left"
+                        >
                             <SheetTitle></SheetTitle>
                             <SheetDescription className="hidden"></SheetDescription>
                             <nav className="grid gap-6">
@@ -242,7 +245,7 @@ export function Navbar() {
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <Link
-                                                    href="/sign-in"
+                                                    href="/login"
                                                     prefetch={false}
                                                     className="w-full"
                                                 >

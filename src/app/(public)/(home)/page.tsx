@@ -6,7 +6,7 @@ import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
 
-export default function SignIn() {
+export default function Home() {
     const t = useTranslations('home');
 
     return (
@@ -20,7 +20,7 @@ export default function SignIn() {
                     <h2 className="text-xl">{t('description')}</h2>
                 </div>
                 <div className="flex place-content-between items-center gap-2 mt-auto">
-                    <Link href="/sign-in" prefetch={false}>
+                    <Link href="/login" prefetch={false}>
                         <Button variant={'secondary'}>
                             {t('get_started')}
                         </Button>

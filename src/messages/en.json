@@ -3,7 +3,7 @@
         "get_started": "Get Started",
         "description": "Everything you need to take control of your finances — simple, smart, and beautifully designed."
     },
-    "signin": {
+    "login": {
         "welcome": "Welcome",
         "login_description": "Login with your Google account",
         "google_btn": "Login with Google"

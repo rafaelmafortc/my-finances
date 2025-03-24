@@ -7,10 +7,10 @@ import {
 const publicRoutes = [
     {
         path: '/',
-        whenAuthenticated: 'redirect',
+        whenAuthenticated: 'next',
     },
     {
-        path: '/sign-in',
+        path: '/login',
         whenAuthenticated: 'redirect',
     },
     {
@@ -19,7 +19,7 @@ const publicRoutes = [
     },
 ] as const;
 
-const REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE = '/sign-in';
+const REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE = '/login';
 
 export function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
@@ -42,7 +42,7 @@ export function middleware(request: NextRequest) {
         publicRoute?.whenAuthenticated === 'redirect'
     ) {
         const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = '/';
+        redirectUrl.pathname = '/resume';
 
         return NextResponse.redirect(redirectUrl);
     }
