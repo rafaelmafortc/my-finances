@@ -52,7 +52,8 @@ export function LanguageSwitcher({ hasText = false }: LanguageSwitcherProps) {
                         src={flagSrc}
                         alt="us / br flag"
                         width={20}
-                        height={20}
+                        height={15}
+                        style={{ height: 'auto' }}
                     />
                 ) : (
                     <div className="w-[20px] h-[20px]" />
