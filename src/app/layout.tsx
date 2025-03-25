@@ -17,7 +17,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     const cookieStore = await cookies();
-    const lang = cookieStore.get('MF_LANGUAGE')?.value || 'en';
+    const lang = cookieStore.get('language')?.value || 'en';
 
     return (
         <html lang={lang} suppressHydrationWarning>
@@ -30,7 +30,7 @@ export default async function RootLayout({
                 />
             </head>
             <body>
-                <NextIntlClientProvider>
+                <NextIntlClientProvider locale={lang}>
                     <ThemeProvider
                         attribute="class"
                         defaultTheme="dark"
