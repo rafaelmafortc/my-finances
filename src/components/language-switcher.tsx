@@ -1,8 +1,9 @@
 'use client';
 
+import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
-import Image from 'next/image';
+
 import { Button } from '@/components/ui/button';
 
 interface LanguageSwitcherProps {

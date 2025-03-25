@@ -1,3 +1,6 @@
+import Link from 'next/link';
+import { useTranslations } from 'next-intl';
+
 import { Button } from '@/components/ui/button';
 import {
     Card,
@@ -6,9 +9,6 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-
-import Link from 'next/link';
-import { useTranslations } from 'next-intl';
 
 export function LoginForm() {
     const t = useTranslations('login');

@@ -1,12 +1,15 @@
+import Link from 'next/link';
+import { PiggyBank } from 'lucide-react';
+
+import ExpandingCircle from '@/components/login-animate';
 import { LanguageSwitcher } from '@/components/language-switcher';
 import { ThemeToggle } from '@/components/theme-toggle';
-import { PiggyBank } from 'lucide-react';
-import Link from 'next/link';
 import { LoginForm } from '@/components/login-form';
 
 export default function Login() {
     return (
         <div className="flex min-h-svh w-full items-center justify-center p-6 md:p-10">
+            {/* <ExpandingCircle /> */}
             <div className="w-full flex flex-col gap-4 max-w-sm">
                 <Link href="/" prefetch={false} className="flex justify-center">
                     <PiggyBank className={'h-8 w-8 '} />

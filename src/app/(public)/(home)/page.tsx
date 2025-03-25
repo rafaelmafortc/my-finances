@@ -1,9 +1,9 @@
-import { LanguageSwitcher } from '@/components/language-switcher';
-import { ThemeToggle } from '@/components/theme-toggle';
+import Link from 'next/link';
 import { useTranslations } from 'next-intl';
 import { PiggyBank } from 'lucide-react';
-import Link from 'next/link';
 
+import { LanguageSwitcher } from '@/components/language-switcher';
+import { ThemeToggle } from '@/components/theme-toggle';
 import { Button } from '@/components/ui/button';
 
 export default function Home() {

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
+
 import { ThemeProvider } from '@/provider/theme-provider';
 
 import '@/styles/globals.css';
