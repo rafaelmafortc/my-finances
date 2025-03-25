@@ -92,7 +92,9 @@ export function Navbar() {
                     <DropdownMenu>
                         <DropdownMenuTrigger asChild>
                             <Settings
-                                className={'h-5 w-5 text-muted-foreground'}
+                                className={
+                                    'h-5 w-5 text-muted-foreground hover:text-foreground transition-all'
+                                }
                             />
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className="w-56" side="top">
