@@ -36,7 +36,7 @@ export function Navbar() {
     const pathname = usePathname();
     const t = useTranslations('navbar');
 
-    const [openSheet, setOpenSheet] = useState(false);
+    const [open, setOpen] = useState(false);
 
     return (
         <div className="flex w-full flex-col bg-muted/40">
@@ -137,14 +137,14 @@ export function Navbar() {
                     className="sticky top-0 z-30 flex h-14 items-center px-4 border-b bg-background gap-4 sm:static 
                 sm:h-auto sm:border-0 sm:bg-transparent sm:px-6"
                 >
-                    <Sheet open={openSheet}>
+                    <Sheet open={open} onOpenChange={setOpen}>
                         <SheetTrigger asChild>
                             <div className="flex justify-between w-100">
                                 <Button
                                     size="icon"
                                     variant="ghost"
                                     className="sm:hidden"
-                                    onClick={() => setOpenSheet(true)}
+                                    onClick={() => setOpen(true)}
                                 >
                                     <Menu className="w-5 h-5" />
                                     <span className="sr-only">
@@ -179,9 +179,7 @@ export function Navbar() {
                                             <Link
                                                 key={id}
                                                 href={href}
-                                                onClick={() =>
-                                                    setOpenSheet(false)
-                                                }
+                                                onClick={() => setOpen(false)}
                                                 className="flex items-center gap-2 px-2.5 text-muted-foreground hover:text-foreground"
                                                 prefetch={false}
                                             >
@@ -214,7 +212,7 @@ export function Navbar() {
                                 <DropdownMenu>
                                     <DropdownMenuTrigger asChild>
                                         <div
-                                            onClick={() => setOpenSheet(false)}
+                                            onClick={() => setOpen(false)}
                                             className="flex items-center gap-2 text-muted-foreground hover:text-foreground"
                                         >
                                             <div
