@@ -14,7 +14,7 @@ export default function PrivateLayout({
     const { user, loading } = useAuth();
     const t = useTranslations('login');
 
-    if (loading) {
+    if (loading || !user?.uid) {
         return (
             <div className="flex h-screen w-screen items-center justify-center">
                 <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
