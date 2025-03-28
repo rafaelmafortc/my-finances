@@ -26,9 +26,6 @@ export function middleware(request: NextRequest) {
     const publicRoute = publicRoutes.find((route) => route.path === path);
     const authToken = request.cookies.get('token');
 
-    // REMOVER:
-    return NextResponse.next();
-
     if (!authToken && !publicRoute) {
         const redirectUrl = request.nextUrl.clone();
         redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE;

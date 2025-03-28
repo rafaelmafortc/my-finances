@@ -46,7 +46,14 @@ export function Navbar() {
         try {
             await signOut(auth);
 
-            router.push('/login');
+            const response = await fetch('/api/auth/logout', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+            });
+
+            if (response.status === 200) {
+                router.push('/login');
+            }
         } catch (err) {
             console.error('error logout function', err);
         }
