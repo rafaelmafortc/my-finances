@@ -1,6 +1,5 @@
 'use client';
 
-import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 
 import { Navbar } from '@/components/navbar';
@@ -12,7 +11,6 @@ export default function PrivateLayout({
     children: React.ReactNode;
 }) {
     const { user, loading } = useAuth();
-    const t = useTranslations('home');
 
     if (loading || !user?.uid) {
         return (
@@ -25,12 +23,7 @@ export default function PrivateLayout({
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
-            <div className="sm:ml-16 p-4 flex-1 flex flex-col">
-                <div className="mb-4 text-sm text-muted-foreground">
-                    {t('hello')}, {user?.displayName}!
-                </div>
-                {children}
-            </div>
+            <div className="sm:ml-16 p-4 flex-1 flex flex-col">{children}</div>
         </div>
     );
 }
