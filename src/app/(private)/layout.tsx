@@ -25,7 +25,7 @@ export default function PrivateLayout({
     return (
         <div>
             <Navbar />
-            <div className="sm:ml-16 p-4">
+            <div className="min-h-screen sm:ml-16 p-4">
                 <div className="mb-4 text-sm text-muted-foreground">
                     {t('welcome')}, {user?.displayName}
                 </div>
