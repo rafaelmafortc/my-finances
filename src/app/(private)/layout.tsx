@@ -25,7 +25,7 @@ export default function PrivateLayout({
     return (
         <div className="flex flex-col h-screen">
             <Navbar />
-            <div className="sm:ml-16 p-4 flex-1 overflow-hidden flex flex-col">
+            <div className="sm:ml-16 p-4 flex-1 flex flex-col">
                 <div className="mb-4 text-sm text-muted-foreground">
                     {t('welcome')}, {user?.displayName}
                 </div>

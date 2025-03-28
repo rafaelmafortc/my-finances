@@ -65,7 +65,7 @@ export function PieChartComponent({ title = '' }: PieChartComponenteProps) {
             <CardHeader className="items-center pb-0">
                 <CardTitle className="text-3xl">{title}</CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 pb-0">
+            <CardContent className="flex-1 flex items-center justify-center">
                 <ChartContainer
                     config={chartConfig}
                     className="mx-auto aspect-square max-h-[500px]"
