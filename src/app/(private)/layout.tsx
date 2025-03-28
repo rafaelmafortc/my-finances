@@ -12,7 +12,7 @@ export default function PrivateLayout({
     children: React.ReactNode;
 }) {
     const { user, loading } = useAuth();
-    const t = useTranslations('login');
+    const t = useTranslations('home');
 
     if (loading || !user?.uid) {
         return (
@@ -27,7 +27,7 @@ export default function PrivateLayout({
             <Navbar />
             <div className="sm:ml-16 p-4 flex-1 flex flex-col">
                 <div className="mb-4 text-sm text-muted-foreground">
-                    {t('welcome')}, {user?.displayName}
+                    {t('hello')}, {user?.displayName}!
                 </div>
                 {children}
             </div>
