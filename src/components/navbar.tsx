@@ -3,8 +3,9 @@
 import Link from 'next/link';
 import { useState } from 'react';
 import { useTranslations } from 'next-intl';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { LogOutIcon, Menu, PiggyBank, Settings } from 'lucide-react';
+import { signOut } from 'firebase/auth';
 
 import {
     Sheet,
@@ -32,12 +33,24 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { auth } from '@/lib/firebase';
 
 export function Navbar() {
+    const router = useRouter();
     const pathname = usePathname();
     const t = useTranslations('navbar');
 
     const [open, setOpen] = useState(false);
+
+    const logout = async () => {
+        try {
+            await signOut(auth);
+
+            router.push('/login');
+        } catch (err) {
+            console.error('error logout function', err);
+        }
+    };
 
     return (
         <div className="flex w-full flex-col bg-muted/40">
@@ -110,23 +123,18 @@ export function Navbar() {
                                     <ThemeToggle hasText />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <Link
-                                        href="/login"
-                                        prefetch={false}
-                                        className="w-full"
+                                    <Button
+                                        onClick={logout}
+                                        variant={'static'}
+                                        className="p-2 group w-full flex justify-start"
                                     >
-                                        <Button
-                                            variant={'static'}
-                                            className="p-2 group w-full flex justify-start"
-                                        >
-                                            <div className="flex items-center gap-5 text-primary">
-                                                <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
-                                                <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
-                                                    {t('logout')}
-                                                </span>
-                                            </div>
-                                        </Button>
-                                    </Link>
+                                        <div className="flex items-center gap-5 text-primary">
+                                            <LogOutIcon className="text-muted-foreground group-hover:text-foreground transition-colors" />
+                                            <span className="text-sm font-medium text-muted-foreground group-hover:text-foreground transition-colors">
+                                                {t('logout')}
+                                            </span>
+                                        </div>
+                                    </Button>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                         </DropdownMenuContent>
@@ -245,25 +253,20 @@ export function Navbar() {
                                                 <ThemeToggle hasText />
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <Link
-                                                    href="/login"
-                                                    prefetch={false}
-                                                    className="w-full"
+                                                <Button
+                                                    onClick={logout}
+                                                    variant={'static'}
+                                                    className="p-2 group flex justify-start w-full"
                                                 >
-                                                    <Button
-                                                        variant={'static'}
-                                                        className="p-2 group flex justify-start w-full"
-                                                    >
-                                                        <div className="flex items-center gap-5 text-muted-foreground group-hover:text-foreground transition-colors">
-                                                            <LogOutIcon />
-                                                            <span
-                                                                className={`text-sm font-medium`}
-                                                            >
-                                                                {t('logout')}
-                                                            </span>
-                                                        </div>
-                                                    </Button>
-                                                </Link>
+                                                    <div className="flex items-center gap-5 text-muted-foreground group-hover:text-foreground transition-colors">
+                                                        <LogOutIcon />
+                                                        <span
+                                                            className={`text-sm font-medium`}
+                                                        >
+                                                            {t('logout')}
+                                                        </span>
+                                                    </div>
+                                                </Button>
                                             </DropdownMenuItem>
                                         </DropdownMenuGroup>
                                     </DropdownMenuContent>
