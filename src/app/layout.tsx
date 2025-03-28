@@ -10,7 +10,7 @@ import '@/styles/globals.css';
 export const metadata: Metadata = {
     title: 'MyFinances',
     description: 'powered by raslow',
-    icons: '/piggy-bank.svg',
+    icons: '/favicon.ico',
 };
 
 export default async function RootLayout({
@@ -24,10 +24,10 @@ export default async function RootLayout({
     return (
         <html lang={lang} suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/piggy-bank.svg" type="image/x-icon" />
+                <link rel="icon" href="/favicon.ico" type="image/x-icon" />
                 <link
                     rel="shortcut icon"
-                    href="/piggy-bank.svg"
+                    href="/favicon.ico"
                     type="image/x-icon"
                 />
             </head>
