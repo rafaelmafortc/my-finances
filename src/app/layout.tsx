@@ -3,6 +3,7 @@ import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 
 import { ThemeProvider } from '@/provider/theme-provider';
+import { AuthProvider } from '@/provider/auth-provider';
 
 import '@/styles/globals.css';
 
@@ -31,16 +32,18 @@ export default async function RootLayout({
                 />
             </head>
             <body>
-                <NextIntlClientProvider locale={lang}>
-                    <ThemeProvider
-                        attribute="class"
-                        defaultTheme="dark"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        {children}
-                    </ThemeProvider>
-                </NextIntlClientProvider>
+                <AuthProvider>
+                    <NextIntlClientProvider locale={lang}>
+                        <ThemeProvider
+                            attribute="class"
+                            defaultTheme="dark"
+                            enableSystem
+                            disableTransitionOnChange
+                        >
+                            {children}
+                        </ThemeProvider>
+                    </NextIntlClientProvider>
+                </AuthProvider>
             </body>
         </html>
     );
