@@ -4,6 +4,7 @@ import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
 import { CardFooter } from '@/components/ui/card';
 import { PieFooterCard } from '@/components/pie-footer-card';
+import { currencyFormatter } from '@/lib/formatCurrency';
 
 const data = [
     { value: 1048, name: 'income', color: '#91CC75' },
@@ -18,7 +19,10 @@ export default function Resume() {
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('resume')}>
-                <PieChart title={balance.toLocaleString()} data={data} />
+                <PieChart
+                    title={currencyFormatter(balance, 'BRL')}
+                    data={data}
+                />
                 <CardFooter className="flex flex-col gap-2">
                     {data.map(({ value, name }) => {
                         return (

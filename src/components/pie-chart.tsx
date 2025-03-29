@@ -22,7 +22,7 @@ const PieChart = ({ title, data }: PieChartProps) => {
     const getOption = () => {
         const option = {
             title: {
-                text: `R$ ${title}`,
+                text: `${title}`,
                 left: 'center',
                 top: 'center',
                 textStyle: {
