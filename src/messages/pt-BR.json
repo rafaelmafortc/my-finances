@@ -16,6 +16,7 @@
         "open_close": "abrir / fechar menu",
         "change_lang": "Alterar linguagem",
         "change_theme": "Alterar tema",
+        "change_currency": "Alterar moeda",
         "logout": "Sair",
         "settings": "Configurações"
     }

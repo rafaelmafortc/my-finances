@@ -24,6 +24,7 @@ import { Button } from '@/components/ui/button';
 import { navbarItems } from '@/lib/navbar';
 import { ThemeToggle } from '@/components/theme-toggle';
 import { LanguageSwitcher } from '@/components/language-switcher';
+import { CurrencyToggle } from '@/components/currency-toggle';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -125,6 +126,9 @@ export function Navbar() {
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
                                     <LanguageSwitcher hasText />
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <CurrencyToggle hasText />
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
                                     <ThemeToggle hasText />
@@ -255,6 +259,9 @@ export function Navbar() {
                                         <DropdownMenuGroup>
                                             <DropdownMenuItem>
                                                 <LanguageSwitcher hasText />
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <CurrencyToggle hasText />
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
                                                 <ThemeToggle hasText />
