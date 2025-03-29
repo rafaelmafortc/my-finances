@@ -6,7 +6,7 @@ export const navbarItems = [
         title: 'resume',
         href: '/resume',
         icon: Home,
-        color: 'text-blue-700',
+        color: 'text-[#5470C6]',
     },
     {
         id: 2,
