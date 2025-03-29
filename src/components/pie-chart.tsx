@@ -5,38 +5,24 @@ import { useTheme } from 'next-themes';
 
 const ReactECharts = dynamic(() => import('echarts-for-react'), { ssr: false });
 
-const PieChart = () => {
+type PieData = {
+    value: number;
+    name: string;
+    color?: string;
+};
+
+type PieChartProps = {
+    title: string;
+    data: PieData[];
+};
+
+const PieChart = ({ title, data }: PieChartProps) => {
     const { theme } = useTheme();
-
-    const data = [
-        { value: 1048, name: 'Income' },
-        { value: 735, name: 'Expense' },
-    ];
-
-    const total = data.reduce((sum, item) => sum + item.value, 0);
 
     const getOption = () => {
         const option = {
-            tooltip: {
-                trigger: 'item',
-                backgroundColor:
-                    theme === 'dark'
-                        ? 'oklch(0.21 0.006 285.885)'
-                        : 'oklch(0.985 0 0)',
-                textStyle: {
-                    color:
-                        theme === 'dark'
-                            ? 'oklch(0.985 0 0)'
-                            : 'oklch(0.141 0.005 285.823)',
-                },
-                borderColor:
-                    theme === 'dark'
-                        ? 'oklch(0.274 0.006 286.033)'
-                        : 'oklch(0.92 0.004 286.32)',
-                borderWidth: 1,
-            },
             title: {
-                text: `R$ ${total.toLocaleString()}`,
+                text: `R$ ${title}`,
                 left: 'center',
                 top: 'center',
                 textStyle: {
@@ -64,7 +50,12 @@ const PieChart = () => {
                         fontSize: 12,
                         fontWeight: 'bold',
                     },
-                    data: data,
+                    data: data.map((item) => ({
+                        ...item,
+                        itemStyle: item.color
+                            ? { color: item.color }
+                            : undefined,
+                    })),
                 },
             ],
         };

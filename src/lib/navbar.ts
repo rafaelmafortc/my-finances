@@ -13,13 +13,13 @@ export const navbarItems = [
         title: 'income',
         href: '/income',
         icon: CircleDollarSign,
-        color: 'text-green-700',
+        color: 'text-[#91CC75]',
     },
     {
         id: 3,
         title: 'expense',
         href: '/expense',
         icon: TrendingDown,
-        color: 'text-red-700',
+        color: 'text-[#EE6666]',
     },
 ];
