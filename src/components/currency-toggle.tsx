@@ -25,7 +25,7 @@ export function CurrencyToggle({ hasText = false }: CurrencyToggleProps) {
             className="p-2 group flex justify-start w-full"
         >
             <div className="flex items-center gap-4 text-muted-foreground group-hover:text-foreground transition-colors">
-                <span className="w-5 h-5">
+                <span className="w-5 h-5 font-semibold">
                     {currency === 'BRL' ? 'R$' : '$'}
                 </span>
                 {hasText && (
