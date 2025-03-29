@@ -2,10 +2,11 @@ import type { Metadata } from 'next';
 import { cookies } from 'next/headers';
 import { NextIntlClientProvider } from 'next-intl';
 
-import { ThemeProvider } from '@/provider/theme-provider';
-import { AuthProvider } from '@/provider/auth-provider';
+import { ThemeProvider } from '@/providers/theme-provider';
+import { AuthProvider } from '@/providers/auth-provider';
 
 import '@/styles/globals.css';
+import { CurrencyProvider } from '@/providers/currency-provider';
 
 export const metadata: Metadata = {
     title: 'MyFinances',
@@ -33,16 +34,18 @@ export default async function RootLayout({
             </head>
             <body>
                 <AuthProvider>
-                    <NextIntlClientProvider locale={lang}>
-                        <ThemeProvider
-                            attribute="class"
-                            defaultTheme="dark"
-                            enableSystem
-                            disableTransitionOnChange
-                        >
-                            {children}
-                        </ThemeProvider>
-                    </NextIntlClientProvider>
+                    <CurrencyProvider>
+                        <NextIntlClientProvider locale={lang}>
+                            <ThemeProvider
+                                attribute="class"
+                                defaultTheme="dark"
+                                enableSystem
+                                disableTransitionOnChange
+                            >
+                                {children}
+                            </ThemeProvider>
+                        </NextIntlClientProvider>
+                    </CurrencyProvider>
                 </AuthProvider>
             </body>
         </html>

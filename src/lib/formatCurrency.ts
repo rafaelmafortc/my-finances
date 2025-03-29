@@ -1,4 +1,4 @@
-export function currencyFormatter(value: number, currency: 'BRL' | 'USD') {
+export function currencyFormatter(value: number, currency: string) {
     const intlNumberFormat = new Intl.NumberFormat(
         currency === 'BRL' ? 'pt-BR' : 'en',
         {

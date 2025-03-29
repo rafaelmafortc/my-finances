@@ -3,7 +3,7 @@
 import { Loader2 } from 'lucide-react';
 
 import { Navbar } from '@/components/navbar';
-import { useAuth } from '@/provider/auth-provider';
+import { useAuth } from '@/providers/auth-provider';
 
 export default function PrivateLayout({
     children,
