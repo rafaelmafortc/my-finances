@@ -9,6 +9,8 @@ import {
     deleteDoc,
     updateDoc,
     doc,
+    query,
+    where,
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
@@ -28,7 +30,12 @@ export default function Income() {
 
     const getIncomes = async () => {
         try {
-            const data = await getDocs(incomeCollegionRef);
+            const userId = auth?.currentUser?.uid;
+
+            if (!userId) return;
+
+            const q = query(incomeCollegionRef, where('userId', '==', userId));
+            const data = await getDocs(q);
             const filteredData = data.docs.map((doc) => ({
                 ...doc.data(),
                 id: doc.id,
