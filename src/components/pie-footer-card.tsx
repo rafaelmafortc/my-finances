@@ -1,22 +1,39 @@
 'use client';
 
+import { Pencil } from 'lucide-react';
+
 import { useCurrency } from '@/providers/currency-provider';
 import { currencyFormatter } from '@/lib/formatCurrency';
+import { Button } from '@/components/ui/button';
 
 interface PieFooterCardProps {
     name: string;
     value: number;
+    hasButton?: boolean;
+    onClick?: () => void;
 }
 
-export function PieFooterCard({ name, value }: PieFooterCardProps) {
+export function PieFooterCard({
+    name,
+    value,
+    hasButton,
+    onClick,
+}: PieFooterCardProps) {
     const { currency } = useCurrency();
 
     return (
-        <div className=" flex items-center space-x-4 rounded-md border p-4 lg:w-1/4 w-full">
+        <div className="flex items-center bg-sidebar space-x-4 rounded-md border p-4 lg:w-1/4 w-full h-16">
             <div className="flex-1 space-y-1">
                 <p className="text-sm font-medium leading-none">{name}</p>
             </div>
-            <p>{currencyFormatter(value, currency)}</p>
+            <div className="flex items-center gap-2">
+                <p>{currencyFormatter(value, currency)}</p>
+                {hasButton && (
+                    <Button variant="ghost" size="icon" onClick={onClick}>
+                        <Pencil />
+                    </Button>
+                )}
+            </div>
         </div>
     );
 }
