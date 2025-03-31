@@ -16,11 +16,19 @@ import {
 import PageLayout from '@/components/layouts/page-layout';
 import { db, auth } from '@/lib/firebase';
 
+interface Income {
+    id: string;
+    amount: number;
+    currency: string;
+    description: string;
+    userId: string;
+}
+
 export default function Income() {
     const t = useTranslations('navbar');
     const incomeCollegionRef = collection(db, 'incomes');
 
-    const [incomes, setIncomes] = useState([]);
+    const [incomes, setIncomes] = useState<Income[]>([]);
 
     const [description, setDescription] = useState('');
     const [currency, setCurrency] = useState('');
@@ -36,8 +44,8 @@ export default function Income() {
 
             const q = query(incomeCollegionRef, where('userId', '==', userId));
             const data = await getDocs(q);
-            const filteredData = data.docs.map((doc) => ({
-                ...doc.data(),
+            const filteredData: Income[] = data.docs.map((doc) => ({
+                ...(doc.data() as Omit<Income, 'id'>),
                 id: doc.id,
             }));
             setIncomes(filteredData);
@@ -75,7 +83,7 @@ export default function Income() {
         }
     };
 
-    const updateIncome = async (id) => {
+    const updateIncome = async (id: string) => {
         try {
             const incomeDoc = doc(db, 'incomes', id);
             await updateDoc(incomeDoc, { description: newDescription });
