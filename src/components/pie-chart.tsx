@@ -3,6 +3,9 @@
 import dynamic from 'next/dynamic';
 import { useTheme } from 'next-themes';
 
+import { useCurrency } from '@/providers/currency-provider';
+import { currencyFormatter } from '@/lib/formatCurrency';
+
 const ReactECharts = dynamic(() => import('echarts-for-react'), { ssr: false });
 
 type PieData = {
@@ -12,17 +15,18 @@ type PieData = {
 };
 
 type PieChartProps = {
-    title: string;
+    title: number;
     data: PieData[];
 };
 
 const PieChart = ({ title, data }: PieChartProps) => {
     const { theme } = useTheme();
+    const { currency } = useCurrency();
 
     const getOption = () => {
         const option = {
             title: {
-                text: `${title}`,
+                text: `${currencyFormatter(title, currency)}`,
                 left: 'center',
                 top: 'center',
                 textStyle: {

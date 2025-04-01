@@ -14,6 +14,9 @@ import {
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
+import PieChart from '@/components/pie-chart';
+import { AddCard } from '@/components/add-card';
+import { CardFooter } from '@/components/ui/card';
 import { db, auth } from '@/lib/firebase';
 
 interface Income {
@@ -25,16 +28,10 @@ interface Income {
 }
 
 export default function Income() {
-    const t = useTranslations('navbar');
+    const t = useTranslations('income');
     const incomeCollegionRef = collection(db, 'incomes');
 
     const [incomes, setIncomes] = useState<Income[]>([]);
-
-    const [description, setDescription] = useState('');
-    const [currency, setCurrency] = useState('');
-    const [amount, setAmount] = useState(0);
-
-    const [newDescription, setNewDescription] = useState('');
 
     const getIncomes = async () => {
         try {
@@ -61,9 +58,9 @@ export default function Income() {
     const onSubmit = async () => {
         try {
             await addDoc(incomeCollegionRef, {
-                amount: amount,
-                currency: currency,
-                description: description,
+                amount: 0,
+                currency: 'BRL',
+                description: 'description',
                 userId: auth?.currentUser?.uid,
             });
 
@@ -86,7 +83,7 @@ export default function Income() {
     const updateIncome = async (id: string) => {
         try {
             const incomeDoc = doc(db, 'incomes', id);
-            await updateDoc(incomeDoc, { description: newDescription });
+            await updateDoc(incomeDoc, { description: '' });
             getIncomes();
         } catch (err) {
             console.error(err);
@@ -96,44 +93,10 @@ export default function Income() {
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('income')}>
-                <div>
-                    <input
-                        placeholder="description"
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <input
-                        placeholder="currency"
-                        onChange={(e) => setCurrency(e.target.value)}
-                    />
-                    <input
-                        type="number"
-                        placeholder="amount"
-                        onChange={(e) => setAmount(Number(e.target.value))}
-                    />
-                    <button onClick={onSubmit}>Submit</button>
-                </div>
-                {incomes.map((income) => (
-                    <div className="p-6" key={income.description}>
-                        <p>
-                            {`${income.description} - ${income.currency} ${income.amount}`}
-                        </p>
-
-                        <button onClick={() => deleteIncome(income.id)}>
-                            Delete income
-                        </button>
-                        <div>
-                            <input
-                                placeholder="new description"
-                                onChange={(e) =>
-                                    setNewDescription(e.target.value)
-                                }
-                            />
-                            <button onClick={() => updateIncome(income.id)}>
-                                update description
-                            </button>
-                        </div>
-                    </div>
-                ))}
+                <PieChart title={'Teste'} data={[]} />
+                <CardFooter className="flex flex-col gap-2">
+                    <AddCard name={t('add_income')} />
+                </CardFooter>
             </PageLayout>
         </main>
     );

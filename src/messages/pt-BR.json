@@ -19,5 +19,9 @@
         "change_currency": "Alterar moeda",
         "logout": "Sair",
         "settings": "Configurações"
+    },
+    "income": {
+        "income": "Renda",
+        "add_income": "Adicionar renda"
     }
 }

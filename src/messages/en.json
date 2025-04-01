@@ -19,5 +19,9 @@
         "change_currency": "Change currency",
         "logout": "Logout",
         "settings": "Settings"
+    },
+    "income": {
+        "income": "Income",
+        "add_income": "Add income"
     }
 }
