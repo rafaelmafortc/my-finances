@@ -1,9 +1,12 @@
+'use client';
+
 import { useTranslations } from 'next-intl';
 
 import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
 import { CardFooter } from '@/components/ui/card';
 import { PieFooterCard } from '@/components/pie-footer-card';
+import { useCurrency } from '@/providers/currency-provider';
 
 const data = [
     { value: 1048, name: 'income', color: '#91CC75' },
@@ -12,6 +15,7 @@ const data = [
 
 export default function Resume() {
     const t = useTranslations('navbar');
+    const { currency } = useCurrency();
 
     const balance = data[0].value - data[1].value;
 
@@ -26,6 +30,7 @@ export default function Resume() {
                                 key={name}
                                 value={value}
                                 name={t(name)}
+                                currency={currency}
                             />
                         );
                     })}

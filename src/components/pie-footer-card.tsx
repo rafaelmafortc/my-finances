@@ -2,13 +2,13 @@
 
 import { Pencil } from 'lucide-react';
 
-import { useCurrency } from '@/providers/currency-provider';
 import { currencyFormatter } from '@/lib/formatCurrency';
 import { Button } from '@/components/ui/button';
 
 interface PieFooterCardProps {
     name: string;
     value: number;
+    currency: string;
     hasButton?: boolean;
     onClick?: () => void;
 }
@@ -16,11 +16,10 @@ interface PieFooterCardProps {
 export function PieFooterCard({
     name,
     value,
+    currency,
     hasButton,
     onClick,
 }: PieFooterCardProps) {
-    const { currency } = useCurrency();
-
     return (
         <div className="flex items-center bg-sidebar space-x-4 rounded-md border p-4 lg:w-1/4 w-full h-16">
             <div className="flex-1 space-y-1">

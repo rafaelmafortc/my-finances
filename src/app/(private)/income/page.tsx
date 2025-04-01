@@ -18,12 +18,13 @@ import PieChart from '@/components/pie-chart';
 import { AddCard } from '@/components/add-card';
 import { CardFooter } from '@/components/ui/card';
 import { db, auth } from '@/lib/firebase';
+import { PieFooterCard } from '@/components/pie-footer-card';
 
 interface Income {
     id: string;
-    amount: number;
+    value: number;
     currency: string;
-    description: string;
+    name: string;
     userId: string;
 }
 
@@ -55,7 +56,7 @@ export default function Income() {
         getIncomes();
     }, []);
 
-    const onSubmit = async () => {
+    const addIncome = async () => {
         try {
             await addDoc(incomeCollegionRef, {
                 amount: 0,
@@ -93,8 +94,18 @@ export default function Income() {
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('income')}>
-                <PieChart title={'Teste'} data={[]} />
+                <PieChart title={0} data={incomes} />
                 <CardFooter className="flex flex-col gap-2">
+                    {incomes.map(({ value, name, currency }) => {
+                        return (
+                            <PieFooterCard
+                                key={name}
+                                value={value}
+                                name={name}
+                                currency={currency}
+                            />
+                        );
+                    })}
                     <AddCard name={t('add_income')} />
                 </CardFooter>
             </PageLayout>
