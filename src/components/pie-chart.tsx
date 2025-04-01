@@ -43,7 +43,7 @@ const PieChart = ({ title, data }: PieChartProps) => {
                     type: 'pie',
                     radius: ['60%', '90%'],
                     avoidLabelOverlap: false,
-                    padAngle: 6,
+                    padAngle: 1,
                     itemStyle: {
                         borderRadius: 10,
                     },
