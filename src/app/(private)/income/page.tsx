@@ -94,7 +94,7 @@ export default function Income() {
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('income')}>
-                <PieChart title={0} data={incomes} />
+                <PieChart data={incomes} />
                 <CardFooter className="flex flex-col gap-2">
                     {incomes.map(({ value, name, currency }) => {
                         return (
