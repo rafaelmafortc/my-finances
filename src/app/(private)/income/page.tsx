@@ -56,25 +56,25 @@ export default function Income() {
         getIncomes();
     }, []);
 
-    const deleteIncome = async (id: string) => {
-        try {
-            const incomeDoc = doc(db, 'incomes', id);
-            await deleteDoc(incomeDoc);
-            getIncomes();
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    // const deleteIncome = async (id: string) => {
+    //     try {
+    //         const incomeDoc = doc(db, 'incomes', id);
+    //         await deleteDoc(incomeDoc);
+    //         getIncomes();
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
 
-    const updateIncome = async (id: string) => {
-        try {
-            const incomeDoc = doc(db, 'incomes', id);
-            await updateDoc(incomeDoc, { description: '' });
-            getIncomes();
-        } catch (err) {
-            console.error(err);
-        }
-    };
+    // const updateIncome = async (id: string) => {
+    //     try {
+    //         const incomeDoc = doc(db, 'incomes', id);
+    //         await updateDoc(incomeDoc, { description: '' });
+    //         getIncomes();
+    //     } catch (err) {
+    //         console.error(err);
+    //     }
+    // };
 
     return (
         <main className="flex-1 flex flex-col">
