@@ -130,6 +130,13 @@ export function AddCard({ name, onAdd }: AddCardProps) {
                         </div>
                         <DialogFooter>
                             <Button
+                                variant="destructive"
+                                onClick={() => console.log('delete')}
+                                className="sm:w-1/4 w-full"
+                            >
+                                {t('delete')}
+                            </Button>
+                            <Button
                                 type="submit"
                                 onClick={onSubmit}
                                 className="sm:w-1/4 w-full"

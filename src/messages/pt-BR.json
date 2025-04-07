@@ -27,6 +27,7 @@
     "dialog": {
         "save": "Salvar",
         "name": "Nome",
-        "value": "Valor"
+        "value": "Valor",
+        "delete": "Deletar"
     }
 }
