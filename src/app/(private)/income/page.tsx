@@ -2,16 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
-import {
-    getDocs,
-    collection,
-    addDoc,
-    deleteDoc,
-    updateDoc,
-    doc,
-    query,
-    where,
-} from 'firebase/firestore';
+import { deleteDoc, updateDoc, doc } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
@@ -30,23 +21,22 @@ interface Income {
 
 export default function Income() {
     const t = useTranslations('income');
-    const incomeCollegionRef = collection(db, 'incomes');
 
     const [incomes, setIncomes] = useState<Income[]>([]);
 
     const getIncomes = async () => {
         try {
             const userId = auth?.currentUser?.uid;
-
             if (!userId) return;
 
-            const q = query(incomeCollegionRef, where('userId', '==', userId));
-            const data = await getDocs(q);
-            const filteredData: Income[] = data.docs.map((doc) => ({
-                ...(doc.data() as Omit<Income, 'id'>),
-                id: doc.id,
-            }));
-            setIncomes(filteredData);
+            const res = await fetch(`/api/income?userId=${userId}`);
+            const data = await res.json();
+
+            if (!res.ok) {
+                console.error(data.error);
+                return;
+            }
+            setIncomes(data);
         } catch (err) {
             console.error(err);
         }
@@ -91,7 +81,7 @@ export default function Income() {
                             />
                         );
                     })}
-                    <AddCard name={t('add_income')} />
+                    <AddCard name={t('add_income')} onAdd={getIncomes} />
                 </CardFooter>
             </PageLayout>
         </main>

@@ -12,15 +12,18 @@ import {
     DialogTitle,
     DialogTrigger,
     DialogFooter,
+    DialogDescription,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useCurrency } from '@/providers/currency-provider';
+import { auth } from '@/lib/firebase';
 
-interface PieFooterCardProps {
+interface AddCardProps {
     name: string;
+    onAdd?: () => void;
 }
 
-export function AddCard({ name }: PieFooterCardProps) {
+export function AddCard({ name, onAdd }: AddCardProps) {
     const { currency } = useCurrency();
     const t = useTranslations('dialog');
 
@@ -28,6 +31,7 @@ export function AddCard({ name }: PieFooterCardProps) {
         currency: currency,
         name: '',
         value: 0,
+        userId: auth?.currentUser?.uid,
     });
     const [loading, setLoading] = useState(false);
     const [open, setOpen] = useState(false);
@@ -67,6 +71,7 @@ export function AddCard({ name }: PieFooterCardProps) {
                 return;
             }
 
+            onAdd?.();
             setOpen(false);
         } finally {
             setLoading(false);
@@ -89,6 +94,7 @@ export function AddCard({ name }: PieFooterCardProps) {
                         <DialogHeader>
                             <DialogTitle>{name}</DialogTitle>
                         </DialogHeader>
+                        <DialogDescription></DialogDescription>
                         <div className="grid gap-4 py-4">
                             <div className="grid grid-cols-4 items-center gap-4">
                                 <Input
