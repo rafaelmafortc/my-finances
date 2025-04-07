@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import { Loader2, Plus } from 'lucide-react';
 import { useTranslations } from 'next-intl';
+import { addDoc, collection, getDocs, query, where } from 'firebase/firestore';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,7 +17,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { useCurrency } from '@/providers/currency-provider';
-import { auth } from '@/lib/firebase';
+import { auth, db } from '@/lib/firebase';
 
 interface AddCardProps {
     name: string;
@@ -53,26 +54,24 @@ export function AddCard({ name, onAdd }: AddCardProps) {
     const onSubmit = async () => {
         try {
             if (!formData.name || formData.value <= 0) return;
+            const incomeCol = collection(db, 'incomes');
 
             setLoading(true);
+            const q = query(
+                incomeCol,
+                where('userId', '==', formData.userId),
+                where('name', '==', name)
+            );
+            const existing = await getDocs(q);
 
-            const res = await fetch('/api/income', {
-                method: 'POST',
-                body: JSON.stringify(formData),
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-            });
-
-            const data = await res.json();
-
-            if (!res.ok) {
-                alert(data.error);
-                return;
+            if (!existing.empty) {
+                console.error('Já existe uma entrada com esse nome');
             }
-
-            onAdd?.();
+            await addDoc(incomeCol, formData);
             setOpen(false);
+            onAdd?.();
+        } catch (err) {
+            console.error(err);
         } finally {
             setLoading(false);
         }
