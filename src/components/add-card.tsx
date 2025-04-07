@@ -50,7 +50,7 @@ export function AddCard({ name, onAdd }: AddCardProps) {
         }));
     };
 
-    const addIncome = async () => {
+    const onSubmit = async () => {
         try {
             if (!formData.name || formData.value <= 0) return;
 
@@ -132,7 +132,7 @@ export function AddCard({ name, onAdd }: AddCardProps) {
                         <DialogFooter>
                             <Button
                                 type="submit"
-                                onClick={addIncome}
+                                onClick={onSubmit}
                                 className="sm:w-1/4 w-full"
                             >
                                 {loading ? (
