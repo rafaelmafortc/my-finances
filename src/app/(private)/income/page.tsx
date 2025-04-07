@@ -56,21 +56,6 @@ export default function Income() {
         getIncomes();
     }, []);
 
-    const addIncome = async () => {
-        try {
-            await addDoc(incomeCollegionRef, {
-                amount: 0,
-                currency: 'BRL',
-                description: 'description',
-                userId: auth?.currentUser?.uid,
-            });
-
-            getIncomes();
-        } catch (err) {
-            console.error(err);
-        }
-    };
-
     const deleteIncome = async (id: string) => {
         try {
             const incomeDoc = doc(db, 'incomes', id);
