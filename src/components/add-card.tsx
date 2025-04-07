@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { Loader2, Plus } from 'lucide-react';
+import { useTranslations } from 'next-intl';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -21,6 +22,7 @@ interface PieFooterCardProps {
 
 export function AddCard({ name }: PieFooterCardProps) {
     const { currency } = useCurrency();
+    const t = useTranslations('dialog');
 
     const [formData, setFormData] = useState({
         currency: currency,
@@ -92,7 +94,7 @@ export function AddCard({ name }: PieFooterCardProps) {
                                 <Input
                                     id="name"
                                     type="text"
-                                    placeholder="Name"
+                                    placeholder={t('name')}
                                     className="col-span-4"
                                     onChange={(e) =>
                                         handleFormData('name', e.target.value)
@@ -110,7 +112,7 @@ export function AddCard({ name }: PieFooterCardProps) {
                                 <Input
                                     id="value"
                                     type="number"
-                                    placeholder="Value"
+                                    placeholder={t('value')}
                                     className="col-span-3"
                                     onChange={(e) =>
                                         handleFormData(
@@ -130,7 +132,7 @@ export function AddCard({ name }: PieFooterCardProps) {
                                 {loading ? (
                                     <Loader2 className="animate-spin" />
                                 ) : (
-                                    'Save'
+                                    t('save')
                                 )}
                             </Button>
                         </DialogFooter>

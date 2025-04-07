@@ -23,5 +23,10 @@
     "income": {
         "income": "Income",
         "add_income": "Add income"
+    },
+    "dialog": {
+        "save": "Save",
+        "name": "Name",
+        "value": "Value"
     }
 }

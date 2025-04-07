@@ -23,5 +23,10 @@
     "income": {
         "income": "Renda",
         "add_income": "Adicionar renda"
+    },
+    "dialog": {
+        "save": "Salvar",
+        "name": "Nome",
+        "value": "Valor"
     }
 }
