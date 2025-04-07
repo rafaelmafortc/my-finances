@@ -88,6 +88,7 @@ export default function Income() {
                                 value={value}
                                 name={name}
                                 currency={currency}
+                                hasButton
                             />
                         );
                     })}

@@ -12,6 +12,7 @@ interface PieFooterCardProps {
     name: string;
     value: number;
     currency: string;
+    hasButton?: boolean;
     onClick?: () => void;
 }
 
@@ -19,6 +20,7 @@ export function PieFooterCard({
     name,
     value,
     currency,
+    hasButton,
     onClick,
 }: PieFooterCardProps) {
     const { currency: globalCurrency } = useCurrency();
@@ -45,9 +47,11 @@ export function PieFooterCard({
                     <p>({currencyFormatter(convertedValue, globalCurrency)})</p>
                 )}
                 <p>{currencyFormatter(value, currency)}</p>
-                <Button variant="ghost" size="icon" onClick={onClick}>
-                    <Pencil />
-                </Button>
+                {hasButton && (
+                    <Button variant="ghost" size="icon" onClick={onClick}>
+                        <Pencil />
+                    </Button>
+                )}
             </div>
         </div>
     );
