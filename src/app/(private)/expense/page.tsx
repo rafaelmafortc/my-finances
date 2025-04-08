@@ -12,7 +12,6 @@ import {
     updateDoc,
     deleteDoc,
     doc,
-    orderBy,
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
@@ -21,7 +20,11 @@ import { CardFooter } from '@/components/ui/card';
 import { EditableCard } from '@/components/editable-card';
 import { AddCard } from '@/components/add-card';
 import { TransactionDialog } from '@/components/transaction-dialog';
+import { CategoryDialog } from '@/components/category-dialog';
 import { db, auth } from '@/lib/firebase';
+import { useCurrency } from '@/providers/currency-provider';
+import { convertCurrency } from '@/lib/convertCurrency';
+import { useRouter } from 'next/navigation';
 
 interface Expense {
     id: string;
@@ -29,33 +32,117 @@ interface Expense {
     value: number;
     currency: string;
     userId: string;
-    category: string;
+    category?: string;
 }
 
-export default function Expense() {
+interface Category {
+    id: string;
+    name: string;
+    userId: string;
+}
+
+interface MergedItem {
+    id: string;
+    name: string;
+    value: number;
+    currency: string;
+    type: 'expense' | 'category';
+    data?: Expense;
+}
+
+export default function ExpensePage() {
     const t = useTranslations('dialog');
+    const { currency: globalCurrency } = useCurrency();
+    const router = useRouter();
 
     const [expenses, setExpenses] = useState<Expense[]>([]);
+    const [categories, setCategories] = useState<Category[]>([]);
+    const [mergedItems, setMergedItems] = useState<MergedItem[]>([]);
+
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [editExpense, setEditExpense] = useState<Expense | null>(null);
+    const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
 
-    const getExpenses = async () => {
+    const fetchData = async () => {
         const userId = auth.currentUser?.uid;
         if (!userId) return;
 
-        const q = query(
-            collection(db, 'expenses'),
-            where('userId', '==', userId),
-            orderBy('value', 'desc')
-        );
-        const snapshot = await getDocs(q);
-        const data = snapshot.docs.map((doc) => ({
+        setLoading(true);
+
+        const [expensesSnap, categoriesSnap] = await Promise.all([
+            getDocs(
+                query(collection(db, 'expenses'), where('userId', '==', userId))
+            ),
+            getDocs(
+                query(
+                    collection(db, 'categories'),
+                    where('userId', '==', userId)
+                )
+            ),
+        ]);
+
+        const expensesData = expensesSnap.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<Expense, 'id'>),
         }));
-        setExpenses(data);
+
+        const categoriesData = categoriesSnap.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<Category, 'id'>),
+        }));
+
+        setExpenses(expensesData);
+        setCategories(categoriesData);
+        setLoading(false);
     };
+
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        const mergeAll = async () => {
+            const userCurrency = globalCurrency;
+            const items: MergedItem[] = [];
+
+            for (const cat of categories) {
+                const related = expenses.filter((e) => e.category === cat.id);
+                const converted = await Promise.all(
+                    related.map((e) =>
+                        convertCurrency(e.value, e.currency, userCurrency)
+                    )
+                );
+                const total = converted.reduce((sum, val) => sum + val, 0);
+
+                if (total > 0) {
+                    items.push({
+                        id: cat.id,
+                        name: cat.name,
+                        value: total,
+                        currency: userCurrency,
+                        type: 'category',
+                    });
+                }
+            }
+
+            for (const expense of expenses.filter((e) => !e.category)) {
+                items.push({
+                    id: expense.id,
+                    name: expense.name,
+                    value: expense.value,
+                    currency: expense.currency,
+                    type: 'expense',
+                    data: expense,
+                });
+            }
+
+            const sorted = items.sort((a, b) => b.value - a.value);
+            setMergedItems(sorted);
+        };
+
+        if (expenses.length) mergeAll();
+    }, [expenses, categories, globalCurrency]);
 
     const handleSubmitExpense = async (form: {
         name: string;
@@ -78,7 +165,7 @@ export default function Expense() {
 
         setModalOpen(false);
         setEditExpense(null);
-        getExpenses();
+        fetchData();
     };
 
     const handleDeleteExpense = async () => {
@@ -87,18 +174,8 @@ export default function Expense() {
         await deleteDoc(ref);
         setEditExpense(null);
         setModalOpen(false);
-        getExpenses();
-    };
-
-    useEffect(() => {
-        const fetchData = async () => {
-            setLoading(true);
-            await getExpenses();
-            setLoading(false);
-        };
-
         fetchData();
-    }, []);
+    };
 
     return (
         <main className="flex-1 flex flex-col">
@@ -109,30 +186,58 @@ export default function Expense() {
                     </div>
                 ) : (
                     <>
-                        <PieChart data={expenses} />
+                        <PieChart
+                            data={mergedItems.map((item) => ({
+                                name: item.name,
+                                value: item.value,
+                                currency: item.currency,
+                            }))}
+                        />
                         <CardFooter className="flex flex-col gap-2">
-                            {expenses.map((expense) => (
-                                <EditableCard
-                                    key={expense.id}
-                                    name={expense.name}
-                                    value={expense.value}
-                                    currency={expense.currency}
-                                    onEdit={() => {
-                                        setEditExpense(expense);
-                                        setModalOpen(true);
-                                    }}
-                                />
-                            ))}
+                            {mergedItems.map((item) =>
+                                item.type === 'expense' ? (
+                                    <EditableCard
+                                        key={item.id}
+                                        name={item.name}
+                                        value={item.value}
+                                        currency={item.currency}
+                                        onEdit={() => {
+                                            if (item.data) {
+                                                setEditExpense(item.data);
+                                                setModalOpen(true);
+                                            }
+                                        }}
+                                    />
+                                ) : (
+                                    <EditableCard
+                                        key={item.id}
+                                        name={item.name}
+                                        value={item.value}
+                                        currency={globalCurrency}
+                                        onNavigate={() =>
+                                            router.push(
+                                                `expense/category/${item.id}`
+                                            )
+                                        }
+                                    />
+                                )
+                            )}
+
                             <AddCard
-                                name={`${t('add')} ${t('expense').toLocaleLowerCase()}`}
+                                name={`${t('add')} ${t('expense').toLowerCase()}`}
                                 onAddClick={() => {
                                     setEditExpense(null);
                                     setModalOpen(true);
                                 }}
                             />
+                            <AddCard
+                                name={`${t('add')} Category`}
+                                onAddClick={() => setCategoryDialogOpen(true)}
+                            />
                         </CardFooter>
                     </>
                 )}
+
                 <TransactionDialog
                     type="expense"
                     open={modalOpen}
@@ -140,6 +245,11 @@ export default function Expense() {
                     initialData={editExpense || undefined}
                     onSubmit={handleSubmitExpense}
                     onDelete={handleDeleteExpense}
+                />
+                <CategoryDialog
+                    open={categoryDialogOpen}
+                    onOpenChange={setCategoryDialogOpen}
+                    onCreated={fetchData}
                 />
             </PageLayout>
         </main>

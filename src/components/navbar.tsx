@@ -74,7 +74,7 @@ export function Navbar() {
                     <TooltipProvider>
                         {navbarItems.map(
                             ({ id, title, href, color, icon: Icon }) => {
-                                const isActive = pathname === href;
+                                const isActive = pathname.includes(href);
                                 return (
                                     <Tooltip key={id}>
                                         <TooltipTrigger asChild>
@@ -196,7 +196,8 @@ export function Navbar() {
                                         color,
                                         icon: Icon,
                                     }) => {
-                                        const isActive = pathname === href;
+                                        const isActive =
+                                            pathname.includes(href);
                                         return (
                                             <Link
                                                 key={id}

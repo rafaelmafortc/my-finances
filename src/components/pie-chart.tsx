@@ -59,6 +59,26 @@ const PieChart = ({ data }: PieChartProps) => {
 
     const getOption = () => {
         return {
+            tooltip: {
+                trigger: 'item',
+                backgroundColor:
+                    theme === 'dark'
+                        ? 'oklch(0.21 0.006 285.885)'
+                        : 'oklch(0.985 0 0)',
+                textStyle: {
+                    fontSize: '2rem',
+                    fontWeight: 'bold',
+                    color:
+                        theme === 'dark'
+                            ? 'oklch(0.985 0 0)'
+                            : 'oklch(0.141 0.005 285.823)',
+                },
+                borderColor:
+                    theme === 'dark'
+                        ? 'oklch(0.274 0.006 286.033)'
+                        : 'oklch(0.92 0.004 286.32)',
+                borderWidth: 1,
+            },
             title: {
                 text: `${currencyFormatter(total, globalCurrency)}`,
                 left: 'center',
