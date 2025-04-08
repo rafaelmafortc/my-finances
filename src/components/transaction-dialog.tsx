@@ -134,21 +134,6 @@ export function TransactionDialog({
                             }
                         />
                     </div>
-
-                    {type === 'expense' && (
-                        <div className="grid grid-cols-4 items-center gap-4">
-                            <Input
-                                id="category"
-                                type="text"
-                                placeholder={t('category')}
-                                className="col-span-4"
-                                value={formData.category}
-                                onChange={(e) =>
-                                    handleChange('category', e.target.value)
-                                }
-                            />
-                        </div>
-                    )}
                 </div>
 
                 <DialogFooter className="flex gap-2">

@@ -105,7 +105,7 @@ const PieChart = ({ data }: PieChartProps) => {
             option={getOption()}
             opts={{ renderer: 'svg' }}
             notMerge
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: '60vh', width: '100%' }}
         />
     );
 };
