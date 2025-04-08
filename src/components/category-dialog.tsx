@@ -125,7 +125,7 @@ export function CategoryDialog({
                     <div className="grid grid-cols-4 items-center gap-4">
                         <Input
                             className="col-span-4"
-                            placeholder="Description"
+                            placeholder={t('name')}
                             value={name}
                             onChange={(e) => setName(e.target.value)}
                         />
