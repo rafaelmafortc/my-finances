@@ -23,6 +23,7 @@
     "dialog": {
         "income": "Renda",
         "expense": "Despesa",
+        "category": "Categoria",
         "save": "Salvar",
         "name": "Nome",
         "value": "Valor",

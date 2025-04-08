@@ -54,7 +54,9 @@ export function CategoryDialog({
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[425px] sm:ml-8">
                 <DialogHeader>
-                    <DialogTitle>{t('add')} Category</DialogTitle>
+                    <DialogTitle>
+                        {t('add')} {t('category').toLowerCase()}
+                    </DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-cols-4 items-center gap-4">

@@ -23,6 +23,7 @@
     "dialog": {
         "income": "Income",
         "expense": "Expense",
+        "category": "Category",
         "save": "Save",
         "name": "Name",
         "value": "Value",

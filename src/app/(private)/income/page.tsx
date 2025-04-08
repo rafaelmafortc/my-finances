@@ -122,7 +122,7 @@ export default function IncomePage() {
                                 />
                             ))}
                             <AddCard
-                                name={`${t('add')} ${t('income').toLocaleLowerCase()}`}
+                                name={`${t('add')} ${t('income').toLowerCase()}`}
                                 onAddClick={() => {
                                     setEditIncome(null);
                                     setModalOpen(true);

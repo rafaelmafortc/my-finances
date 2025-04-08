@@ -98,7 +98,7 @@ export function TransactionDialog({
             <DialogContent className="sm:max-w-[425px] sm:ml-8">
                 <DialogHeader>
                     <DialogTitle>
-                        {`${initialData ? t('edit') : t('add')} ${t(type).toLocaleLowerCase()}`}
+                        {`${initialData ? t('edit') : t('add')} ${t(type).toLowerCase()}`}
                     </DialogTitle>
                 </DialogHeader>
 
