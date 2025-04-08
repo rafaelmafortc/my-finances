@@ -64,6 +64,17 @@ export function TransactionDialog({
         }
     }, [initialData, currency]);
 
+    useEffect(() => {
+        if (!open && !initialData) {
+            setFormData({
+                name: '',
+                value: 0,
+                currency,
+                category: '',
+            });
+        }
+    }, [open, initialData]);
+
     const handleChange = (key: string, value: string | number) => {
         setFormData((prev) => ({
             ...prev,

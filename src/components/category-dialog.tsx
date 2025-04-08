@@ -52,6 +52,12 @@ export function CategoryDialog({
         setName(initialData?.name ?? '');
     }, [initialData]);
 
+    useEffect(() => {
+        if (!open && !initialData) {
+            setName('');
+        }
+    }, [open, initialData]);
+
     const handleSubmit = async () => {
         if (!userId || !name.trim()) return;
         setLoading(true);
