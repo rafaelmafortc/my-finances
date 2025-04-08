@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { collection, getDocs, query, where } from 'firebase/firestore';
 import { Loader2 } from 'lucide-react';
@@ -8,10 +9,10 @@ import { Loader2 } from 'lucide-react';
 import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
 import { CardFooter } from '@/components/ui/card';
-import { PieFooterCard } from '@/components/pie-footer-card';
 import { db, auth } from '@/lib/firebase';
 import { useCurrency } from '@/providers/currency-provider';
 import { convertCurrency } from '@/lib/convertCurrency';
+import { EditableCard } from '@/components/editable-card';
 
 interface FirestoreItem {
     value: number;
@@ -20,6 +21,7 @@ interface FirestoreItem {
 
 export default function Resume() {
     const t = useTranslations('navbar');
+    const router = useRouter();
     const { currency: globalCurrency } = useCurrency();
 
     const [resumeData, setResumeData] = useState<
@@ -112,11 +114,12 @@ export default function Resume() {
                         />
                         <CardFooter className="flex flex-col gap-2">
                             {resumeData.map(({ value, name, currency }) => (
-                                <PieFooterCard
+                                <EditableCard
                                     key={name}
                                     value={value}
                                     name={t(name)}
                                     currency={currency}
+                                    onNavigate={() => router.push(`/${name}`)}
                                 />
                             ))}
                         </CardFooter>
