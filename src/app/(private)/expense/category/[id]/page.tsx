@@ -34,7 +34,7 @@ interface Expense {
     category: string;
 }
 
-export default function CategoryPage() {
+export default function Category() {
     const { id: categoryId } = useParams();
     const router = useRouter();
     const t = useTranslations('dialog');
@@ -138,7 +138,26 @@ export default function CategoryPage() {
 
     return (
         <main className="flex-1 flex flex-col">
-            <PageLayout title={categoryName}>
+            <PageLayout
+                title={
+                    <div className="flex items-center gap-2 text-3xl font-semibold">
+                        {categoryName && (
+                            <>
+                                <button
+                                    onClick={() => router.push('/expense')}
+                                    className="hover:underline text-muted-foreground transition"
+                                >
+                                    {t('expense')}
+                                </button>
+                                <span className="text-muted-foreground">
+                                    {'>'}
+                                </span>
+                                <span>{categoryName}</span>
+                            </>
+                        )}
+                    </div>
+                }
+            >
                 {loading ? (
                     <div className="flex h-full w-full items-center justify-center">
                         <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
