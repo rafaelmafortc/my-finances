@@ -20,14 +20,14 @@
         "logout": "Logout",
         "settings": "Settings"
     },
-    "income": {
-        "income": "Income",
-        "add_income": "Add income"
-    },
     "dialog": {
+        "income": "Income",
+        "expense": "Expense",
         "save": "Save",
         "name": "Name",
         "value": "Value",
-        "delete": "Delete"
+        "delete": "Delete",
+        "edit": "Edit",
+        "add": "Add"
     }
 }

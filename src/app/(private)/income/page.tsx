@@ -5,95 +5,122 @@ import { useTranslations } from 'next-intl';
 import {
     getDocs,
     collection,
-    addDoc,
-    deleteDoc,
-    updateDoc,
-    doc,
     query,
     where,
+    addDoc,
+    updateDoc,
+    deleteDoc,
+    doc,
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
-import { AddCard } from '@/components/add-card';
 import { CardFooter } from '@/components/ui/card';
+import { EditableCard } from '@/components/editable-card';
+import { AddCard } from '@/components/add-card';
+import { TransactionDialog } from '@/components/transaction-dialog';
 import { db, auth } from '@/lib/firebase';
-import { PieFooterCard } from '@/components/pie-footer-card';
 
 interface Income {
     id: string;
+    name: string;
     value: number;
     currency: string;
-    name: string;
     userId: string;
 }
 
-export default function Income() {
-    const t = useTranslations('income');
-    const incomeCollegionRef = collection(db, 'incomes');
+export default function IncomePage() {
+    const t = useTranslations('dialog');
 
     const [incomes, setIncomes] = useState<Income[]>([]);
+    const [modalOpen, setModalOpen] = useState(false);
+    const [editIncome, setEditIncome] = useState<Income | null>(null);
 
     const getIncomes = async () => {
-        try {
-            const userId = auth?.currentUser?.uid;
+        const userId = auth.currentUser?.uid;
+        if (!userId) return;
 
-            if (!userId) return;
+        const q = query(
+            collection(db, 'incomes'),
+            where('userId', '==', userId)
+        );
+        const snapshot = await getDocs(q);
+        const data = snapshot.docs.map((doc) => ({
+            id: doc.id,
+            ...(doc.data() as Omit<Income, 'id'>),
+        }));
+        setIncomes(data);
+    };
 
-            const q = query(incomeCollegionRef, where('userId', '==', userId));
-            const data = await getDocs(q);
-            const filteredData: Income[] = data.docs.map((doc) => ({
-                ...(doc.data() as Omit<Income, 'id'>),
-                id: doc.id,
-            }));
-            setIncomes(filteredData);
-        } catch (err) {
-            console.error(err);
+    const handleSubmitIncome = async (form: {
+        name: string;
+        value: number;
+        currency: string;
+    }) => {
+        const userId = auth.currentUser?.uid;
+        if (!userId) return;
+
+        if (editIncome) {
+            const docRef = doc(db, 'incomes', editIncome.id);
+            await updateDoc(docRef, { ...form });
+        } else {
+            await addDoc(collection(db, 'incomes'), {
+                ...form,
+                userId,
+            });
         }
+
+        setModalOpen(false);
+        setEditIncome(null);
+        getIncomes();
+    };
+
+    const handleDeleteIncome = async () => {
+        if (!editIncome) return;
+        const ref = doc(db, 'incomes', editIncome.id);
+        await deleteDoc(ref);
+        setEditIncome(null);
+        setModalOpen(false);
+        getIncomes();
     };
 
     useEffect(() => {
         getIncomes();
     }, []);
 
-    // const deleteIncome = async (id: string) => {
-    //     try {
-    //         const incomeDoc = doc(db, 'incomes', id);
-    //         await deleteDoc(incomeDoc);
-    //         getIncomes();
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
-    // const updateIncome = async (id: string) => {
-    //     try {
-    //         const incomeDoc = doc(db, 'incomes', id);
-    //         await updateDoc(incomeDoc, { description: '' });
-    //         getIncomes();
-    //     } catch (err) {
-    //         console.error(err);
-    //     }
-    // };
-
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('income')}>
                 <PieChart data={incomes} />
                 <CardFooter className="flex flex-col gap-2">
-                    {incomes.map(({ value, name, currency }) => {
-                        return (
-                            <PieFooterCard
-                                key={name}
-                                value={value}
-                                name={name}
-                                currency={currency}
-                                hasButton
-                            />
-                        );
-                    })}
-                    <AddCard name={t('add_income')} onAdd={getIncomes} />
+                    {incomes.map((income) => (
+                        <EditableCard
+                            key={income.id}
+                            name={income.name}
+                            value={income.value}
+                            currency={income.currency}
+                            onEdit={() => {
+                                setEditIncome(income);
+                                setModalOpen(true);
+                            }}
+                        />
+                    ))}
+                    <AddCard
+                        name={`${t('add')} ${t('income').toLocaleLowerCase()}`}
+                        onAddClick={() => {
+                            setEditIncome(null);
+                            setModalOpen(true);
+                        }}
+                    />
                 </CardFooter>
+                <TransactionDialog
+                    type="income"
+                    open={modalOpen}
+                    onOpenChange={setModalOpen}
+                    initialData={editIncome || undefined}
+                    onSubmit={handleSubmitIncome}
+                    onDelete={handleDeleteIncome}
+                />
             </PageLayout>
         </main>
     );

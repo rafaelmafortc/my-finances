@@ -20,14 +20,14 @@
         "logout": "Sair",
         "settings": "Configurações"
     },
-    "income": {
-        "income": "Renda",
-        "add_income": "Adicionar renda"
-    },
     "dialog": {
+        "income": "Renda",
+        "expense": "Despesa",
         "save": "Salvar",
         "name": "Nome",
         "value": "Valor",
-        "delete": "Deletar"
+        "delete": "Deletar",
+        "edit": "Editar",
+        "add": "Adicionar"
     }
 }
