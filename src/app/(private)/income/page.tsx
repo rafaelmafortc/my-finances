@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Loader2 } from 'lucide-react';
 import {
     getDocs,
     collection,
@@ -33,6 +34,7 @@ export default function IncomePage() {
     const t = useTranslations('dialog');
 
     const [incomes, setIncomes] = useState<Income[]>([]);
+    const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [editIncome, setEditIncome] = useState<Income | null>(null);
 
@@ -85,34 +87,48 @@ export default function IncomePage() {
     };
 
     useEffect(() => {
-        getIncomes();
+        const fetchData = async () => {
+            setLoading(true);
+            await getIncomes();
+            setLoading(false);
+        };
+
+        fetchData();
     }, []);
 
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('income')}>
-                <PieChart data={incomes} />
-                <CardFooter className="flex flex-col gap-2">
-                    {incomes.map((income) => (
-                        <EditableCard
-                            key={income.id}
-                            name={income.name}
-                            value={income.value}
-                            currency={income.currency}
-                            onEdit={() => {
-                                setEditIncome(income);
-                                setModalOpen(true);
-                            }}
-                        />
-                    ))}
-                    <AddCard
-                        name={`${t('add')} ${t('income').toLocaleLowerCase()}`}
-                        onAddClick={() => {
-                            setEditIncome(null);
-                            setModalOpen(true);
-                        }}
-                    />
-                </CardFooter>
+                {loading ? (
+                    <div className="flex h-full w-full items-center justify-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    </div>
+                ) : (
+                    <>
+                        <PieChart data={incomes} />
+                        <CardFooter className="flex flex-col gap-2">
+                            {incomes.map((income) => (
+                                <EditableCard
+                                    key={income.id}
+                                    name={income.name}
+                                    value={income.value}
+                                    currency={income.currency}
+                                    onEdit={() => {
+                                        setEditIncome(income);
+                                        setModalOpen(true);
+                                    }}
+                                />
+                            ))}
+                            <AddCard
+                                name={`${t('add')} ${t('income').toLocaleLowerCase()}`}
+                                onAddClick={() => {
+                                    setEditIncome(null);
+                                    setModalOpen(true);
+                                }}
+                            />
+                        </CardFooter>
+                    </>
+                )}
                 <TransactionDialog
                     type="income"
                     open={modalOpen}
