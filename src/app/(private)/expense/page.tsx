@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useTranslations } from 'next-intl';
+import { Loader2 } from 'lucide-react';
 import {
     getDocs,
     collection,
@@ -34,6 +35,7 @@ export default function Expense() {
     const t = useTranslations('dialog');
 
     const [expenses, setExpenses] = useState<Expense[]>([]);
+    const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [editExpense, setEditExpense] = useState<Expense | null>(null);
 
@@ -87,34 +89,48 @@ export default function Expense() {
     };
 
     useEffect(() => {
-        getExpenses();
+        const fetchData = async () => {
+            setLoading(true);
+            await getExpenses();
+            setLoading(false);
+        };
+
+        fetchData();
     }, []);
 
     return (
         <main className="flex-1 flex flex-col">
             <PageLayout title={t('expense')}>
-                <PieChart data={expenses} />
-                <CardFooter className="flex flex-col gap-2">
-                    {expenses.map((expense) => (
-                        <EditableCard
-                            key={expense.id}
-                            name={expense.name}
-                            value={expense.value}
-                            currency={expense.currency}
-                            onEdit={() => {
-                                setEditExpense(expense);
-                                setModalOpen(true);
-                            }}
-                        />
-                    ))}
-                    <AddCard
-                        name={`${t('add')} ${t('expense').toLocaleLowerCase()}`}
-                        onAddClick={() => {
-                            setEditExpense(null);
-                            setModalOpen(true);
-                        }}
-                    />
-                </CardFooter>
+                {loading ? (
+                    <div className="flex h-full w-full items-center justify-center">
+                        <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+                    </div>
+                ) : (
+                    <>
+                        <PieChart data={expenses} />
+                        <CardFooter className="flex flex-col gap-2">
+                            {expenses.map((expense) => (
+                                <EditableCard
+                                    key={expense.id}
+                                    name={expense.name}
+                                    value={expense.value}
+                                    currency={expense.currency}
+                                    onEdit={() => {
+                                        setEditExpense(expense);
+                                        setModalOpen(true);
+                                    }}
+                                />
+                            ))}
+                            <AddCard
+                                name={`${t('add')} ${t('expense').toLocaleLowerCase()}`}
+                                onAddClick={() => {
+                                    setEditExpense(null);
+                                    setModalOpen(true);
+                                }}
+                            />
+                        </CardFooter>
+                    </>
+                )}
                 <TransactionDialog
                     type="expense"
                     open={modalOpen}
