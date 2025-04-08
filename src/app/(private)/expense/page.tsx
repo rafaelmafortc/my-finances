@@ -228,7 +228,7 @@ export default function ExpensePage() {
                                 }}
                             />
                             <AddCard
-                                name={`${t('add')} Category`}
+                                name={`${t('add')} ${t('category').toLowerCase()}`}
                                 onAddClick={() => {
                                     setEditCategory(null);
                                     setCategoryDialogOpen(true);
