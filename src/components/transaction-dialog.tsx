@@ -128,7 +128,7 @@ export function TransactionDialog({
                             type="number"
                             placeholder={t('value')}
                             className="col-span-3"
-                            value={formData.value}
+                            value={formData.value === 0 ? '' : formData.value}
                             onChange={(e) =>
                                 handleChange('value', Number(e.target.value))
                             }

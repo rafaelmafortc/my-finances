@@ -12,6 +12,7 @@ import {
     updateDoc,
     deleteDoc,
     doc,
+    orderBy,
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
@@ -44,7 +45,8 @@ export default function IncomePage() {
 
         const q = query(
             collection(db, 'incomes'),
-            where('userId', '==', userId)
+            where('userId', '==', userId),
+            orderBy('value', 'desc')
         );
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map((doc) => ({

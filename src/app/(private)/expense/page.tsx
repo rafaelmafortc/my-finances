@@ -12,6 +12,7 @@ import {
     updateDoc,
     deleteDoc,
     doc,
+    orderBy,
 } from 'firebase/firestore';
 
 import PageLayout from '@/components/layouts/page-layout';
@@ -45,7 +46,8 @@ export default function Expense() {
 
         const q = query(
             collection(db, 'expenses'),
-            where('userId', '==', userId)
+            where('userId', '==', userId),
+            orderBy('value', 'desc')
         );
         const snapshot = await getDocs(q);
         const data = snapshot.docs.map((doc) => ({
