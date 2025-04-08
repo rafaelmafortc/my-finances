@@ -19,9 +19,10 @@ type PieData = {
 
 type PieChartProps = {
     data: PieData[];
+    centerText?: number;
 };
 
-const PieChart = ({ data }: PieChartProps) => {
+const PieChart = ({ data, centerText }: PieChartProps) => {
     const { theme } = useTheme();
     const { currency: globalCurrency } = useCurrency();
 
@@ -80,7 +81,7 @@ const PieChart = ({ data }: PieChartProps) => {
                 borderWidth: 1,
             },
             title: {
-                text: `${currencyFormatter(total, globalCurrency)}`,
+                text: `${currencyFormatter(centerText ? centerText : total, globalCurrency)}`,
                 left: 'center',
                 top: 'center',
                 textStyle: {

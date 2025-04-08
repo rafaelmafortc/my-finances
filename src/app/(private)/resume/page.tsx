@@ -103,7 +103,12 @@ export default function Resume() {
                     </div>
                 ) : (
                     <>
-                        <PieChart data={resumeData} />
+                        <PieChart
+                            data={resumeData}
+                            centerText={
+                                resumeData[0]?.value - resumeData[1]?.value
+                            }
+                        />
                         <CardFooter className="flex flex-col gap-2">
                             {resumeData.map(({ value, name, currency }) => (
                                 <PieFooterCard
