@@ -105,6 +105,7 @@ export default function Resume() {
                     <>
                         <PieChart
                             data={resumeData}
+                            hideTooltip
                             centerText={
                                 resumeData[0]?.value - resumeData[1]?.value
                             }

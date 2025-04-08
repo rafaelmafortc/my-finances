@@ -20,9 +20,10 @@ type PieData = {
 type PieChartProps = {
     data: PieData[];
     centerText?: number;
+    hideTooltip?: boolean;
 };
 
-const PieChart = ({ data, centerText }: PieChartProps) => {
+const PieChart = ({ data, centerText, hideTooltip }: PieChartProps) => {
     const { theme } = useTheme();
     const { currency: globalCurrency } = useCurrency();
 
@@ -60,26 +61,32 @@ const PieChart = ({ data, centerText }: PieChartProps) => {
 
     const getOption = () => {
         return {
-            tooltip: {
-                trigger: 'item',
-                backgroundColor:
-                    theme === 'dark'
-                        ? 'oklch(0.21 0.006 285.885)'
-                        : 'oklch(0.985 0 0)',
-                textStyle: {
-                    fontSize: '2rem',
-                    fontWeight: 'bold',
-                    color:
-                        theme === 'dark'
-                            ? 'oklch(0.985 0 0)'
-                            : 'oklch(0.141 0.005 285.823)',
-                },
-                borderColor:
-                    theme === 'dark'
-                        ? 'oklch(0.274 0.006 286.033)'
-                        : 'oklch(0.92 0.004 286.32)',
-                borderWidth: 1,
-            },
+            tooltip: hideTooltip
+                ? undefined
+                : {
+                      trigger: 'item',
+                      backgroundColor:
+                          theme === 'dark'
+                              ? 'oklch(0.21 0.006 285.885)'
+                              : 'oklch(0.985 0 0)',
+                      textStyle: {
+                          fontSize: '2rem',
+                          fontWeight: 'bold',
+                          color:
+                              theme === 'dark'
+                                  ? 'oklch(0.985 0 0)'
+                                  : 'oklch(0.141 0.005 285.823)',
+                      },
+                      borderColor:
+                          theme === 'dark'
+                              ? 'oklch(0.274 0.006 286.033)'
+                              : 'oklch(0.92 0.004 286.32)',
+                      borderWidth: 1,
+                      formatter: function (params: any) {
+                          const currency = params?.data?.currency || 'BRL';
+                          return `<strong>${params.name}:</strong> ${currencyFormatter(params.value, currency)}`;
+                      },
+                  },
             title: {
                 text: `${currencyFormatter(centerText ? centerText : total, globalCurrency)}`,
                 left: 'center',
