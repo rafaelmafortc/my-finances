@@ -1,16 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import {
-    Dialog,
-    DialogContent,
-    DialogHeader,
-    DialogTitle,
-    DialogFooter,
-} from '@/components/ui/dialog';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { db, auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
 import {
     addDoc,
     collection,
@@ -23,6 +14,17 @@ import {
 } from 'firebase/firestore';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
+
+import {
+    Dialog,
+    DialogContent,
+    DialogHeader,
+    DialogTitle,
+    DialogFooter,
+} from '@/components/ui/dialog';
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { db, auth } from '@/lib/firebase';
 
 interface CategoryDialogProps {
     open: boolean;
@@ -38,8 +40,11 @@ export function CategoryDialog({
     initialData,
 }: CategoryDialogProps) {
     const t = useTranslations('dialog');
+    const router = useRouter();
+
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
     const userId = auth.currentUser?.uid;
 
@@ -56,10 +61,11 @@ export function CategoryDialog({
                 const ref = doc(db, 'categories', initialData.id);
                 await updateDoc(ref, { name: name.trim() });
             } else {
-                await addDoc(collection(db, 'categories'), {
+                const docRef = await addDoc(collection(db, 'categories'), {
                     name: name.trim(),
                     userId,
                 });
+                router.push(`expense/category/${docRef.id}`);
             }
             setName('');
             onCreated();
@@ -74,7 +80,7 @@ export function CategoryDialog({
     const handleDelete = async () => {
         if (!userId || !initialData) return;
 
-        setLoading(true);
+        setDeleting(true);
         try {
             const expenseQuery = query(
                 collection(db, 'expenses'),
@@ -95,7 +101,7 @@ export function CategoryDialog({
         } catch (err) {
             console.error('Erro ao excluir categoria:', err);
         } finally {
-            setLoading(false);
+            setDeleting(false);
         }
     };
 
@@ -125,7 +131,7 @@ export function CategoryDialog({
                             variant="destructive"
                             onClick={handleDelete}
                             className="sm:w-1/4 w-full"
-                            disabled={loading}
+                            disabled={deleting}
                         >
                             {t('delete')}
                         </Button>
