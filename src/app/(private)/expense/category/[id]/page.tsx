@@ -140,7 +140,7 @@ export default function Category() {
         <main className="flex-1 flex flex-col">
             <PageLayout
                 title={
-                    <div className="flex items-center gap-2 text-3xl font-semibold">
+                    <div className="flex items-center gap-2 text-xl font-semibold">
                         {categoryName && (
                             <>
                                 <button
