@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import {
     Dialog,
     DialogContent,
@@ -11,7 +11,16 @@ import {
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { db, auth } from '@/lib/firebase';
-import { addDoc, collection } from 'firebase/firestore';
+import {
+    addDoc,
+    collection,
+    deleteDoc,
+    doc,
+    getDocs,
+    query,
+    updateDoc,
+    where,
+} from 'firebase/firestore';
 import { useTranslations } from 'next-intl';
 import { Loader2 } from 'lucide-react';
 
@@ -19,32 +28,72 @@ interface CategoryDialogProps {
     open: boolean;
     onOpenChange: (open: boolean) => void;
     onCreated: () => void;
+    initialData?: { id: string; name: string };
 }
 
 export function CategoryDialog({
     open,
     onOpenChange,
     onCreated,
+    initialData,
 }: CategoryDialogProps) {
     const t = useTranslations('dialog');
     const [name, setName] = useState('');
     const [loading, setLoading] = useState(false);
 
-    const handleSubmit = async () => {
-        const userId = auth.currentUser?.uid;
-        if (!userId || !name.trim()) return;
+    const userId = auth.currentUser?.uid;
 
+    useEffect(() => {
+        setName(initialData?.name ?? '');
+    }, [initialData]);
+
+    const handleSubmit = async () => {
+        if (!userId || !name.trim()) return;
         setLoading(true);
+
         try {
-            await addDoc(collection(db, 'categories'), {
-                name: name.trim(),
-                userId,
-            });
+            if (initialData) {
+                const ref = doc(db, 'categories', initialData.id);
+                await updateDoc(ref, { name: name.trim() });
+            } else {
+                await addDoc(collection(db, 'categories'), {
+                    name: name.trim(),
+                    userId,
+                });
+            }
             setName('');
             onCreated();
             onOpenChange(false);
-        } catch (error) {
-            console.error('Erro ao criar categoria:', error);
+        } catch (err) {
+            console.error(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+    const handleDelete = async () => {
+        if (!userId || !initialData) return;
+
+        setLoading(true);
+        try {
+            const expenseQuery = query(
+                collection(db, 'expenses'),
+                where('userId', '==', userId),
+                where('category', '==', initialData.id)
+            );
+
+            const snap = await getDocs(expenseQuery);
+            const deletePromises = snap.docs.map((docItem) =>
+                deleteDoc(doc(db, 'expenses', docItem.id))
+            );
+
+            await Promise.all(deletePromises);
+            await deleteDoc(doc(db, 'categories', initialData.id));
+
+            onCreated();
+            onOpenChange(false);
+        } catch (err) {
+            console.error('Erro ao excluir categoria:', err);
         } finally {
             setLoading(false);
         }
@@ -55,7 +104,9 @@ export function CategoryDialog({
             <DialogContent className="sm:max-w-[425px] sm:ml-8">
                 <DialogHeader>
                     <DialogTitle>
-                        {t('add')} {t('category').toLowerCase()}
+                        {initialData
+                            ? `${t('edit')} ${t('category').toLowerCase()}`
+                            : `${t('add')} ${t('category').toLowerCase()}`}
                     </DialogTitle>
                 </DialogHeader>
                 <div className="grid gap-4 py-4">
@@ -68,7 +119,17 @@ export function CategoryDialog({
                         />
                     </div>
                 </div>
-                <DialogFooter>
+                <DialogFooter className="flex gap-2">
+                    {initialData && (
+                        <Button
+                            variant="destructive"
+                            onClick={handleDelete}
+                            className="sm:w-1/4 w-full"
+                            disabled={loading}
+                        >
+                            {t('delete')}
+                        </Button>
+                    )}
                     <Button
                         type="submit"
                         onClick={handleSubmit}

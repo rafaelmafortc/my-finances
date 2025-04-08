@@ -13,7 +13,6 @@ import {
     deleteDoc,
     doc,
 } from 'firebase/firestore';
-
 import PageLayout from '@/components/layouts/page-layout';
 import PieChart from '@/components/pie-chart';
 import { CardFooter } from '@/components/ui/card';
@@ -48,28 +47,29 @@ interface MergedItem {
     currency: string;
     type: 'expense' | 'category';
     data?: Expense;
+    categoryData?: { id: string; name: string };
 }
 
 export default function ExpensePage() {
     const t = useTranslations('dialog');
     const { currency: globalCurrency } = useCurrency();
     const router = useRouter();
-
     const [expenses, setExpenses] = useState<Expense[]>([]);
     const [categories, setCategories] = useState<Category[]>([]);
     const [mergedItems, setMergedItems] = useState<MergedItem[]>([]);
-
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [editExpense, setEditExpense] = useState<Expense | null>(null);
     const [categoryDialogOpen, setCategoryDialogOpen] = useState(false);
+    const [editCategory, setEditCategory] = useState<{
+        id: string;
+        name: string;
+    } | null>(null);
 
     const fetchData = async () => {
         const userId = auth.currentUser?.uid;
         if (!userId) return;
-
         setLoading(true);
-
         const [expensesSnap, categoriesSnap] = await Promise.all([
             getDocs(
                 query(collection(db, 'expenses'), where('userId', '==', userId))
@@ -81,17 +81,14 @@ export default function ExpensePage() {
                 )
             ),
         ]);
-
         const expensesData = expensesSnap.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<Expense, 'id'>),
         }));
-
         const categoriesData = categoriesSnap.docs.map((doc) => ({
             id: doc.id,
             ...(doc.data() as Omit<Category, 'id'>),
         }));
-
         setExpenses(expensesData);
         setCategories(categoriesData);
         setLoading(false);
@@ -105,7 +102,6 @@ export default function ExpensePage() {
         const mergeAll = async () => {
             const userCurrency = globalCurrency;
             const items: MergedItem[] = [];
-
             for (const cat of categories) {
                 const related = expenses.filter((e) => e.category === cat.id);
                 const converted = await Promise.all(
@@ -114,18 +110,15 @@ export default function ExpensePage() {
                     )
                 );
                 const total = converted.reduce((sum, val) => sum + val, 0);
-
-                if (total > 0) {
-                    items.push({
-                        id: cat.id,
-                        name: cat.name,
-                        value: total,
-                        currency: userCurrency,
-                        type: 'category',
-                    });
-                }
+                items.push({
+                    id: cat.id,
+                    name: cat.name,
+                    value: total,
+                    currency: userCurrency,
+                    type: 'category',
+                    categoryData: { id: cat.id, name: cat.name },
+                });
             }
-
             for (const expense of expenses.filter((e) => !e.category)) {
                 items.push({
                     id: expense.id,
@@ -136,7 +129,6 @@ export default function ExpensePage() {
                     data: expense,
                 });
             }
-
             const sorted = items.sort((a, b) => b.value - a.value);
             setMergedItems(sorted);
         };
@@ -152,7 +144,6 @@ export default function ExpensePage() {
     }) => {
         const userId = auth.currentUser?.uid;
         if (!userId) return;
-
         if (editExpense) {
             const docRef = doc(db, 'expenses', editExpense.id);
             await updateDoc(docRef, { ...form });
@@ -162,7 +153,6 @@ export default function ExpensePage() {
                 userId,
             });
         }
-
         setModalOpen(false);
         setEditExpense(null);
         fetchData();
@@ -219,10 +209,17 @@ export default function ExpensePage() {
                                                 `expense/category/${item.id}`
                                             )
                                         }
+                                        onEdit={() => {
+                                            if (item.categoryData) {
+                                                setEditCategory(
+                                                    item.categoryData
+                                                );
+                                                setCategoryDialogOpen(true);
+                                            }
+                                        }}
                                     />
                                 )
                             )}
-
                             <AddCard
                                 name={`${t('add')} ${t('expense').toLowerCase()}`}
                                 onAddClick={() => {
@@ -231,13 +228,15 @@ export default function ExpensePage() {
                                 }}
                             />
                             <AddCard
-                                name={`${t('add')} ${t('category').toLowerCase()}`}
-                                onAddClick={() => setCategoryDialogOpen(true)}
+                                name={`${t('add')} Category`}
+                                onAddClick={() => {
+                                    setEditCategory(null);
+                                    setCategoryDialogOpen(true);
+                                }}
                             />
                         </CardFooter>
                     </>
                 )}
-
                 <TransactionDialog
                     type="expense"
                     open={modalOpen}
@@ -250,6 +249,7 @@ export default function ExpensePage() {
                     open={categoryDialogOpen}
                     onOpenChange={setCategoryDialogOpen}
                     onCreated={fetchData}
+                    initialData={editCategory || undefined}
                 />
             </PageLayout>
         </main>
