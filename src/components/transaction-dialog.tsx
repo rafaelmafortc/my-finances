@@ -76,10 +76,15 @@ export function TransactionDialog({
     }, [open, initialData]);
 
     const handleChange = (key: string, value: string | number) => {
-        setFormData((prev) => ({
-            ...prev,
-            [key]: value,
-        }));
+        if (key === 'name' && typeof value === 'string' && value.length > 20)
+            return;
+        if (key === 'value' && typeof value === 'number') {
+            const rounded = Number(value.toFixed(2));
+            if (rounded > 999999.99) return;
+            setFormData((prev) => ({ ...prev, value: rounded }));
+            return;
+        }
+        setFormData((prev) => ({ ...prev, [key]: value }));
     };
 
     const handleCurrencyToggle = () => {

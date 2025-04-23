@@ -111,6 +111,11 @@ export function CategoryDialog({
         }
     };
 
+    const handleOnChange = (value: string) => {
+        if (value.length > 20) return;
+        setName(value);
+    };
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="sm:max-w-[425px] sm:ml-8">
@@ -127,7 +132,7 @@ export function CategoryDialog({
                             className="col-span-4"
                             placeholder={t('name')}
                             value={name}
-                            onChange={(e) => setName(e.target.value)}
+                            onChange={(e) => handleOnChange(e.target.value)}
                         />
                     </div>
                 </div>
