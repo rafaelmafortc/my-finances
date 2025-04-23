@@ -79,7 +79,9 @@ export function CategoryDialog({
         } catch (err) {
             console.error(err);
         } finally {
-            setLoading(false);
+            setTimeout(() => {
+                setLoading(false);
+            }, 100);
         }
     };
 

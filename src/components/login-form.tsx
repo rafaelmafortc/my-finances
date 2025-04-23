@@ -41,7 +41,9 @@ export function LoginForm() {
         } catch (err) {
             console.error('error signInWithGoogle function', err);
         }
-        setLoading(false);
+        setTimeout(() => {
+            setLoading(false);
+        }, 500);
     };
 
     return (
