@@ -23,8 +23,8 @@ export function LoginForm() {
     const [loading, setLoading] = useState(false);
 
     const signInWithGoogle = async () => {
+        setLoading(true);
         try {
-            setLoading(true);
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
             const token = await user.getIdToken();
@@ -40,9 +40,8 @@ export function LoginForm() {
             }
         } catch (err) {
             console.error('error signInWithGoogle function', err);
-        } finally {
-            setLoading(false);
         }
+        setLoading(false);
     };
 
     return (
