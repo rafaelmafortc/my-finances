@@ -9,7 +9,7 @@ import { CurrencyProvider } from '@/providers/currency-provider';
 
 export const metadata: Metadata = {
     title: 'MyFinances',
-    description: 'powered by raslow',
+    description: 'powered by Rafael Mafort Coimbra',
     icons: '/favicon.ico',
 };
 
