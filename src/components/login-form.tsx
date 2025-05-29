@@ -44,6 +44,8 @@ export function LoginForm() {
         setTimeout(() => {
             setLoading(false);
         }, 500);
+
+        console.log('teste');
     };
 
     return (
