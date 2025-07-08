@@ -1,7 +1,7 @@
-export default function Home() {
-  return (
-    <main>
-      <div>Hello world!</div>
-    </main>
-  );
+export default function LandingPage() {
+    return (
+        <main>
+            <div>Landing Page</div>
+        </main>
+    );
 }
