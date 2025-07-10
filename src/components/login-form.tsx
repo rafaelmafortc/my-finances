@@ -35,14 +35,14 @@ export function LoginForm({
                                             fill="currentColor"
                                         />
                                     </svg>
-                                    Login with Google
+                                    Login com Google
                                 </Button>
                             </div>
                         </div>
                     </form>
                 </CardContent>
             </Card>
-            <div className="text-muted-foreground *:[a]:hover:text-primary text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
+            <div className="text-muted-foreground *:[a]:hover:text-muted text-center text-xs text-balance *:[a]:underline *:[a]:underline-offset-4">
                 Ao clicar em continuar, você concorda com nossos{' '}
                 <a href="#">Termos de Serviço</a> e{' '}
                 <a href="#">Política de Privacidade</a>.
