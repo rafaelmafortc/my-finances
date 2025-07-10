@@ -44,15 +44,15 @@
 
 :root {
     --radius: 0.625rem;
-    --background: #2b2b2b;
+    --background: #262626;
     --foreground: #ffffff;
     --card: #2b2b2b;
     --card-foreground: #ffffff;
     --popover: #2d2a38;
     --popover-foreground: #ffffff;
-    --primary: #2b2b2b;
+    --primary: #262626;
     --primary-foreground: #fafafa;
-    --secondary: #262626;
+    --secondary: #2b2b2b;
     --secondary-foreground: #fafafa;
     --muted: #afafaf;
     --muted-foreground: #808080;
