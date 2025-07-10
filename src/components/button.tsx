@@ -10,9 +10,9 @@ const buttonVariants = cva(
         variants: {
             variant: {
                 default:
-                    'bg-primary text-primary-foreground shadow-xs hover:bg-primary/90',
+                    'bg-background-foreground shadow-xs hover:bg-primary/90',
                 destructive:
-                    'bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60',
+                    'bg-red text-white shadow-xs hover:bg-red/90 focus-visible:ring-red/20 dark:focus-visible:ring-red/40 dark:bg-red/60',
                 outline:
                     'bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:hover:bg-input/50',
                 secondary:
@@ -26,6 +26,15 @@ const buttonVariants = cva(
                 lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
                 icon: 'size-9',
             },
+            color: {
+                blue: 'text-primary bg-blue hover:bg-blue/75',
+                lime: 'text-primary bg-lime hover:bg-lime/75',
+                yellow: 'text-primary bg-yellow hover:bg-yellow/75',
+                red: 'text-primary bg-red hover:bg-red/75',
+                cian: 'text-primary bg-cian hover:bg-cian/75',
+                green: 'text-primary bg-green hover:bg-green/75',
+                purple: 'text-primary bg-purple hover:bg-purple/75',
+            },
         },
         defaultVariants: {
             variant: 'default',
@@ -38,6 +47,7 @@ function Button({
     className,
     variant,
     size,
+    color,
     asChild = false,
     ...props
 }: React.ComponentProps<'button'> &
@@ -49,7 +59,7 @@ function Button({
     return (
         <Comp
             data-slot="button"
-            className={cn(buttonVariants({ variant, size, className }))}
+            className={cn(buttonVariants({ variant, size, color, className }))}
             {...props}
         />
     );
