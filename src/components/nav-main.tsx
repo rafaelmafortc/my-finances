@@ -19,14 +19,16 @@ export function NavMain() {
                     <Collapsible
                         key={item.title}
                         asChild
-                        defaultOpen={item.isActive}
+                        defaultOpen={item.defaultOpen}
                         className="group/collapsible"
                     >
                         <SidebarMenuItem>
                             <Link href={item.url}>
                                 <SidebarMenuButton tooltip={item.title}>
                                     {item.icon && (
-                                        <item.icon className="text-muted-foreground" />
+                                        <item.icon
+                                            className={`text-muted-foreground`}
+                                        />
                                     )}
                                     <span className="text-sm">
                                         {item.title}

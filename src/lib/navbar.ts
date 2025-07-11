@@ -11,7 +11,7 @@ export const navbarItems = [
         title: 'Dashboard',
         url: '/dashboard',
         icon: ChartPie,
-        isActive: true,
+        defaultOpen: true,
     },
     {
         title: 'Transações',
