@@ -1,5 +1,7 @@
-import { Link, PiggyBank } from 'lucide-react';
-import { LoginForm } from './_components/login-form';
+import Link from 'next/link';
+import { PiggyBank } from 'lucide-react';
+
+import { LoginForm } from '@/components/login-form';
 
 export default function Login() {
     return (
