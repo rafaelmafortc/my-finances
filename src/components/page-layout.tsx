@@ -36,7 +36,7 @@ export default function PrivatePageLayout({
                         </Breadcrumb>
                     </div>
                 </header>
-                <div className="p-4">{children}</div>
+                <div className="h-full w-full p-4">{children}</div>
             </SidebarInset>
         </SidebarProvider>
     );
