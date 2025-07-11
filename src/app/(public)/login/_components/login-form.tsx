@@ -1,12 +1,12 @@
 import { cn } from '@/lib/utils';
-import { Button } from '@/components/button';
+import { Button } from '@/components/ui/button';
 import {
     Card,
     CardContent,
     CardDescription,
     CardHeader,
     CardTitle,
-} from '@/components/card';
+} from '@/components/ui/card';
 import Link from 'next/link';
 
 export function LoginForm({

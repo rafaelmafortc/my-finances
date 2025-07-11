@@ -1,6 +1,6 @@
-import { Footer } from './components/footer';
-import { Main } from './components/main';
-import { Header } from './components/header';
+import { Footer } from './_components/footer';
+import { Main } from './_components/main';
+import { Header } from './_components/header';
 
 export default function LandingPage() {
     return (

@@ -1,5 +1,7 @@
 @import 'tailwindcss';
 
+@custom-variant dark (&:is(.dark *));
+
 @theme inline {
     --radius-sm: calc(var(--radius) - 4px);
     --radius-md: calc(var(--radius) - 2px);
@@ -60,14 +62,16 @@
     --accent-foreground: #ffffff;
     --border: #393939;
     --input: #ffffff26;
-    --ring: #877aa4;
-    --sidebar-foreground: #ffffff;
-    --sidebar-primary: #6c5cd6;
-    --sidebar-primary-foreground: #ffffff;
-    --sidebar-accent: #434050;
-    --sidebar-accent-foreground: #ffffff;
-    --sidebar-border: #ffffff1a;
-    --sidebar-ring: #877aa4;
+    --ring: #393939;
+    /* sidebar */
+    --sidebar: #2b2b2b;
+    --sidebar-foreground: #fafafa;
+    --sidebar-primary: #fafafa;
+    --sidebar-primary-foreground: #262626;
+    --sidebar-accent: #393939;
+    --sidebar-accent-foreground: #fafafa;
+    --sidebar-border: #393939;
+    --sidebar-ring: #393939;
     /* primary colors */
     --blue: #5470c6;
     --lime: #91cc75;
