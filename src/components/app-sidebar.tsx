@@ -2,13 +2,11 @@
 
 import * as React from 'react';
 import {
-    AudioWaveform,
-    BookOpen,
-    Bot,
-    Command,
+    ArrowUpDown,
+    ChartPie,
+    FileText,
     GalleryVerticalEnd,
-    Settings2,
-    SquareTerminal,
+    LineChart,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
@@ -24,32 +22,32 @@ import {
 
 // This is sample data.
 const data = {
-    user: {
-        name: 'shadcn',
-        email: 'm@example.com',
-        avatar: '/avatars/shadcn.jpg',
-    },
     navMain: [
         {
-            title: 'Playground',
+            title: 'Dashboard',
             url: '#',
-            icon: SquareTerminal,
+            icon: ChartPie,
             isActive: true,
         },
         {
-            title: 'Models',
+            title: 'Transações',
             url: '#',
-            icon: Bot,
+            icon: FileText,
         },
         {
-            title: 'Documentation',
+            title: 'Fixos',
             url: '#',
-            icon: BookOpen,
+            icon: ArrowUpDown,
         },
         {
-            title: 'Settings',
+            title: 'Metas',
             url: '#',
-            icon: Settings2,
+            icon: LineChart,
+        },
+        {
+            title: 'Categorias',
+            url: '#',
+            icon: GalleryVerticalEnd,
         },
     ],
 };
@@ -64,7 +62,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 <NavMain items={data.navMain} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={data.user} />
+                <NavUser />
             </SidebarFooter>
             <SidebarRail />
         </Sidebar>
