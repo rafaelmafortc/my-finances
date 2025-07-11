@@ -68,7 +68,7 @@ export function NavUser() {
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem>
-                            <LogOut />
+                            <LogOut className="text-red" />
                             Sair
                         </DropdownMenuItem>
                     </DropdownMenuContent>
