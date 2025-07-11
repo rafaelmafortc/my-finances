@@ -25,13 +25,13 @@ const data = {
     navMain: [
         {
             title: 'Dashboard',
-            url: '#',
+            url: '/dashboard',
             icon: ChartPie,
             isActive: true,
         },
         {
             title: 'Transações',
-            url: '#',
+            url: '/transactions',
             icon: FileText,
         },
         {

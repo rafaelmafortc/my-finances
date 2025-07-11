@@ -1,3 +1,9 @@
+import PrivatePageLayout from '@/components/page-layout';
+
 export default function Dashboard() {
-    return <h1>Dashboard</h1>;
+    return (
+        <PrivatePageLayout title="Dashboard">
+            <div>Dashboard</div>
+        </PrivatePageLayout>
+    );
 }

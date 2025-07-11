@@ -13,8 +13,10 @@ import {
 
 export default function PrivatePageLayout({
     children,
+    title,
 }: Readonly<{
     children: React.ReactNode;
+    title: string;
 }>) {
     return (
         <SidebarProvider>
@@ -29,7 +31,7 @@ export default function PrivatePageLayout({
                         />
                         <Breadcrumb>
                             <BreadcrumbItem>
-                                <BreadcrumbPage>Data Fetching</BreadcrumbPage>
+                                <BreadcrumbPage>{title}</BreadcrumbPage>
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>

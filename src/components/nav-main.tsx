@@ -9,6 +9,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
+import Link from 'next/link';
 
 export function NavMain({
     items,
@@ -31,12 +32,16 @@ export function NavMain({
                         className="group/collapsible"
                     >
                         <SidebarMenuItem>
-                            <SidebarMenuButton tooltip={item.title}>
-                                {item.icon && (
-                                    <item.icon className="text-muted-foreground" />
-                                )}
-                                <span className="text-sm">{item.title}</span>
-                            </SidebarMenuButton>
+                            <Link href={item.url}>
+                                <SidebarMenuButton tooltip={item.title}>
+                                    {item.icon && (
+                                        <item.icon className="text-muted-foreground" />
+                                    )}
+                                    <span className="text-sm">
+                                        {item.title}
+                                    </span>
+                                </SidebarMenuButton>
+                            </Link>
                         </SidebarMenuItem>
                     </Collapsible>
                 ))}
