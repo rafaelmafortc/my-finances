@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { PiggyBank } from 'lucide-react';
 
 import { LoginForm } from './components/login-form';
@@ -6,7 +7,7 @@ export default function Login() {
     return (
         <div className="bg-primary flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
             <div className="flex w-full max-w-sm flex-col gap-6">
-                <a
+                <Link
                     href="/"
                     className="flex items-center gap-2 self-center font-medium"
                 >
@@ -14,7 +15,7 @@ export default function Login() {
                         <PiggyBank className="size-6" />
                     </div>
                     <h1>MyFinances</h1>
-                </a>
+                </Link>
                 <LoginForm />
             </div>
         </div>
