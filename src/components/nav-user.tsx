@@ -2,7 +2,7 @@
 
 import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -32,7 +32,7 @@ export function NavUser() {
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarFallback className="rounded-lg">
+                                <AvatarFallback className="rounded-lg bg-purple">
                                     RM
                                 </AvatarFallback>
                             </Avatar>
@@ -41,7 +41,7 @@ export function NavUser() {
                                     Rafael Mafort
                                 </span>
                             </div>
-                            <Settings className="ml-auto size-4" />
+                            <Settings className="ml-auto size-4 text-muted-foreground" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent

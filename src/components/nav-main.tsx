@@ -32,8 +32,10 @@ export function NavMain({
                     >
                         <SidebarMenuItem>
                             <SidebarMenuButton tooltip={item.title}>
-                                {item.icon && <item.icon />}
-                                <span>{item.title}</span>
+                                {item.icon && (
+                                    <item.icon className="text-muted-foreground" />
+                                )}
+                                <span className="text-sm">{item.title}</span>
                             </SidebarMenuButton>
                         </SidebarMenuItem>
                     </Collapsible>
