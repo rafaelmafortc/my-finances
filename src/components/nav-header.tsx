@@ -14,7 +14,6 @@ export function NavHeader() {
     return (
         <SidebarMenu>
             <SidebarMenuItem>
-                {/* <Link href="/"> */}
                 <SidebarMenuButton
                     size="lg"
                     className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground hover:bg-transparent active:bg-transparent"
@@ -26,7 +25,6 @@ export function NavHeader() {
                         <h1 className="truncate font-base">MyFinances</h1>
                     </div>
                 </SidebarMenuButton>
-                {/* </Link> */}
             </SidebarMenuItem>
         </SidebarMenu>
     );

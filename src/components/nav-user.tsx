@@ -1,5 +1,6 @@
 'use client';
 
+import Link from 'next/link';
 import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -67,10 +68,12 @@ export function NavUser() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <DropdownMenuItem>
-                            <LogOut className="text-red" />
-                            Sair
-                        </DropdownMenuItem>
+                        <Link href="/">
+                            <DropdownMenuItem>
+                                <LogOut className="text-red" />
+                                Sair
+                            </DropdownMenuItem>
+                        </Link>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>
