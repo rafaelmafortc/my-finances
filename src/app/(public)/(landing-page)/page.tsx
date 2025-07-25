@@ -4,7 +4,7 @@ import { Header } from './_components/header';
 
 export default function LandingPage() {
     return (
-        <main className="bg-primary p-2 sm:p-4">
+        <main className="bg-primary p-2 sm:p-6">
             <Header />
             <Main />
             <Footer />
