@@ -4,7 +4,7 @@ import founderImage from 'public/founder-image.jpg';
 
 export function Founder() {
     return (
-        <div className="flex flex-col justify-center md:flex-row gap-8 md:gap-16 items-center p-8 md:p-16">
+        <div className="flex flex-col justify-center md:flex-row gap-8 md:gap-16 items-center py-8 px-2 md:p-16">
             <Image
                 width={280}
                 height={280}
