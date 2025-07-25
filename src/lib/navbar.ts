@@ -18,16 +18,16 @@ export const navbarItems = [
         url: '/transactions',
         icon: FileText,
     },
-    {
-        title: 'Fixos',
-        url: '/fixes',
-        icon: ArrowUpDown,
-    },
-    {
-        title: 'Metas',
-        url: '/metas',
-        icon: LineChart,
-    },
+    // {
+    //     title: 'Fixos',
+    //     url: '/fixes',
+    //     icon: ArrowUpDown,
+    // },
+    // {
+    //     title: 'Metas',
+    //     url: '/metas',
+    //     icon: LineChart,
+    // },
     {
         title: 'Categorias',
         url: '/categories',
