@@ -68,7 +68,7 @@ export function NavUser() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <Link href="/">
+                        <Link href="/login">
                             <DropdownMenuItem>
                                 <LogOut className="text-red" />
                                 Sair
