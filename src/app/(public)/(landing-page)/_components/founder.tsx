@@ -14,7 +14,7 @@ export function Founder() {
             />
             <div className="flex flex-col gap-4 text-center md:text-left md:max-w-1/2">
                 <span className="font-bold text-xl md:text-2xl">
-                    Olá, sou o Rafael, o único fundador do MyFinances
+                    Olá, sou o Rafael, o fundador do MyFinances
                 </span>
                 <span className="text-sm md:text-base text-muted-foreground">
                     Lorem ipsum dolor sit amet, consectetur adipisicing elit.
