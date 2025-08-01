@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 
-import { NavMain } from '@/components/nav-main';
-import { NavUser } from '@/components/nav-user';
-import { NavHeader } from '@/components/nav-header';
+import { NavMain } from '@/components/nav/nav-main';
+import { NavUser } from '@/components/nav/nav-user';
+import { NavHeader } from '@/components/nav/nav-header';
 import {
     Sidebar,
     SidebarContent,
