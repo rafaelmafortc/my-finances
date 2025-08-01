@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 import {
     SidebarGroup,
@@ -12,6 +13,8 @@ import { Collapsible } from '@/components/ui/collapsible';
 import { navbarItems } from '@/lib/navbar';
 
 export function NavMain() {
+    const pathname = usePathname();
+
     return (
         <SidebarGroup>
             <SidebarMenu>
@@ -24,7 +27,10 @@ export function NavMain() {
                     >
                         <SidebarMenuItem>
                             <Link href={item.url}>
-                                <SidebarMenuButton tooltip={item.title}>
+                                <SidebarMenuButton
+                                    tooltip={item.title}
+                                    isActive={pathname === item.url}
+                                >
                                     {item.icon && (
                                         <item.icon
                                             className={`text-muted-foreground`}
