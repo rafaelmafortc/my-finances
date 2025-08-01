@@ -1,4 +1,4 @@
-import PrivatePageLayout from '@/components/page-layout';
+import PrivatePageLayout from '@/components/private-page-layout';
 import { Button } from '@/components/ui/button';
 
 export default function Categories() {

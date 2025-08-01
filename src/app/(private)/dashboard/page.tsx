@@ -1,4 +1,4 @@
-import PrivatePageLayout from '@/components/page-layout';
+import PrivatePageLayout from '@/components/private-page-layout';
 
 export default function Dashboard() {
     return (
