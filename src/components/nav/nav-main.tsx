@@ -26,7 +26,7 @@ export function NavMain() {
                         className="group/collapsible"
                     >
                         <SidebarMenuItem>
-                            <Link href={item.url}>
+                            <Link href={item.url} prefetch>
                                 <SidebarMenuButton
                                     tooltip={item.title}
                                     isActive={pathname === item.url}
