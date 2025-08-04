@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-import { LogOut, ChevronRight, Settings } from 'lucide-react';
+import { LogOut, Settings2, Settings } from 'lucide-react';
 
 import { useUser } from '@/providers/user-provider';
 import { SettingsDialog } from '@/components/settings-dialog';
@@ -46,7 +46,7 @@ export function NavUser() {
                                     {`${firstName} ${lastName}`}
                                 </span>
                             </div>
-                            <ChevronRight className="ml-auto size-4 text-muted-foreground" />
+                            <Settings className="ml-auto size-4 text-muted-foreground" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
@@ -61,7 +61,7 @@ export function NavUser() {
                                 setOpen(true);
                             }}
                         >
-                            <Settings />
+                            <Settings2 />
                             Configurações
                         </DropdownMenuItem>
                         <DropdownMenuSeparator />
