@@ -2,7 +2,12 @@
 
 import * as React from 'react';
 import { navbarConfig } from '@/lib/navbar';
-import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
+import {
+    Dialog,
+    DialogContent,
+    DialogDescription,
+    DialogTitle,
+} from '@/components/ui/dialog';
 import {
     Sidebar,
     SidebarContent,
@@ -39,6 +44,9 @@ export function SettingsDialog({
                         Configurações
                     </DialogTitle>
                 </div>
+                <DialogDescription className="sr-only">
+                    Descrição
+                </DialogDescription>
                 <div className="flex h-[600px]">
                     <SidebarProvider className="items-start">
                         <Sidebar collapsible="none" className="w-fit border-r">
