@@ -34,7 +34,7 @@ export function SettingsDialog({
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }) {
-    const [activeTab, setActiveTab] = React.useState<string>('profile');
+    const [activeTab, setActiveTab] = React.useState<string>('account');
 
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
@@ -49,7 +49,7 @@ export function SettingsDialog({
                 </DialogDescription>
                 <div className="flex h-[600px]">
                     <SidebarProvider className="items-start">
-                        <Sidebar collapsible="none" className="w-fit border-r">
+                        {/* <Sidebar collapsible="none" className="w-fit border-r">
                             <SidebarContent className="h-full">
                                 <SidebarGroup>
                                     <SidebarGroupContent>
@@ -78,7 +78,7 @@ export function SettingsDialog({
                                     </SidebarGroupContent>
                                 </SidebarGroup>
                             </SidebarContent>
-                        </Sidebar>
+                        </Sidebar> */}
                         <div className="flex-1 flex flex-col p-6 overflow-y-auto">
                             {contentMap[activeTab] ?? (
                                 <div>Conteúdo não disponível.</div>
