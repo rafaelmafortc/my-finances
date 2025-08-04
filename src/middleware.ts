@@ -3,6 +3,7 @@ import {
     type MiddlewareConfig,
     type NextRequest,
 } from 'next/server';
+import { getToken } from 'next-auth/jwt';
 
 const publicRoutes = [
     {
@@ -16,37 +17,32 @@ const publicRoutes = [
 ] as const;
 
 const REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE = '/login';
+const REDIRECT_IF_AUTHENTICATED_ROUTE = '/dashboard';
 
-export function middleware(request: NextRequest) {
-    return NextResponse.next();
-
+export async function middleware(request: NextRequest) {
     const path = request.nextUrl.pathname;
     const publicRoute = publicRoutes.find((route) => route.path === path);
-    const authToken = request.cookies.get('token');
+    const token = await getToken({ req: request });
 
-    if (!authToken && !publicRoute) {
+    if (!token && !publicRoute) {
         const redirectUrl = request.nextUrl.clone();
         redirectUrl.pathname = REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE;
 
         return NextResponse.redirect(redirectUrl);
     }
 
-    if (
-        authToken &&
-        publicRoute &&
-        publicRoute?.whenAuthenticated === 'redirect'
-    ) {
+    if (token && publicRoute && publicRoute?.whenAuthenticated === 'redirect') {
         const redirectUrl = request.nextUrl.clone();
-        redirectUrl.pathname = '/resume';
+        redirectUrl.pathname = REDIRECT_IF_AUTHENTICATED_ROUTE;
 
         return NextResponse.redirect(redirectUrl);
     }
 
-    if (authToken && !publicRoute) {
-        // Checar se o JWT está EXPIRADO
-        // Se sim, remover o cookie e redirecionar o usuário para o login
-        return NextResponse.next();
-    }
+    // if (token && !publicRoute) {
+    //     // Checar se o JWT está EXPIRADO
+    //     // Se sim, remover o cookie e redirecionar o usuário para o login
+    //     return NextResponse.next();
+    // }
 
     return NextResponse.next();
 }

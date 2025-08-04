@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
+import { SessionProvider } from '@/providers/SessionProvider';
+
 import './globals.css';
 
 const poppins = Poppins({
@@ -24,7 +26,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="pt-BR" suppressHydrationWarning>
-            <body className={poppins.className}>{children}</body>
+            <body className={poppins.className}>
+                <SessionProvider>{children}</SessionProvider>
+            </body>
         </html>
     );
 }

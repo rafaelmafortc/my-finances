@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { useSession, signOut } from 'next-auth/react';
 import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
 
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
@@ -23,6 +24,19 @@ import {
 export function NavUser() {
     const { isMobile } = useSidebar();
 
+    const { data: session } = useSession();
+    const fullName = session?.user?.name ?? '';
+    const nameParts = fullName.trim().split(' ');
+    const displayName =
+        nameParts.length >= 2
+            ? `${nameParts[0]} ${nameParts[nameParts.length - 1]}`
+            : fullName;
+    const initials = displayName
+        .split(' ')
+        .filter((n) => n.length > 0)
+        .map((n) => n[0].toUpperCase())
+        .join('');
+
     return (
         <SidebarMenu>
             <SidebarMenuItem>
@@ -34,12 +48,12 @@ export function NavUser() {
                         >
                             <Avatar className="h-8 w-8 rounded-lg">
                                 <AvatarFallback className="rounded-lg bg-purple">
-                                    RM
+                                    {initials}
                                 </AvatarFallback>
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">
-                                    Rafael Mafort
+                                    {displayName}
                                 </span>
                             </div>
                             <Settings className="ml-auto size-4 text-muted-foreground" />
@@ -70,12 +84,15 @@ export function NavUser() {
                             </DropdownMenuItem>
                         </DropdownMenuGroup>
                         <DropdownMenuSeparator />
-                        <Link href="/login">
-                            <DropdownMenuItem>
-                                <LogOut className="text-red" />
-                                Sair
-                            </DropdownMenuItem>
-                        </Link>
+                        <DropdownMenuItem
+                            onSelect={(e) => {
+                                e.preventDefault();
+                                signOut({ callbackUrl: '/login' });
+                            }}
+                        >
+                            <LogOut className="text-red" />
+                            Sair
+                        </DropdownMenuItem>
                     </DropdownMenuContent>
                 </DropdownMenu>
             </SidebarMenuItem>
