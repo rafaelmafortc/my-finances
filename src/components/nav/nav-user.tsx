@@ -21,14 +21,15 @@ import {
     useSidebar,
 } from '@/components/ui/sidebar';
 
-export function NavUser() {
+export function NavUser({
+    setOpenSettings,
+}: {
+    setOpenSettings: (open: boolean) => void;
+}) {
     const { isMobile, setOpenMobile } = useSidebar();
     const { firstName, lastName, initials } = useUser();
-    const [open, setOpen] = useState(false);
-
     return (
         <SidebarMenu>
-            <SettingsDialog open={open} onOpenChange={setOpen} />
             <SidebarMenuItem>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -57,8 +58,8 @@ export function NavUser() {
                     >
                         <DropdownMenuItem
                             onSelect={(e) => {
-                                setOpenMobile(false);
-                                setOpen(true);
+                                if (isMobile) setOpenMobile(false);
+                                setOpenSettings(true);
                             }}
                         >
                             <Settings2 />
