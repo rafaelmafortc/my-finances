@@ -5,7 +5,7 @@ import { Footer } from '@/components/landingpage/footer';
 
 export default function LandingPage() {
     return (
-        <main className="bg-primary p-2 sm:p-6">
+        <main className="bg-primary p-2 sm:px-4 sm:pt-4">
             <Header />
             <Main />
             <Founder />
