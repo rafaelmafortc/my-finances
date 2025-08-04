@@ -58,10 +58,12 @@ export function NavUser() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <CircleUser />
-                                Conta
-                            </DropdownMenuItem>
+                            <Link href="/account">
+                                <DropdownMenuItem>
+                                    <CircleUser />
+                                    Conta
+                                </DropdownMenuItem>
+                            </Link>
                             <DropdownMenuItem>
                                 <CreditCard />
                                 Pagamento
