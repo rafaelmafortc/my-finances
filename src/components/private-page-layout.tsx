@@ -14,15 +14,17 @@ import {
 export default function PrivatePageLayout({
     children,
     title,
+    hasCalendarFilter = false,
 }: Readonly<{
     children: React.ReactNode;
     title: string;
+    hasCalendarFilter?: boolean;
 }>) {
     return (
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="bg-sidebar border-b-2 flex h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
+                <header className="bg-sidebar border-b-2 flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
                     <div className="flex items-center gap-2 px-4">
                         <SidebarTrigger className="-ml-1" />
                         <Separator
@@ -35,6 +37,9 @@ export default function PrivatePageLayout({
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
+                    {hasCalendarFilter && (
+                        <div className="px-4">CALENDARIO</div>
+                    )}
                 </header>
                 <div className="h-full w-full p-4">{children}</div>
             </SidebarInset>
