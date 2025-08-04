@@ -39,3 +39,18 @@ export async function PATCH(req: Request) {
 
     return NextResponse.json({ success: true });
 }
+
+export async function GET() {
+    const session = await getServerSession(authOptions);
+
+    if (!session?.user?.email) {
+        return NextResponse.json({ color: 'purple' }, { status: 401 });
+    }
+
+    const user = await prisma.user.findUnique({
+        where: { email: session.user.email },
+        select: { color: true },
+    });
+
+    return NextResponse.json({ color: user?.color ?? 'purple' });
+}

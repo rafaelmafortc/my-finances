@@ -48,6 +48,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
             try {
                 const res = await fetch('/api/user/color');
                 const data = await res.json();
+                console.log('data -> ', data);
                 setAvatarColor(data?.color ?? 'purple');
             } catch (error) {
                 setAvatarColor('purple');
