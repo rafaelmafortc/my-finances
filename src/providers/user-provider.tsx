@@ -9,6 +9,8 @@ interface UserContextType {
     firstName: string;
     lastName: string;
     initials: string;
+    avatarColor: string;
+    setAvatarColor: (color: string) => void;
 }
 
 const UserContext = createContext<UserContextType | undefined>(undefined);
@@ -17,12 +19,11 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     children,
 }) => {
     const { data: session } = useSession();
-    const [user, setUser] = useState<DefaultSession['user'] | undefined>(
-        undefined
-    );
+    const [user, setUser] = useState<DefaultSession['user']>();
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [initials, setInitials] = useState('');
+    const [avatarColor, setAvatarColor] = useState('purple');
 
     useEffect(() => {
         const userSession = session?.user ?? undefined;
@@ -30,22 +31,40 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
 
         const fullName = userSession?.name ?? '';
         const nameParts = fullName.trim().split(' ');
+        const first = nameParts[0] ?? '';
+        const last =
+            nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
+        const initials = first && last ? `${first[0]}${last[0]}` : '';
 
-        const firstName = nameParts[0] ?? '';
-        const lastName = nameParts.length
-            ? nameParts[nameParts.length - 1]
-            : '';
-        const initials = firstName.length
-            ? `${firstName[0]}${lastName[0]}`
-            : '';
-
-        setFirstName(firstName);
-        setLastName(lastName);
+        setFirstName(first);
+        setLastName(last);
         setInitials(initials);
     }, [session]);
 
+    useEffect(() => {
+        if (!session?.user?.email) return;
+
+        fetch('/api/user/color')
+            .then((res) => res.json())
+            .then((data) => {
+                if (data?.color) {
+                    setAvatarColor(data.color);
+                }
+            })
+            .catch(() => setAvatarColor('purple'));
+    }, [session]);
+
     return (
-        <UserContext.Provider value={{ user, firstName, lastName, initials }}>
+        <UserContext.Provider
+            value={{
+                user,
+                firstName,
+                lastName,
+                initials,
+                avatarColor,
+                setAvatarColor,
+            }}
+        >
             {children}
         </UserContext.Provider>
     );
