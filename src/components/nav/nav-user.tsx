@@ -1,9 +1,12 @@
 'use client';
 
+import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
+import { LogOut, Settings } from 'lucide-react';
 
 import { useUser } from '@/providers/user-provider';
+import { navbarConfig } from '@/lib/navbar';
+import { SettingsDialog } from '@/components/settings-dialog';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     DropdownMenu,
@@ -24,9 +27,11 @@ import {
 export function NavUser() {
     const { isMobile } = useSidebar();
     const { firstName, lastName, initials } = useUser();
+    const [open, setOpen] = useState(false);
 
     return (
         <SidebarMenu>
+            <SettingsDialog open={open} onOpenChange={setOpen} />
             <SidebarMenuItem>
                 <DropdownMenu>
                     <DropdownMenuTrigger asChild>
@@ -53,22 +58,14 @@ export function NavUser() {
                         align="end"
                         sideOffset={4}
                     >
-                        <DropdownMenuLabel className="p-0 font-normal">
-                            <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm font-bold">
-                                <span>Configurações</span>
-                            </div>
-                        </DropdownMenuLabel>
-                        <DropdownMenuSeparator />
-                        <DropdownMenuGroup>
-                            <DropdownMenuItem>
-                                <CircleUser />
-                                Conta
-                            </DropdownMenuItem>
-                            <DropdownMenuItem disabled>
-                                <CreditCard />
-                                Pagamento
-                            </DropdownMenuItem>
-                        </DropdownMenuGroup>
+                        <DropdownMenuItem
+                            onSelect={(e) => {
+                                setOpen(true);
+                            }}
+                        >
+                            <Settings />
+                            Configurações
+                        </DropdownMenuItem>
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onSelect={(e) => {

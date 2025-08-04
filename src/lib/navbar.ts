@@ -1,12 +1,13 @@
 import {
     ArrowUpDown,
     ChartPie,
+    CircleUser,
+    CreditCard,
     FileText,
     GalleryVerticalEnd,
-    LineChart,
 } from 'lucide-react';
 
-export const navbarItems = [
+export const navbarMain = [
     {
         title: 'Dashboard',
         url: '/dashboard',
@@ -23,14 +24,20 @@ export const navbarItems = [
         url: '/fixes',
         icon: ArrowUpDown,
     },
-    // {
-    //     title: 'Metas',
-    //     url: '/metas',
-    //     icon: LineChart,
-    // },
     {
         title: 'Categorias',
         url: '/categories',
         icon: GalleryVerticalEnd,
+    },
+];
+
+export const navbarConfig = [
+    {
+        title: 'Conta',
+        icon: CircleUser,
+    },
+    {
+        title: 'Pagamento',
+        icon: CreditCard,
     },
 ];

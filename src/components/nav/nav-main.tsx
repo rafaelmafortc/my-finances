@@ -10,7 +10,7 @@ import {
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
 import { Collapsible } from '@/components/ui/collapsible';
-import { navbarItems } from '@/lib/navbar';
+import { navbarMain } from '@/lib/navbar';
 
 export function NavMain() {
     const pathname = usePathname();
@@ -18,7 +18,7 @@ export function NavMain() {
     return (
         <SidebarGroup>
             <SidebarMenu>
-                {navbarItems.map((item) => (
+                {navbarMain.map((item) => (
                     <Collapsible
                         key={item.title}
                         asChild
