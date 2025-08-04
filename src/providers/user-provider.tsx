@@ -23,7 +23,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     const [firstName, setFirstName] = useState('');
     const [lastName, setLastName] = useState('');
     const [initials, setInitials] = useState('');
-    const [avatarColor, setAvatarColor] = useState('purple');
+    const [avatarColor, setAvatarColor] = useState<string>('');
 
     useEffect(() => {
         const userSession = session?.user ?? undefined;
@@ -42,16 +42,19 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
     }, [session]);
 
     useEffect(() => {
-        if (!session?.user?.email) return;
+        const fetchColor = async () => {
+            if (!session?.user?.email) return;
 
-        fetch('/api/user/color')
-            .then((res) => res.json())
-            .then((data) => {
-                if (data?.color) {
-                    setAvatarColor(data.color);
-                }
-            })
-            .catch(() => setAvatarColor('purple'));
+            try {
+                const res = await fetch('/api/user/color');
+                const data = await res.json();
+                setAvatarColor(data?.color ?? 'purple');
+            } catch (error) {
+                setAvatarColor('purple');
+            }
+        };
+
+        fetchColor();
     }, [session]);
 
     return (
