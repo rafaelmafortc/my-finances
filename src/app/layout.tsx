@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
-import { SessionProvider } from '@/providers/SessionProvider';
+import { SessionProvider } from '@/providers/session-provider';
 
 import './globals.css';
 
