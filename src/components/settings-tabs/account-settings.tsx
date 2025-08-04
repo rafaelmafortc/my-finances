@@ -42,20 +42,22 @@ export function AccountSettings() {
             <div>
                 <Label className="mb-2 block text-sm font-medium">Avatar</Label>
                 <div className="flex items-center gap-4">
-                    <Avatar className="h-12 w-12 rounded-lg">
-                        {avatarColor === 'image' ? (
+                    {avatarColor === 'image' ? (
+                        <Avatar className="h-12 w-12 rounded-lg">
                             <AvatarImage
                                 src={user?.image || ''}
                                 alt={'Profile Image'}
                             />
-                        ) : (
+                        </Avatar>
+                    ) : (
+                        <Avatar className="h-12 w-12 rounded-lg">
                             <AvatarFallback
                                 className={`rounded-lg bg-${avatarColor} text-xl`}
                             >
                                 {initials}
                             </AvatarFallback>
-                        )}
-                    </Avatar>
+                        </Avatar>
+                    )}
                 </div>
                 <div className="mt-4">
                     <p className="text-sm font-medium mb-2">

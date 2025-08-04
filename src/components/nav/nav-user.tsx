@@ -6,7 +6,7 @@ import { LogOut, Settings2, Settings } from 'lucide-react';
 
 import { useUser } from '@/providers/user-provider';
 import { SettingsDialog } from '@/components/settings-dialog';
-import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -27,7 +27,7 @@ export function NavUser({
     setOpenSettings: (open: boolean) => void;
 }) {
     const { isMobile, setOpenMobile } = useSidebar();
-    const { firstName, lastName, initials } = useUser();
+    const { firstName, lastName, initials, avatarColor, user } = useUser();
     return (
         <SidebarMenu>
             <SidebarMenuItem>
@@ -37,11 +37,22 @@ export function NavUser({
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
-                            <Avatar className="h-8 w-8 rounded-lg">
-                                <AvatarFallback className="rounded-lg bg-purple">
-                                    {initials}
-                                </AvatarFallback>
-                            </Avatar>
+                            {avatarColor === 'image' ? (
+                                <Avatar className="h-8 w-8 rounded-lg">
+                                    <AvatarImage
+                                        src={user?.image || ''}
+                                        alt={'Profile Image'}
+                                    />
+                                </Avatar>
+                            ) : (
+                                <Avatar className="h-8 w-8 rounded-lg">
+                                    <AvatarFallback
+                                        className={`rounded-lg bg-${avatarColor}`}
+                                    >
+                                        {initials}
+                                    </AvatarFallback>
+                                </Avatar>
+                            )}
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">
                                     {`${firstName} ${lastName}`}
