@@ -1,6 +1,5 @@
 'use client';
 
-import Link from 'next/link';
 import { signOut } from 'next-auth/react';
 import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
 
@@ -24,19 +23,7 @@ import {
 
 export function NavUser() {
     const { isMobile } = useSidebar();
-    const { user } = useUser();
-
-    const fullName = user?.name ?? '';
-    const nameParts = fullName.trim().split(' ');
-    const displayName =
-        nameParts.length >= 2
-            ? `${nameParts[0]} ${nameParts[nameParts.length - 1]}`
-            : fullName;
-    const initials = displayName
-        .split(' ')
-        .filter((n) => n.length > 0)
-        .map((n) => n[0].toUpperCase())
-        .join('');
+    const { firstName, lastName, initials } = useUser();
 
     return (
         <SidebarMenu>
@@ -54,7 +41,7 @@ export function NavUser() {
                             </Avatar>
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">
-                                    {displayName}
+                                    {`${firstName} ${lastName}`}
                                 </span>
                             </div>
                             <Settings className="ml-auto size-4 text-muted-foreground" />
@@ -73,12 +60,10 @@ export function NavUser() {
                         </DropdownMenuLabel>
                         <DropdownMenuSeparator />
                         <DropdownMenuGroup>
-                            <Link href="/account">
-                                <DropdownMenuItem>
-                                    <CircleUser />
-                                    Conta
-                                </DropdownMenuItem>
-                            </Link>
+                            <DropdownMenuItem>
+                                <CircleUser />
+                                Conta
+                            </DropdownMenuItem>
                             <DropdownMenuItem disabled>
                                 <CreditCard />
                                 Pagamento
