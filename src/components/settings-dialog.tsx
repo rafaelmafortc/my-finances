@@ -38,42 +38,48 @@ export function SettingsDialog({
 }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="overflow-hidden p-0 md:max-h-[500px] md:max-w-[700px] lg:max-w-[800px]">
-                <DialogHeader>Configurações da conta</DialogHeader>
-                <SidebarProvider className="items-start">
-                    <Sidebar collapsible="none" className="hidden md:flex">
-                        <SidebarContent>
-                            <SidebarGroup>
-                                <SidebarGroupContent>
-                                    <SidebarMenu>
-                                        {navbarConfig.map((item) => (
-                                            <SidebarMenuItem key={item.title}>
-                                                <SidebarMenuButton asChild>
-                                                    <a href="#">
-                                                        <item.icon />
-                                                        <span>
-                                                            {item.title}
-                                                        </span>
-                                                    </a>
-                                                </SidebarMenuButton>
-                                            </SidebarMenuItem>
-                                        ))}
-                                    </SidebarMenu>
-                                </SidebarGroupContent>
-                            </SidebarGroup>
-                        </SidebarContent>
-                    </Sidebar>
-                    <main className="flex h-[480px] flex-1 flex-col overflow-hidden pt-12">
-                        <div className="flex flex-1 flex-col gap-4 overflow-y-auto p-4 pt-0">
-                            {Array.from({ length: 10 }).map((_, i) => (
-                                <div
-                                    key={i}
-                                    className="bg-muted/50 aspect-video max-w-3xl rounded-xl"
-                                />
-                            ))}
+            <DialogContent className="overflow-hidden p-0 w-full max-w-1xl rounded-xl gap-0">
+                <div className="border-b py-2 px-4">
+                    <DialogTitle className="text-lg font-semibold text-foreground">
+                        Configurações
+                    </DialogTitle>
+                </div>
+                <div className="flex h-[600px]">
+                    <SidebarProvider className="items-start">
+                        <Sidebar collapsible="none" className="w-1/3 border-r">
+                            <SidebarContent className="h-full">
+                                <SidebarGroup>
+                                    <SidebarGroupContent>
+                                        <SidebarMenu>
+                                            {navbarConfig.map((item) => (
+                                                <SidebarMenuItem
+                                                    key={item.title}
+                                                >
+                                                    <SidebarMenuButton asChild>
+                                                        <a
+                                                            href="#"
+                                                            className="w-full text-left text-sm font-medium hover:bg-muted/50 rounded-md transition-colors"
+                                                        >
+                                                            <item.icon className="mr-2 inline size-4" />
+                                                            <span>
+                                                                {item.title}
+                                                            </span>
+                                                        </a>
+                                                    </SidebarMenuButton>
+                                                </SidebarMenuItem>
+                                            ))}
+                                        </SidebarMenu>
+                                    </SidebarGroupContent>
+                                </SidebarGroup>
+                            </SidebarContent>
+                        </Sidebar>
+
+                        {/* Main Content */}
+                        <div className="flex-1 flex flex-col p-6">
+                            {/* Conteúdo da aba ativa */}
                         </div>
-                    </main>
-                </SidebarProvider>
+                    </SidebarProvider>
+                </div>
             </DialogContent>
         </Dialog>
     );
