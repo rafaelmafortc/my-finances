@@ -79,7 +79,7 @@ export function NavUser() {
                                     Conta
                                 </DropdownMenuItem>
                             </Link>
-                            <DropdownMenuItem>
+                            <DropdownMenuItem disabled>
                                 <CreditCard />
                                 Pagamento
                             </DropdownMenuItem>
