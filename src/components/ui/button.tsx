@@ -33,6 +33,7 @@ const buttonVariants = cva(
                 red: 'text-primary bg-red hover:bg-red/80',
                 cian: 'text-primary bg-cian hover:bg-cian/80',
                 green: 'text-primary bg-green hover:bg-green/80',
+                orange: 'text-primary bg-orange hover:bg-orange/80',
                 purple: 'text-primary bg-purple hover:bg-purple/80',
             },
         },
