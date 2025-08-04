@@ -32,9 +32,7 @@ export function NavMain() {
                                     isActive={pathname === item.url}
                                 >
                                     {item.icon && (
-                                        <item.icon
-                                            className={`text-muted-foreground`}
-                                        />
+                                        <item.icon className="text-muted-foreground" />
                                     )}
                                     <span className="text-sm">
                                         {item.title}

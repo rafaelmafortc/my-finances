@@ -60,7 +60,7 @@ export function SettingsDialog({
                                                             href="#"
                                                             className="w-full text-left text-sm font-medium hover:bg-muted/50 rounded-md transition-colors"
                                                         >
-                                                            <item.icon className="mr-2 inline size-4" />
+                                                            <item.icon className="text-muted-foreground" />
                                                             <span>
                                                                 {item.title}
                                                             </span>
