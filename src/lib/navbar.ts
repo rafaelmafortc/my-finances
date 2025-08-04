@@ -37,9 +37,9 @@ export const navbarConfig = [
         title: 'Conta',
         icon: CircleUser,
     },
-    {
-        id: 'payment',
-        title: 'Pagamento',
-        icon: CreditCard,
-    },
+    // {
+    //     id: 'payment',
+    //     title: 'Pagamento',
+    //     icon: CreditCard,
+    // },
 ];
