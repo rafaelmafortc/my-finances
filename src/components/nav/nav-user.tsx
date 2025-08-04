@@ -1,9 +1,10 @@
 'use client';
 
 import Link from 'next/link';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { CircleUser, CreditCard, LogOut, Settings } from 'lucide-react';
 
+import { useUser } from '@/providers/user-provider';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     DropdownMenu,
@@ -23,9 +24,9 @@ import {
 
 export function NavUser() {
     const { isMobile } = useSidebar();
+    const { user } = useUser();
 
-    const { data: session } = useSession();
-    const fullName = session?.user?.name ?? '';
+    const fullName = user?.name ?? '';
     const nameParts = fullName.trim().split(' ');
     const displayName =
         nameParts.length >= 2

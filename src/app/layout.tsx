@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
 import { SessionProvider } from '@/providers/session-provider';
+import { UserProvider } from '@/providers/user-provider';
 
 import './globals.css';
 
@@ -27,7 +28,9 @@ export default function RootLayout({
     return (
         <html lang="pt-BR" suppressHydrationWarning>
             <body className={poppins.className}>
-                <SessionProvider>{children}</SessionProvider>
+                <SessionProvider>
+                    <UserProvider>{children}</UserProvider>
+                </SessionProvider>
             </body>
         </html>
     );
