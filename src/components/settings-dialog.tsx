@@ -1,7 +1,6 @@
 'use client';
 
 import * as React from 'react';
-
 import { navbarConfig } from '@/lib/navbar';
 import { Dialog, DialogContent, DialogTitle } from '@/components/ui/dialog';
 import {
@@ -15,6 +14,14 @@ import {
     SidebarProvider,
 } from '@/components/ui/sidebar';
 
+import { AccountSettings } from '@/components/settings-tabs/account-settings';
+import { PaymentSettings } from '@/components/settings-tabs/payment-settings';
+
+const contentMap: Record<string, React.ReactNode> = {
+    account: <AccountSettings />,
+    payment: <PaymentSettings />,
+};
+
 export function SettingsDialog({
     open,
     onOpenChange,
@@ -22,6 +29,8 @@ export function SettingsDialog({
     open: boolean;
     onOpenChange: (open: boolean) => void;
 }) {
+    const [activeTab, setActiveTab] = React.useState<string>('profile');
+
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
             <DialogContent className="w-full overflow-hidden p-0 gap-0 sm:max-w-1/2">
@@ -38,19 +47,22 @@ export function SettingsDialog({
                                     <SidebarGroupContent>
                                         <SidebarMenu>
                                             {navbarConfig.map((item) => (
-                                                <SidebarMenuItem
-                                                    key={item.title}
-                                                >
-                                                    <SidebarMenuButton asChild>
-                                                        <a
-                                                            href="#"
-                                                            className="w-full text-left text-sm font-medium hover:bg-muted/50 rounded-md transition-colors"
-                                                        >
-                                                            <item.icon className="text-muted-foreground" />
-                                                            <span>
-                                                                {item.title}
-                                                            </span>
-                                                        </a>
+                                                <SidebarMenuItem key={item.id}>
+                                                    <SidebarMenuButton
+                                                        onClick={() =>
+                                                            setActiveTab(
+                                                                item.id
+                                                            )
+                                                        }
+                                                        isActive={
+                                                            activeTab ===
+                                                            item.id
+                                                        }
+                                                    >
+                                                        <item.icon className="text-muted-foreground" />
+                                                        <span>
+                                                            {item.title}
+                                                        </span>
                                                     </SidebarMenuButton>
                                                 </SidebarMenuItem>
                                             ))}
@@ -59,10 +71,10 @@ export function SettingsDialog({
                                 </SidebarGroup>
                             </SidebarContent>
                         </Sidebar>
-
-                        {/* Main Content */}
-                        <div className="flex-1 flex flex-col p-6">
-                            {/* Conteúdo da aba ativa */}
+                        <div className="flex-1 flex flex-col p-6 overflow-y-auto">
+                            {contentMap[activeTab] ?? (
+                                <div>Conteúdo não disponível.</div>
+                            )}
                         </div>
                     </SidebarProvider>
                 </div>

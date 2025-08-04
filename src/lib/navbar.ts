@@ -33,10 +33,12 @@ export const navbarMain = [
 
 export const navbarConfig = [
     {
+        id: 'account',
         title: 'Conta',
         icon: CircleUser,
     },
     {
+        id: 'payment',
         title: 'Pagamento',
         icon: CreditCard,
     },
