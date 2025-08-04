@@ -34,7 +34,7 @@ export const UserProvider: React.FC<{ children: React.ReactNode }> = ({
         const first = nameParts[0] ?? '';
         const last =
             nameParts.length > 1 ? nameParts[nameParts.length - 1] : '';
-        const initials = first ? `${first[0]}${last[0]}` : '';
+        const initials = `${first[0] || ''}${last[0] || ''}`;
 
         setFirstName(first);
         setLastName(last);
