@@ -7,7 +7,7 @@ export default function Categories() {
             <div className="flex items-center justify-center min-h-full border-2 border-dashed rounded-lg p-4 border-accent">
                 <div className="w-full max-w-md ">
                     <div className="flex flex-col items-center gap-4">
-                        <div className="flex flex-col items-center">
+                        <div className="flex flex-col items-center text-center">
                             <p className="text-xl">
                                 Nenhuma categoria cadastrada
                             </p>
