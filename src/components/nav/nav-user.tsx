@@ -2,18 +2,15 @@
 
 import { useState } from 'react';
 import { signOut } from 'next-auth/react';
-import { LogOut, Settings } from 'lucide-react';
+import { LogOut, ChevronRight, Settings } from 'lucide-react';
 
 import { useUser } from '@/providers/user-provider';
-import { navbarConfig } from '@/lib/navbar';
 import { SettingsDialog } from '@/components/settings-dialog';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import {
     DropdownMenu,
     DropdownMenuContent,
-    DropdownMenuGroup,
     DropdownMenuItem,
-    DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
@@ -25,7 +22,7 @@ import {
 } from '@/components/ui/sidebar';
 
 export function NavUser() {
-    const { isMobile } = useSidebar();
+    const { isMobile, setOpenMobile } = useSidebar();
     const { firstName, lastName, initials } = useUser();
     const [open, setOpen] = useState(false);
 
@@ -49,7 +46,7 @@ export function NavUser() {
                                     {`${firstName} ${lastName}`}
                                 </span>
                             </div>
-                            <Settings className="ml-auto size-4 text-muted-foreground" />
+                            <ChevronRight className="ml-auto size-4 text-muted-foreground" />
                         </SidebarMenuButton>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent
@@ -60,6 +57,7 @@ export function NavUser() {
                     >
                         <DropdownMenuItem
                             onSelect={(e) => {
+                                setOpenMobile(false);
                                 setOpen(true);
                             }}
                         >
