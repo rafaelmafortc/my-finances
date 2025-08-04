@@ -1,7 +1,9 @@
 'use client';
 
+import { useState } from 'react';
 import { cn } from '@/lib/utils';
 import { signIn } from 'next-auth/react';
+import { Loader2 } from 'lucide-react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -16,6 +18,12 @@ export function LoginForm({
     className,
     ...props
 }: React.ComponentProps<'div'>) {
+    const [loading, setLoading] = useState(false);
+
+    const handleLogin = () => {
+        setLoading(true);
+        signIn('google', { callbackUrl: '/dashboard' });
+    };
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
             <Card>
@@ -32,11 +40,8 @@ export function LoginForm({
                                 type="button"
                                 variant="outline"
                                 className="w-full"
-                                onClick={() =>
-                                    signIn('google', {
-                                        callbackUrl: '/dashboard',
-                                    })
-                                }
+                                onClick={handleLogin}
+                                loading={loading}
                             >
                                 <svg
                                     xmlns="http://www.w3.org/2000/svg"
