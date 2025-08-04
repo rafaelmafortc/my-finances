@@ -16,7 +16,7 @@ const publicRoutes = [
     },
 ] as const;
 
-const REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE = '/login';
+const REDIRECT_WHEN_NOT_AUTHENTICANTED_ROUTE = '/';
 const REDIRECT_IF_AUTHENTICATED_ROUTE = '/dashboard';
 
 export async function middleware(request: NextRequest) {
