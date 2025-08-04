@@ -1,4 +1,6 @@
 import { AppSidebar } from '@/components/app-sidebar';
+import { MonthPicker } from '@/components/month-picker';
+
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -14,11 +16,11 @@ import {
 export default function PrivatePageLayout({
     children,
     title,
-    hasCalendarFilter = false,
+    hasMonthPicker = false,
 }: Readonly<{
     children: React.ReactNode;
     title: string;
-    hasCalendarFilter?: boolean;
+    hasMonthPicker?: boolean;
 }>) {
     return (
         <SidebarProvider>
@@ -37,8 +39,10 @@ export default function PrivatePageLayout({
                             </BreadcrumbItem>
                         </Breadcrumb>
                     </div>
-                    {hasCalendarFilter && (
-                        <div className="px-4">CALENDARIO</div>
+                    {hasMonthPicker && (
+                        <div className="px-4">
+                            <MonthPicker />
+                        </div>
                     )}
                 </header>
                 <div className="h-full w-full p-4">{children}</div>

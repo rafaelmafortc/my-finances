@@ -53,6 +53,7 @@ function Button({
 }: React.ComponentProps<'button'> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
+        color?: string;
     }) {
     const Comp = asChild ? Slot : 'button';
 
