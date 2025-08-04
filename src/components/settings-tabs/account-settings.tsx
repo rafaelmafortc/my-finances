@@ -71,7 +71,7 @@ export function AccountSettings() {
                                 onClick={() => handleColorChange(color)}
                                 className={`rounded-full bg-${color} hover:bg-${color}/80 border-2 transition-all overflow-hidden ${
                                     avatarColor === color
-                                        ? 'ring-2 ring-black'
+                                        ? 'ring-2 ring-muted-foreground'
                                         : 'ring-0'
                                 }`}
                             >
@@ -81,7 +81,7 @@ export function AccountSettings() {
                                         alt="Profile User"
                                         width={36}
                                         height={36}
-                                        className="rounded-full object-cover w-full h-full hover:bg-black/80"
+                                        className="rounded-full object-cover w-full h-full"
                                     />
                                 ) : (
                                     <span className="block w-full h-full rounded-full" />
@@ -93,21 +93,21 @@ export function AccountSettings() {
             </div>
 
             <div>
-                <Label className="mb-1 block text-sm font-medium">
+                <Label className="mb-2 block text-sm font-medium">
                     First Name
                 </Label>
                 <Input disabled value={firstName} />
             </div>
 
             <div>
-                <Label className="mb-1 block text-sm font-medium">
+                <Label className="mb-2 block text-sm font-medium">
                     Last Name
                 </Label>
                 <Input disabled value={lastName} />
             </div>
 
             <div>
-                <Label className="mb-1 block text-sm font-medium">Email</Label>
+                <Label className="mb-2 block text-sm font-medium">Email</Label>
                 <Input disabled value={user?.email || ''} />
             </div>
         </div>
