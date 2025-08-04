@@ -37,22 +37,24 @@ export function NavUser({
                             size="lg"
                             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
                         >
-                            {avatarColor === 'image' ? (
-                                <Avatar className="h-8 w-8 rounded-lg">
+                            <Avatar
+                                key={avatarColor}
+                                className="h-8 w-8 rounded-lg"
+                            >
+                                {avatarColor === 'image' ? (
                                     <AvatarImage
                                         src={user?.image || ''}
-                                        alt={'Profile Image'}
+                                        alt="Profile Image"
                                     />
-                                </Avatar>
-                            ) : (
-                                <Avatar className="h-8 w-8 rounded-lg">
+                                ) : (
                                     <AvatarFallback
                                         className={`rounded-lg bg-${avatarColor}`}
                                     >
                                         {initials}
                                     </AvatarFallback>
-                                </Avatar>
-                            )}
+                                )}
+                            </Avatar>
+
                             <div className="grid flex-1 text-left text-sm leading-tight">
                                 <span className="truncate font-medium">
                                     {`${firstName} ${lastName}`}
