@@ -38,7 +38,7 @@ export function SettingsDialog({
 }) {
     return (
         <Dialog open={open} onOpenChange={onOpenChange}>
-            <DialogContent className="overflow-hidden p-0 w-full max-w-1xl rounded-xl gap-0">
+            <DialogContent className="w-full overflow-hidden p-0 gap-0 sm:max-w-1/2">
                 <div className="border-b py-2 px-4">
                     <DialogTitle className="text-lg font-semibold text-foreground">
                         Configurações
@@ -46,7 +46,7 @@ export function SettingsDialog({
                 </div>
                 <div className="flex h-[600px]">
                     <SidebarProvider className="items-start">
-                        <Sidebar collapsible="none" className="w-1/3 border-r">
+                        <Sidebar collapsible="none" className="w-fit border-r">
                             <SidebarContent className="h-full">
                                 <SidebarGroup>
                                     <SidebarGroupContent>
