@@ -3,6 +3,8 @@
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
+import { Calendar as CalendarIcon } from 'lucide-react';
+
 import { Calendar } from '@/components/ui/calendar';
 import {
     Popover,
@@ -18,7 +20,8 @@ export function MonthPicker() {
         <Popover>
             <PopoverTrigger asChild>
                 <Button variant="outline">
-                    {date ? format(date, 'MM/yyyy') : 'Selecionar mês'}
+                    <CalendarIcon />
+                    {date ? format(date, 'MM/yyyy') : 'Selecione um mês'}
                 </Button>
             </PopoverTrigger>
             <PopoverContent className="w-auto p-0 mx-3">
