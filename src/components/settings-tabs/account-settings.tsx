@@ -92,14 +92,14 @@ export function AccountSettings() {
 
             <div>
                 <Label className="mb-2 block text-sm font-medium">
-                    First Name
+                    Primeiro nome
                 </Label>
                 <Input disabled value={firstName} />
             </div>
 
             <div>
                 <Label className="mb-2 block text-sm font-medium">
-                    Last Name
+                    Último nome
                 </Label>
                 <Input disabled value={lastName} />
             </div>
