@@ -73,7 +73,7 @@ export function AccountSettings() {
                                         : 'ring-0'
                                 }`}
                             >
-                                {color === 'image' ? (
+                                {user?.image && color === 'image' ? (
                                     <Image
                                         src={user?.image || ''}
                                         alt="Profile User"
