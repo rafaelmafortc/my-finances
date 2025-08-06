@@ -36,14 +36,12 @@ export function SettingsDialog({
                 <DialogDescription className="sr-only">
                     Descrição
                 </DialogDescription>
-                <div className="flex h-[600px]">
-                    <SidebarProvider className="items-start">
-                        <div className="flex-1 flex flex-col p-6 overflow-y-auto">
-                            {contentMap[activeTab] ?? (
-                                <div>Conteúdo não disponível.</div>
-                            )}
-                        </div>
-                    </SidebarProvider>
+                <div className="flex h-full">
+                    <div className="flex-1 flex flex-col p-6 overflow-y-auto">
+                        {contentMap[activeTab] ?? (
+                            <div>Conteúdo não disponível.</div>
+                        )}
+                    </div>
                 </div>
             </DialogContent>
         </Dialog>
