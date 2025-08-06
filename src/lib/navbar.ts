@@ -19,16 +19,16 @@ export const navbarMain = [
         url: '/transactions',
         icon: FileText,
     },
-    {
-        title: 'Fixos',
-        url: '/fixes',
-        icon: ArrowUpDown,
-    },
-    {
-        title: 'Categorias',
-        url: '/categories',
-        icon: GalleryVerticalEnd,
-    },
+    // {
+    //     title: 'Fixos',
+    //     url: '/fixes',
+    //     icon: ArrowUpDown,
+    // },
+    // {
+    //     title: 'Categorias',
+    //     url: '/categories',
+    //     icon: GalleryVerticalEnd,
+    // },
 ];
 
 export const navbarSettings = [
