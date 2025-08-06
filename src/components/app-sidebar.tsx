@@ -24,7 +24,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     };
 
     return (
-        <>
+        <React.Fragment>
             <SettingsDialog
                 open={openSettings}
                 onOpenChange={setOpenSettings}
@@ -42,6 +42,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </SidebarFooter>
                 <SidebarRail />
             </Sidebar>
-        </>
+        </React.Fragment>
     );
 }
