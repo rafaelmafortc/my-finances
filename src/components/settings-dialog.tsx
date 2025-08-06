@@ -30,7 +30,7 @@ export function SettingsDialog({
             <DialogContent className="w-full overflow-hidden p-0 gap-0 sm:max-w-1/2">
                 <div className="border-b py-2 px-4">
                     <DialogTitle className="text-lg font-semibold text-foreground">
-                        Configurações da Conta
+                        Configurações
                     </DialogTitle>
                 </div>
                 <DialogDescription className="sr-only">
