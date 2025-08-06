@@ -70,6 +70,7 @@ export function NavUser({
                     >
                         {navbarSettings.map((item) => (
                             <DropdownMenuItem
+                                key={item.id}
                                 onSelect={(e) => {
                                     if (isMobile) setOpenMobile(false);
                                     handleOpenSettings(true, item.id);

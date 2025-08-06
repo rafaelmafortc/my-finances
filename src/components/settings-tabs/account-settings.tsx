@@ -28,7 +28,7 @@ export function AccountSettings() {
 
         try {
             await fetch('/api/user/color', {
-                method: 'PATCH',
+                method: 'PUT',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({ color: colorName }),
             });
