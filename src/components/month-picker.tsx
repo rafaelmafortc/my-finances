@@ -22,6 +22,8 @@ export function MonthPicker() {
         const storedDate = localStorage.getItem(LOCAL_STORAGE_KEY);
         if (storedDate) {
             setDate(new Date(storedDate));
+        } else {
+            setDate(new Date());
         }
     }, []);
 
