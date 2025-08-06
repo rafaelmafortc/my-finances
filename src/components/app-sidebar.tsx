@@ -16,12 +16,19 @@ import {
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const [openSettings, setOpenSettings] = React.useState(false);
+    const [activeTab, setActiveTab] = React.useState('');
+
+    const handleOpenSettings = async (open: boolean, tab: string) => {
+        setOpenSettings(open);
+        setActiveTab(tab);
+    };
 
     return (
         <>
             <SettingsDialog
                 open={openSettings}
                 onOpenChange={setOpenSettings}
+                activeTab={activeTab}
             />
             <Sidebar collapsible="icon" {...props}>
                 <SidebarHeader>
@@ -31,7 +38,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <NavMain />
                 </SidebarContent>
                 <SidebarFooter>
-                    <NavUser setOpenSettings={setOpenSettings} />
+                    <NavUser handleOpenSettings={handleOpenSettings} />
                 </SidebarFooter>
                 <SidebarRail />
             </Sidebar>

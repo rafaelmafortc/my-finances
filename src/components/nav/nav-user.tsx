@@ -1,11 +1,10 @@
 'use client';
 
-import { useState } from 'react';
 import { signOut } from 'next-auth/react';
 import { LogOut, Settings2, Settings } from 'lucide-react';
 
 import { useUser } from '@/providers/user-provider';
-import { SettingsDialog } from '@/components/settings-dialog';
+import { navbarSettings } from '@/lib/navbar';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
     DropdownMenu,
@@ -22,9 +21,9 @@ import {
 } from '@/components/ui/sidebar';
 
 export function NavUser({
-    setOpenSettings,
+    handleOpenSettings,
 }: {
-    setOpenSettings: (open: boolean) => void;
+    handleOpenSettings: (open: boolean, tab: string) => void;
 }) {
     const { isMobile, setOpenMobile } = useSidebar();
     const { firstName, lastName, initials, avatarColor, user } = useUser();
@@ -69,15 +68,17 @@ export function NavUser({
                         align="end"
                         sideOffset={4}
                     >
-                        <DropdownMenuItem
-                            onSelect={(e) => {
-                                if (isMobile) setOpenMobile(false);
-                                setOpenSettings(true);
-                            }}
-                        >
-                            <Settings2 />
-                            Configurações
-                        </DropdownMenuItem>
+                        {navbarSettings.map((item) => (
+                            <DropdownMenuItem
+                                onSelect={(e) => {
+                                    if (isMobile) setOpenMobile(false);
+                                    handleOpenSettings(true, item.id);
+                                }}
+                            >
+                                <item.icon />
+                                {item.title}
+                            </DropdownMenuItem>
+                        ))}
                         <DropdownMenuSeparator />
                         <DropdownMenuItem
                             onSelect={(e) => {

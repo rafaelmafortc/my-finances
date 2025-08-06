@@ -31,15 +31,15 @@ export const navbarMain = [
     },
 ];
 
-export const navbarConfig = [
+export const navbarSettings = [
     {
         id: 'account',
         title: 'Conta',
         icon: CircleUser,
     },
-    // {
-    //     id: 'payment',
-    //     title: 'Pagamento',
-    //     icon: CreditCard,
-    // },
+    {
+        id: 'payment',
+        title: 'Pagamento',
+        icon: CreditCard,
+    },
 ];
