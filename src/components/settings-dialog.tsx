@@ -6,7 +6,6 @@ import {
     DialogDescription,
     DialogTitle,
 } from '@/components/ui/dialog';
-import { SidebarProvider } from '@/components/ui/sidebar';
 
 import { AccountSettings } from '@/components/settings-tabs/account-settings';
 import { PaymentSettings } from '@/components/settings-tabs/payment-settings';
