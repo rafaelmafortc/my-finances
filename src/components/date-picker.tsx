@@ -6,7 +6,12 @@ import { ptBR } from 'date-fns/locale';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
-import { Card, CardAction, CardContent } from '@/components/ui/card';
+import {
+    Card,
+    CardAction,
+    CardContent,
+    CardFooter,
+} from '@/components/ui/card';
 
 interface DatePickerProps {
     selected: Date;
@@ -43,6 +48,7 @@ export default function DatePicker({ selected, onSelect }: DatePickerProps) {
                     className="bg-transparent p-0 h-[310px]"
                 />
             </CardContent>
+            <CardFooter></CardFooter>
         </Card>
     );
 }
