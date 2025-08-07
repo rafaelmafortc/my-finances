@@ -6,7 +6,7 @@ import { getAuthenticatedUser } from '@/lib/route-service';
 export async function PUT(req: Request) {
     const { userId, response } = await getAuthenticatedUser();
 
-    if (!userId) return response;
+    if (!userId && response) return response;
 
     const { color } = await req.json();
 
@@ -37,7 +37,7 @@ export async function PUT(req: Request) {
 export async function GET() {
     const { userId, response } = await getAuthenticatedUser();
 
-    if (!userId) return response;
+    if (!userId && response) return response;
 
     const user = await prisma.user.findUnique({
         where: { id: userId },
