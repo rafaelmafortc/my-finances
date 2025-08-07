@@ -10,7 +10,7 @@ export function Footer() {
                     <span>Atualizações direto na sua caixa de email</span>
                     <div className="flex gap-4">
                         <Input type="email" placeholder="Email" />
-                        <Button color="cian" className="w-32">
+                        <Button className="w-32 text-primary bg-yellow hover:bg-yellow/80">
                             Participar
                         </Button>
                     </div>

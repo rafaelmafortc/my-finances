@@ -28,16 +28,6 @@ const buttonVariants = cva(
                 lg: 'h-10 rounded-md px-6 has-[>svg]:px-4',
                 icon: 'size-9',
             },
-            color: {
-                blue: 'text-primary bg-blue hover:bg-blue/80',
-                lime: 'text-primary bg-lime hover:bg-lime/80',
-                yellow: 'text-primary bg-yellow hover:bg-yellow/80',
-                red: 'text-primary bg-red hover:bg-red/80',
-                cian: 'text-primary bg-cian hover:bg-cian/80',
-                green: 'text-primary bg-green hover:bg-green/80',
-                orange: 'text-primary bg-orange hover:bg-orange/80',
-                purple: 'text-primary bg-purple hover:bg-purple/80',
-            },
         },
         defaultVariants: {
             variant: 'default',
@@ -50,7 +40,6 @@ function Button({
     className,
     variant,
     size,
-    color,
     children,
     asChild = false,
     loading = false,
@@ -58,7 +47,6 @@ function Button({
 }: React.ComponentProps<'button'> &
     VariantProps<typeof buttonVariants> & {
         asChild?: boolean;
-        color?: string;
         loading?: boolean;
     }) {
     const Comp = asChild ? Slot : 'button';
@@ -66,7 +54,7 @@ function Button({
     return (
         <Comp
             data-slot="button"
-            className={cn(buttonVariants({ variant, size, color, className }))}
+            className={cn(buttonVariants({ variant, size, className }))}
             disabled={loading || props.disabled}
             {...props}
         >

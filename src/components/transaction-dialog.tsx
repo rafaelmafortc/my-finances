@@ -53,7 +53,10 @@ export function TransactionDialog() {
 
     return (
         <React.Fragment>
-            <Button color="cian" onClick={() => setOpen(!open)}>
+            <Button
+                className="text-primary bg-cian hover:bg-cian/80"
+                onClick={() => setOpen(!open)}
+            >
                 <Plus />
                 Adicionar transação
             </Button>
