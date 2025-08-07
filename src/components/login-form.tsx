@@ -22,7 +22,11 @@ export function LoginForm({
 
     const handleLogin = () => {
         setLoading(true);
-        signIn('google', { callbackUrl: '/dashboard' });
+        try {
+            signIn('google', { callbackUrl: '/dashboard' });
+        } finally {
+            setLoading(false);
+        }
     };
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
