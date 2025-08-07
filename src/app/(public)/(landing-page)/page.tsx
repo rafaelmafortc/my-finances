@@ -1,7 +1,7 @@
+import { Footer } from '@/components/landingpage/footer';
+import { Founder } from '@/components/landingpage/founder';
 import { Header } from '@/components/landingpage/header';
 import { Main } from '@/components/landingpage/main';
-import { Founder } from '@/components/landingpage/founder';
-import { Footer } from '@/components/landingpage/footer';
 
 export default function LandingPage() {
     return (

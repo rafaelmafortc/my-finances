@@ -2,9 +2,9 @@
 
 import * as React from 'react';
 
+import { NavHeader } from '@/components/nav/nav-header';
 import { NavMain } from '@/components/nav/nav-main';
 import { NavUser } from '@/components/nav/nav-user';
-import { NavHeader } from '@/components/nav/nav-header';
 import { SettingsDialog } from '@/components/settings-dialog';
 import {
     Sidebar,

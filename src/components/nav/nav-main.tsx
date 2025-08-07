@@ -3,13 +3,13 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
+import { Collapsible } from '@/components/ui/collapsible';
 import {
     SidebarGroup,
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { Collapsible } from '@/components/ui/collapsible';
 import { navbarMain } from '@/lib/navbar';
 
 export function NavMain() {

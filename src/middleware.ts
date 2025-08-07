@@ -1,9 +1,9 @@
+import { getToken } from 'next-auth/jwt';
 import {
-    NextResponse,
     type MiddlewareConfig,
     type NextRequest,
+    NextResponse,
 } from 'next/server';
-import { getToken } from 'next-auth/jwt';
 
 const publicRoutes = [
     {

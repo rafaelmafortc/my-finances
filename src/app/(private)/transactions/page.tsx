@@ -1,7 +1,5 @@
-import { Plus } from 'lucide-react';
-
 import PrivatePageLayout from '@/components/private-page-layout';
-import { Button } from '@/components/ui/button';
+import { TransactionDialog } from '@/components/transaction-dialog';
 
 export default function Transactions() {
     return (
@@ -17,10 +15,7 @@ export default function Transactions() {
                                 Adicione sua primeira transação para começar
                             </p>
                         </div>
-                        <Button color="cian">
-                            <Plus />
-                            Adicionar transação
-                        </Button>
+                        <TransactionDialog />
                     </div>
                 </div>
             </div>

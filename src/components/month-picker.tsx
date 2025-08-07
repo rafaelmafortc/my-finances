@@ -1,17 +1,18 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
 
+import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import {
     Popover,
-    PopoverTrigger,
     PopoverContent,
+    PopoverTrigger,
 } from '@/components/ui/popover';
-import { Button } from '@/components/ui/button';
 
 const LOCAL_STORAGE_KEY = 'filter-month';
 

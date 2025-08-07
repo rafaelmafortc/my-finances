@@ -1,14 +1,16 @@
 'use client';
 
 import * as React from 'react';
+
+import Link from 'next/link';
+
 import { PiggyBank } from 'lucide-react';
+
 import {
     SidebarMenu,
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-
-import Link from 'next/link';
 
 export function NavHeader() {
     return (

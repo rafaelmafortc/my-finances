@@ -1,8 +1,9 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { useSession } from 'next-auth/react';
+import React, { createContext, useContext, useEffect, useState } from 'react';
+
 import { type DefaultSession } from 'next-auth';
+import { useSession } from 'next-auth/react';
 
 interface UserContextType {
     user: DefaultSession['user'] | undefined;

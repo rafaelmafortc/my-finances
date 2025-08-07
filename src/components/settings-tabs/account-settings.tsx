@@ -1,11 +1,13 @@
 'use client';
 
-import { Label } from '@/components/ui/label';
-import { Input } from '@/components/ui/input';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { useUser } from '@/providers/user-provider';
-import { Button } from '../ui/button';
 import Image from 'next/image';
+
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useUser } from '@/providers/user-provider';
+
+import { Button } from '../ui/button';
 
 const avatarColors = [
     'blue',

@@ -1,14 +1,13 @@
 'use client';
 
+import { AccountSettings } from '@/components/settings-tabs/account-settings';
+import { PaymentSettings } from '@/components/settings-tabs/payment-settings';
 import {
     Dialog,
     DialogContent,
     DialogDescription,
     DialogTitle,
 } from '@/components/ui/dialog';
-
-import { AccountSettings } from '@/components/settings-tabs/account-settings';
-import { PaymentSettings } from '@/components/settings-tabs/payment-settings';
 
 const contentMap: Record<string, React.ReactNode> = {
     account: <AccountSettings />,
