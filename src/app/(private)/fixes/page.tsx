@@ -16,7 +16,7 @@ export default function FixesPage() {
                                 começar
                             </p>
                         </div>
-                        <Button color="yellow">Adicionar transação fixa</Button>
+                        <Button>Adicionar transação fixa</Button>
                     </div>
                 </div>
             </div>

@@ -15,7 +15,7 @@ export default function CategoriesPage() {
                                 Adicione sua primeira categoria para começar
                             </p>
                         </div>
-                        <Button color="cian">Adicionar Categoria</Button>
+                        <Button>Adicionar Categoria</Button>
                     </div>
                 </div>
             </div>
