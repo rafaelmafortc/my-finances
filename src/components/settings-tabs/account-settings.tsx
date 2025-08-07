@@ -9,17 +9,17 @@ import { useUser } from '@/providers/user-provider';
 
 import { Button } from '../ui/button';
 
-const avatarColors = [
-    'blue',
-    'lime',
-    'yellow',
-    'red',
-    'cian',
-    'green',
-    'orange',
-    'purple',
-    'image',
-];
+const colorClasses: Record<string, string> = {
+    blue: 'bg-blue hover:bg-blue/80',
+    lime: 'bg-lime hover:bg-lime/80',
+    yellow: 'bg-yellow hover:bg-yellow/80',
+    red: 'bg-red hover:bg-red/80',
+    cian: 'bg-cian hover:bg-cian/80',
+    green: 'bg-green hover:bg-green/80',
+    orange: 'bg-orange hover:bg-orange/80',
+    purple: 'bg-purple hover:bg-purple/80',
+    image: '',
+};
 
 export function AccountSettings() {
     const { firstName, lastName, user, initials, avatarColor, setAvatarColor } =
@@ -64,30 +64,32 @@ export function AccountSettings() {
                         Escolha a cor do avatar
                     </p>
                     <div className="flex flex-wrap gap-2">
-                        {avatarColors.map((color) => (
-                            <Button
-                                key={color}
-                                size="icon"
-                                onClick={() => handleColorChange(color)}
-                                className={`rounded-full bg-${color} hover:bg-${color}/80 border-2 transition-all overflow-hidden ${
-                                    avatarColor === color
-                                        ? 'ring-2 ring-muted-foreground'
-                                        : 'ring-0'
-                                }`}
-                            >
-                                {user?.image && color === 'image' ? (
-                                    <Image
-                                        src={user?.image || ''}
-                                        alt="Profile User"
-                                        width={36}
-                                        height={36}
-                                        className="rounded-full object-cover w-full h-full"
-                                    />
-                                ) : (
-                                    <span className="block w-full h-full rounded-full" />
-                                )}
-                            </Button>
-                        ))}
+                        {Object.entries(colorClasses).map(
+                            ([color, className]) => (
+                                <Button
+                                    key={color}
+                                    size="icon"
+                                    onClick={() => handleColorChange(color)}
+                                    className={`rounded-full ${className} border-2 transition-all overflow-hidden ${
+                                        avatarColor === color
+                                            ? 'ring-2 ring-muted-foreground'
+                                            : 'ring-0'
+                                    }`}
+                                >
+                                    {user?.image && color === 'image' ? (
+                                        <Image
+                                            src={user?.image || ''}
+                                            alt="Profile User"
+                                            width={36}
+                                            height={36}
+                                            className="rounded-full object-cover w-full h-full"
+                                        />
+                                    ) : (
+                                        <span className="block w-full h-full rounded-full" />
+                                    )}
+                                </Button>
+                            )
+                        )}
                     </div>
                 </div>
             </div>
