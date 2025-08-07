@@ -10,6 +10,7 @@ import {
     Dialog,
     DialogContent,
     DialogDescription,
+    DialogFooter,
     DialogTitle,
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
@@ -191,6 +192,13 @@ export function TransactionDialog() {
                             </div>
                         </div>
                     </div>
+                    <DialogFooter>
+                        <div className="border-t py-2 px-4 w-full flex justify-end">
+                            <Button className="text-primary bg-cian hover:bg-cian/80">
+                                Salvar
+                            </Button>
+                        </div>
+                    </DialogFooter>
                 </DialogContent>
             </Dialog>
         </React.Fragment>
