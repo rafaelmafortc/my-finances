@@ -25,6 +25,23 @@ import {
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
+    const [formData, setFormData] = useState<Transaction>({
+        id: null,
+        description: '',
+        amount: 0,
+        date: new Date(),
+        type: 'EXPENSE',
+        isFixed: false,
+        categoryId: null,
+    });
+
+    const handleChangeFormData = (key: string, value: any) => {
+        setFormData((prev) => ({
+            ...prev,
+            [key]: value,
+        }));
+    };
+
     return (
         <React.Fragment>
             <Button color="cian" onClick={() => setOpen(!open)}>
@@ -48,38 +65,89 @@ export function TransactionDialog() {
                                     <Label className="mb-2 block text-sm font-medium">
                                         Descrição
                                     </Label>
-                                    <Input />
+                                    <Input
+                                        value={formData?.description}
+                                        onChange={(e) =>
+                                            handleChangeFormData(
+                                                'description',
+                                                e.target.value
+                                            )
+                                        }
+                                    />
                                 </div>
                                 <div className="w-full">
                                     <Label className="mb-2 block text-sm font-medium">
                                         Valor
                                     </Label>
-                                    <Input type="number" />
+                                    <Input
+                                        type="number"
+                                        value={formData?.amount}
+                                        min={0}
+                                        onChange={(e) =>
+                                            handleChangeFormData(
+                                                'amount',
+                                                e.target.value
+                                            )
+                                        }
+                                    />
                                 </div>
                             </div>
                             <div className="w-full">
                                 <Label className="mb-2 block text-sm font-medium">
                                     Data
                                 </Label>
-                                <DatePicker />
+                                <DatePicker
+                                    selected={formData?.date}
+                                    onSelect={(date) =>
+                                        handleChangeFormData('date', date)
+                                    }
+                                />
                             </div>
-                            <div>
-                                <Label className="mb-2 block text-sm font-medium">
-                                    Tipo de transação
-                                </Label>
-                                <Select>
-                                    <SelectTrigger className="w-full">
-                                        <SelectValue />
-                                    </SelectTrigger>
-                                    <SelectContent>
-                                        <SelectItem value="INCOME">
-                                            Receita
-                                        </SelectItem>
-                                        <SelectItem value="EXPENSE">
-                                            Despesa
-                                        </SelectItem>
-                                    </SelectContent>
-                                </Select>
+                            <div className="flex flex-col lg:flex-row gap-4">
+                                <div className="w-full">
+                                    <Label className="mb-2 block text-sm font-medium">
+                                        Tipo de transação
+                                    </Label>
+                                    <Select
+                                        value={formData.type}
+                                        onValueChange={(value) =>
+                                            handleChangeFormData(
+                                                'type',
+                                                value as 'INCOME' | 'EXPENSE'
+                                            )
+                                        }
+                                    >
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="INCOME">
+                                                Receita
+                                            </SelectItem>
+                                            <SelectItem value="EXPENSE">
+                                                Despesa
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
+                                <div className="w-full">
+                                    <Label className="mb-2 block text-sm font-medium">
+                                        Categoria
+                                    </Label>
+                                    <Select>
+                                        <SelectTrigger className="w-full">
+                                            <SelectValue />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="INCOME">
+                                                Receita
+                                            </SelectItem>
+                                            <SelectItem value="EXPENSE">
+                                                Despesa
+                                            </SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </div>
                             </div>
                         </div>
                     </div>

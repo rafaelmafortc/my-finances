@@ -8,20 +8,25 @@ import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
 import { Card, CardAction, CardContent } from '@/components/ui/card';
 
-export default function DatePicker() {
-    const [date, setDate] = React.useState<Date | undefined>(new Date());
-    const [month, setMonth] = React.useState<Date | undefined>(new Date());
+interface DatePickerProps {
+    selected: Date;
+    onSelect: (date: Date) => void;
+}
+
+export default function DatePicker({ selected, onSelect }: DatePickerProps) {
+    const [month, setMonth] = React.useState<Date | undefined>(selected);
 
     return (
         <Card>
             <CardContent className="flex flex-col gap-4 items-center">
                 <Calendar
                     mode="single"
+                    required
                     locale={ptBR}
                     month={month}
                     onMonthChange={setMonth}
-                    selected={date}
-                    onSelect={setDate}
+                    selected={selected}
+                    onSelect={onSelect}
                     className="bg-transparent p-0"
                 />
                 <CardAction className="flex w-full justify-end">
@@ -29,8 +34,9 @@ export default function DatePicker() {
                         size="sm"
                         variant="outline"
                         onClick={() => {
-                            setMonth(new Date());
-                            setDate(new Date());
+                            const today = new Date();
+                            setMonth(today);
+                            onSelect(today);
                         }}
                     >
                         Hoje
