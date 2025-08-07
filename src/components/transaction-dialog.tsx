@@ -160,7 +160,7 @@ export function TransactionDialog() {
                                         }}
                                     >
                                         <SelectTrigger className="w-full">
-                                            <SelectValue placeholder="Selecione uma categoria" />
+                                            <SelectValue />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {!!filteredCategories.length &&
