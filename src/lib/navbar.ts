@@ -56,12 +56,12 @@ export const pageHeader: Record<
         title: 'Dashboard',
         hasMonthPicker: true,
     },
-    categories: {
-        title: 'Categorias',
-        hasMonthPicker: false,
-    },
-    fixes: {
-        title: 'Fixos',
-        hasMonthPicker: false,
-    },
+    // categories: {
+    //     title: 'Categorias',
+    //     hasMonthPicker: false,
+    // },
+    // fixes: {
+    //     title: 'Fixos',
+    //     hasMonthPicker: false,
+    // },
 };
