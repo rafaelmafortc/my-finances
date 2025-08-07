@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { signIn } from 'next-auth/react';
 
@@ -19,8 +19,6 @@ export function LoginForm({
     ...props
 }: React.ComponentProps<'div'>) {
     const [loading, setLoading] = useState(false);
-
-    useEffect(() => {}, []);
 
     const handleLogin = () => {
         setLoading(true);
