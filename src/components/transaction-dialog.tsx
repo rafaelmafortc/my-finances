@@ -112,7 +112,7 @@ export function TransactionDialog() {
                 Adicionar transação
             </Button>
             <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-                <DialogContent className="w-full lg:m-0 sm:max-w-1/2 p-0 gap-0 my-2">
+                <DialogContent className="w-full lg:m-0 sm:max-w-1/2 p-0 gap-0">
                     <div className="border-b py-2 px-4">
                         <DialogTitle className="text-lg font-semibold text-foreground">
                             Adicionar Transação
@@ -121,7 +121,7 @@ export function TransactionDialog() {
                     <DialogDescription className="sr-only">
                         Adicionar ou editar uma transação
                     </DialogDescription>
-                    <div className="flex w-full overflow-y-auto max-h-[85dvh]">
+                    <div className="flex w-full overflow-y-auto max-h-[80dvh]">
                         <div className="flex-1 flex flex-col gap-4 p-6 overflow-y-auto">
                             <div className="flex flex-col lg:flex-row gap-4">
                                 <div className="w-full">
