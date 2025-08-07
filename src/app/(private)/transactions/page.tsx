@@ -1,7 +1,7 @@
 import PrivatePageLayout from '@/components/private-page-layout';
 import { TransactionDialog } from '@/components/transaction-dialog';
 
-export default function Transactions() {
+export default function TransactionsPage() {
     return (
         <PrivatePageLayout title="Transações" hasMonthPicker>
             <div className="flex items-center justify-center min-h-full border-2 border-dashed rounded-lg p-4 border-accent">

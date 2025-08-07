@@ -1,7 +1,7 @@
 import PrivatePageLayout from '@/components/private-page-layout';
 import { Button } from '@/components/ui/button';
 
-export default function Categories() {
+export default function CategoriesPage() {
     return (
         <PrivatePageLayout title="Categorias">
             <div className="flex items-center justify-center min-h-full border-2 border-dashed rounded-lg p-4 border-accent">
