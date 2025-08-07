@@ -112,7 +112,7 @@ export function TransactionDialog() {
                 Adicionar transação
             </Button>
             <Dialog open={open} onOpenChange={() => setOpen(!open)}>
-                <DialogContent className="w-full sm:max-w-1/2 p-0 gap-0">
+                <DialogContent className="w-full lg:m-0 sm:max-w-1/2 p-0 gap-0 my-2">
                     <div className="border-b py-2 px-4">
                         <DialogTitle className="text-lg font-semibold text-foreground">
                             Adicionar Transação
