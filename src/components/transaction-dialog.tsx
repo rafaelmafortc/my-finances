@@ -32,8 +32,6 @@ export function TransactionDialog() {
         (category: Category) => category.type === formData.type
     );
 
-    console.log('categories', categories);
-
     const [formData, setFormData] = useState<Transaction>({
         id: null,
         description: '',

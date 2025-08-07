@@ -1,5 +1,5 @@
-import { AppSidebar } from '@/components/app-sidebar';
 import { MonthPicker } from '@/components/month-picker';
+import { AppSidebar } from '@/components/sidebar/app-sidebar';
 import {
     Breadcrumb,
     BreadcrumbItem,
