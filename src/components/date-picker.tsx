@@ -18,18 +18,8 @@ export default function DatePicker({ selected, onSelect }: DatePickerProps) {
 
     return (
         <Card>
-            <CardContent className="flex flex-col gap-4 items-center">
-                <Calendar
-                    mode="single"
-                    required
-                    locale={ptBR}
-                    month={month}
-                    onMonthChange={setMonth}
-                    selected={selected}
-                    onSelect={onSelect}
-                    className="bg-transparent p-0"
-                />
-                <CardAction className="flex w-full justify-end">
+            <CardContent className="flex flex-col gap-4 justify-center items-center h-fit">
+                <CardAction className="flex w-full justify-start">
                     <Button
                         size="sm"
                         variant="outline"
@@ -42,6 +32,16 @@ export default function DatePicker({ selected, onSelect }: DatePickerProps) {
                         Hoje
                     </Button>
                 </CardAction>
+                <Calendar
+                    mode="single"
+                    required
+                    locale={ptBR}
+                    month={month}
+                    onMonthChange={setMonth}
+                    selected={selected}
+                    onSelect={onSelect}
+                    className="bg-transparent p-0 h-[310px]"
+                />
             </CardContent>
         </Card>
     );
