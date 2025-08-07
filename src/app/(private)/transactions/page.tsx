@@ -1,4 +1,3 @@
-import PrivatePageLayout from '@/components/private-page-layout';
 import { TransactionDialog } from '@/components/transaction-dialog';
 
 export default function TransactionsPage() {

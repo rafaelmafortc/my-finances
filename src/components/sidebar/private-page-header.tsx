@@ -10,26 +10,7 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-
-const headerTitles: Record<string, { title: string; hasMonthPicker: boolean }> =
-    {
-        transactions: {
-            title: 'Transações',
-            hasMonthPicker: true,
-        },
-        dashboard: {
-            title: 'Dashboard',
-            hasMonthPicker: true,
-        },
-        categories: {
-            title: 'Categorias',
-            hasMonthPicker: false,
-        },
-        fixes: {
-            title: 'Fixos',
-            hasMonthPicker: false,
-        },
-    };
+import { pageHeader } from '@/lib/navbar';
 
 export function PrivatePageHeader() {
     const pathname = usePathname().split('/')[1].toString();
@@ -45,12 +26,12 @@ export function PrivatePageHeader() {
                 <Breadcrumb>
                     <BreadcrumbItem>
                         <BreadcrumbPage>
-                            {headerTitles[pathname].title}
+                            {pageHeader[pathname].title}
                         </BreadcrumbPage>
                     </BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            {headerTitles[pathname].hasMonthPicker && (
+            {pageHeader[pathname].hasMonthPicker && (
                 <div className="px-4">
                     <MonthPicker />
                 </div>

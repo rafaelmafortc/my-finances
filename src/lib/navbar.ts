@@ -43,3 +43,25 @@ export const navbarSettings = [
     //     icon: CreditCard,
     // },
 ];
+
+export const pageHeader: Record<
+    string,
+    { title: string; hasMonthPicker: boolean }
+> = {
+    transactions: {
+        title: 'Transações',
+        hasMonthPicker: true,
+    },
+    dashboard: {
+        title: 'Dashboard',
+        hasMonthPicker: true,
+    },
+    categories: {
+        title: 'Categorias',
+        hasMonthPicker: false,
+    },
+    fixes: {
+        title: 'Fixos',
+        hasMonthPicker: false,
+    },
+};
