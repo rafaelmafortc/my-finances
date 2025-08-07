@@ -25,11 +25,6 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
 
     return (
         <React.Fragment>
-            <SettingsDialog
-                open={openSettings}
-                onOpenChange={setOpenSettings}
-                activeTab={activeTab}
-            />
             <Sidebar collapsible="icon" {...props}>
                 <SidebarHeader>
                     <NavHeader />
@@ -38,6 +33,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     <NavMain />
                 </SidebarContent>
                 <SidebarFooter>
+                    <SettingsDialog
+                        open={openSettings}
+                        onOpenChange={setOpenSettings}
+                        activeTab={activeTab}
+                    />
                     <NavUser handleOpenSettings={handleOpenSettings} />
                 </SidebarFooter>
                 <SidebarRail />
