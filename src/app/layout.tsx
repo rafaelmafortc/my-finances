@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
+import { Toaster } from '@/components/ui/sonner';
 import { SessionProvider } from '@/providers/session-provider';
 import { UserProvider } from '@/providers/user-provider';
 
@@ -31,6 +32,7 @@ export default function RootLayout({
                 <SessionProvider>
                     <UserProvider>{children}</UserProvider>
                 </SessionProvider>
+                <Toaster />
             </body>
         </html>
     );

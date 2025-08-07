@@ -3,6 +3,7 @@
 import React, { useState } from 'react';
 
 import { Plus, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 import DatePicker from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
@@ -28,11 +29,6 @@ export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
     const { categories } = useCategories();
-
-    const filteredCategories = categories.filter(
-        (category: Category) => category.type === formData.type
-    );
-
     const [formData, setFormData] = useState<Transaction>({
         id: null,
         description: '',
@@ -42,6 +38,9 @@ export function TransactionDialog() {
         isFixed: false,
         categoryId: null,
     });
+    const filteredCategories = categories.filter(
+        (category: Category) => category.type === formData.type
+    );
 
     const [newCategoryName, setNewCategoryName] = useState('');
 
@@ -50,6 +49,57 @@ export function TransactionDialog() {
             ...prev,
             [key]: value,
         }));
+    };
+
+    const submitTransaction = async () => {
+        if (!formData.description.trim()) {
+            toast.warning('A descrição é obrigatória');
+            return;
+        }
+
+        if (Number(formData.amount) <= 0) {
+            toast.warning('O valor deve ser maior que zero');
+            return;
+        }
+
+        if (!formData.categoryId && !newCategoryName.trim()) {
+            toast.warning('Selecione ou crie uma categoria');
+            return;
+        }
+
+        const payload = {
+            ...formData,
+            newCategoryName:
+                formData.categoryId === 'new' ? newCategoryName : undefined,
+        };
+
+        try {
+            const res = await fetch('/api/transactions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (!res.ok) throw new Error('Erro ao criar transação');
+
+            setFormData({
+                id: null,
+                description: '',
+                amount: 0,
+                date: new Date(),
+                type: 'EXPENSE',
+                isFixed: false,
+                categoryId: null,
+            });
+            setNewCategoryName('');
+            setOpen(false);
+            toast.success('Sucesso ao salvar transação');
+        } catch (err) {
+            console.error(err);
+            toast.error('Erro ao salvar transação');
+        }
     };
 
     return (
@@ -219,7 +269,10 @@ export function TransactionDialog() {
                     </div>
                     <DialogFooter>
                         <div className="border-t py-2 px-4 w-full flex justify-end">
-                            <Button className="text-primary bg-cian hover:bg-cian/80">
+                            <Button
+                                onClick={submitTransaction}
+                                className="text-primary bg-cian hover:bg-cian/80"
+                            >
                                 Salvar
                             </Button>
                         </div>
