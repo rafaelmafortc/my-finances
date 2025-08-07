@@ -21,9 +21,18 @@ import {
     SelectTrigger,
     SelectValue,
 } from '@/components/ui/select';
+import { useCategories } from '@/hooks/use-categories';
 
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
+
+    const { categories } = useCategories();
+
+    const filteredCategories = categories.filter(
+        (category: Category) => category.type === formData.type
+    );
+
+    console.log('categories', categories);
 
     const [formData, setFormData] = useState<Transaction>({
         id: null,
@@ -134,16 +143,46 @@ export function TransactionDialog() {
                                     <Label className="mb-2 block text-sm font-medium">
                                         Categoria
                                     </Label>
-                                    <Select>
+                                    <Select
+                                        value={formData.categoryId ?? ''}
+                                        onValueChange={(value) => {
+                                            if (value === 'new') {
+                                                console.log(
+                                                    'Abrir criação de nova categoria'
+                                                );
+                                                return;
+                                            }
+
+                                            handleChangeFormData(
+                                                'categoryId',
+                                                value
+                                            );
+                                        }}
+                                    >
                                         <SelectTrigger className="w-full">
-                                            <SelectValue />
+                                            <SelectValue placeholder="Selecione uma categoria" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="INCOME">
-                                                Receita
-                                            </SelectItem>
-                                            <SelectItem value="EXPENSE">
-                                                Despesa
+                                            {!!filteredCategories.length &&
+                                                filteredCategories.map(
+                                                    (category: Category) => (
+                                                        <SelectItem
+                                                            key={category.id}
+                                                            value={
+                                                                category.id ||
+                                                                ''
+                                                            }
+                                                        >
+                                                            {category.name}
+                                                        </SelectItem>
+                                                    )
+                                                )}
+                                            {!!filteredCategories.length && (
+                                                <div className="border-t my-1" />
+                                            )}
+                                            <SelectItem value="new">
+                                                <Plus />
+                                                Criar nova categoria
                                             </SelectItem>
                                         </SelectContent>
                                     </Select>
