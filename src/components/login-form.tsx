@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { signIn } from 'next-auth/react';
 
@@ -20,14 +20,13 @@ export function LoginForm({
 }: React.ComponentProps<'div'>) {
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {}, []);
+
     const handleLogin = () => {
         setLoading(true);
-        try {
-            signIn('google', { callbackUrl: '/dashboard' });
-        } finally {
-            setLoading(false);
-        }
+        signIn('google', { callbackUrl: '/dashboard' });
     };
+
     return (
         <div className={cn('flex flex-col gap-6', className)} {...props}>
             <Card>
