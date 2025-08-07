@@ -21,6 +21,14 @@ const headerTitles: Record<string, { title: string; hasMonthPicker: boolean }> =
             title: 'Dashboard',
             hasMonthPicker: true,
         },
+        categories: {
+            title: 'Categorias',
+            hasMonthPicker: false,
+        },
+        fixes: {
+            title: 'Fixos',
+            hasMonthPicker: false,
+        },
     };
 
 export function PrivatePageHeader() {
