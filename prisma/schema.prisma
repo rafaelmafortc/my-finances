@@ -8,14 +8,16 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
+  id            String        @id @default(cuid())
   name          String?
-  email         String?   @unique
+  email         String?       @unique
   emailVerified DateTime?
   image         String?
-  color         String?   @default("purple")
+  color         String?       @default("purple")
   accounts      Account[]
   sessions      Session[]
+  transactions  Transaction[]
+  categories    Category[]
 }
 
 model Account {
@@ -44,4 +46,34 @@ model Session {
   expires      DateTime
 
   user User @relation(fields: [userId], references: [id])
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model Transaction {
+  id     String @id @default(cuid())
+  userId String
+  user   User   @relation(fields: [userId], references: [id])
+
+  description String
+  amount      Float
+  date        DateTime
+  type        TransactionType
+  isFixed     Boolean         @default(false)
+
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id])
+}
+
+model Category {
+  id     String          @id @default(cuid())
+  userId String
+  user   User            @relation(fields: [userId], references: [id])
+  name   String
+  type   TransactionType
+
+  transactions Transaction[]
 }
