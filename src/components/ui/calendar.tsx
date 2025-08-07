@@ -47,10 +47,7 @@ function Calendar({
                     'flex gap-4 flex-col md:flex-row relative',
                     defaultClassNames.months
                 ),
-                month: cn(
-                    'flex flex-col w-full gap-4',
-                    defaultClassNames.month
-                ),
+                month: cn('flex flex-col w-full', defaultClassNames.month),
                 nav: cn(
                     'flex items-center gap-1 w-full absolute top-0 inset-x-0 justify-between',
                     defaultClassNames.nav
@@ -91,7 +88,7 @@ function Calendar({
                 table: 'w-full border-collapse',
                 weekdays: cn('flex', defaultClassNames.weekdays),
                 weekday: cn(
-                    'text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] select-none',
+                    'text-muted-foreground rounded-md flex-1 font-normal text-[0.8rem] select-none pt-4',
                     defaultClassNames.weekday
                 ),
                 week: cn('flex w-full mt-2', defaultClassNames.week),
