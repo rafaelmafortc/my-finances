@@ -1,18 +1,12 @@
-import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-import { authOptions } from '@/lib/auth';
 import { prisma } from '@/lib/prisma';
+import { getAuthenticatedUser } from '@/lib/route-service';
 
 export async function PUT(req: Request) {
-    const session = await getServerSession(authOptions);
+    const { userId, response } = await getAuthenticatedUser();
 
-    if (!session?.user?.email) {
-        return NextResponse.json(
-            { error: 'Not authenticated' },
-            { status: 401 }
-        );
-    }
+    if (!userId) return response;
 
     const { color } = await req.json();
 
@@ -33,7 +27,7 @@ export async function PUT(req: Request) {
     }
 
     await prisma.user.update({
-        where: { email: session.user.email },
+        where: { id: userId },
         data: { color },
     });
 
@@ -41,14 +35,12 @@ export async function PUT(req: Request) {
 }
 
 export async function GET() {
-    const session = await getServerSession(authOptions);
+    const { userId, response } = await getAuthenticatedUser();
 
-    if (!session?.user?.email) {
-        return NextResponse.json({ color: 'purple' }, { status: 401 });
-    }
+    if (!userId) return response;
 
     const user = await prisma.user.findUnique({
-        where: { email: session.user.email },
+        where: { id: userId },
         select: { color: true },
     });
 
