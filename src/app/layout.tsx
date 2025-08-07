@@ -32,7 +32,15 @@ export default function RootLayout({
                 <SessionProvider>
                     <UserProvider>{children}</UserProvider>
                 </SessionProvider>
-                <Toaster />
+                <Toaster
+                    toastOptions={{
+                        classNames: {
+                            success: '!text-lime',
+                            warning: '!text-yellow',
+                            error: '!text-red',
+                        },
+                    }}
+                />
             </body>
         </html>
     );
