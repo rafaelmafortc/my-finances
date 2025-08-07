@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react';
 
-import { Plus } from 'lucide-react';
+import { Plus, X } from 'lucide-react';
 
 import DatePicker from '@/components/date-picker';
 import { Button } from '@/components/ui/button';
@@ -42,6 +42,8 @@ export function TransactionDialog() {
         isFixed: false,
         categoryId: null,
     });
+
+    const [newCategoryName, setNewCategoryName] = useState('');
 
     const handleChangeFormData = (key: string, value: any) => {
         setFormData((prev) => ({
@@ -103,17 +105,6 @@ export function TransactionDialog() {
                                     />
                                 </div>
                             </div>
-                            <div className="w-full">
-                                <Label className="mb-2 block text-sm font-medium">
-                                    Data
-                                </Label>
-                                <DatePicker
-                                    selected={formData?.date}
-                                    onSelect={(date) =>
-                                        handleChangeFormData('date', date)
-                                    }
-                                />
-                            </div>
                             <div className="flex flex-col lg:flex-row gap-4">
                                 <div className="w-full">
                                     <Label className="mb-2 block text-sm font-medium">
@@ -145,50 +136,84 @@ export function TransactionDialog() {
                                     <Label className="mb-2 block text-sm font-medium">
                                         Categoria
                                     </Label>
-                                    <Select
-                                        value={formData.categoryId ?? ''}
-                                        onValueChange={(value) => {
-                                            if (value === 'new') {
-                                                console.log(
-                                                    'Abrir criação de nova categoria'
-                                                );
-                                                return;
-                                            }
-
-                                            handleChangeFormData(
-                                                'categoryId',
-                                                value
-                                            );
-                                        }}
-                                    >
-                                        <SelectTrigger className="w-full">
-                                            <SelectValue />
-                                        </SelectTrigger>
-                                        <SelectContent>
-                                            {!!filteredCategories.length &&
-                                                filteredCategories.map(
-                                                    (category: Category) => (
-                                                        <SelectItem
-                                                            key={category.id}
-                                                            value={
-                                                                category.id ||
-                                                                ''
-                                                            }
-                                                        >
-                                                            {category.name}
-                                                        </SelectItem>
+                                    {formData.categoryId === 'new' ? (
+                                        <div className="flex items-center gap-2">
+                                            <Input
+                                                placeholder="Digite a nova categoria"
+                                                value={newCategoryName}
+                                                onChange={(e) =>
+                                                    setNewCategoryName(
+                                                        e.target.value
                                                     )
+                                                }
+                                            />
+                                            <Button
+                                                onClick={() => {
+                                                    handleChangeFormData(
+                                                        'categoryId',
+                                                        null
+                                                    );
+                                                    setNewCategoryName('');
+                                                }}
+                                                variant="outline"
+                                            >
+                                                <X className="text-red" />
+                                            </Button>
+                                        </div>
+                                    ) : (
+                                        <Select
+                                            value={formData.categoryId ?? ''}
+                                            onValueChange={(value) => {
+                                                handleChangeFormData(
+                                                    'categoryId',
+                                                    value
+                                                );
+                                            }}
+                                        >
+                                            <SelectTrigger className="w-full">
+                                                <SelectValue placeholder="Selecione uma categoria" />
+                                            </SelectTrigger>
+                                            <SelectContent>
+                                                {!!filteredCategories.length &&
+                                                    filteredCategories.map(
+                                                        (
+                                                            category: Category
+                                                        ) => (
+                                                            <SelectItem
+                                                                key={
+                                                                    category.id
+                                                                }
+                                                                value={
+                                                                    category.id ||
+                                                                    ''
+                                                                }
+                                                            >
+                                                                {category.name}
+                                                            </SelectItem>
+                                                        )
+                                                    )}
+                                                {!!filteredCategories.length && (
+                                                    <div className="border-t my-1" />
                                                 )}
-                                            {!!filteredCategories.length && (
-                                                <div className="border-t my-1" />
-                                            )}
-                                            <SelectItem value="new">
-                                                <Plus />
-                                                Criar nova categoria
-                                            </SelectItem>
-                                        </SelectContent>
-                                    </Select>
+                                                <SelectItem value="new">
+                                                    <Plus />
+                                                    Criar nova categoria
+                                                </SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    )}
                                 </div>
+                            </div>
+                            <div className="w-full">
+                                <Label className="mb-2 block text-sm font-medium">
+                                    Data
+                                </Label>
+                                <DatePicker
+                                    selected={formData?.date}
+                                    onSelect={(date) =>
+                                        handleChangeFormData('date', date)
+                                    }
+                                />
                             </div>
                         </div>
                     </div>
