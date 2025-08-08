@@ -168,12 +168,17 @@ export function TransactionDialog() {
                                     </Label>
                                     <Select
                                         value={formData.type}
-                                        onValueChange={(value) =>
+                                        onValueChange={(value) => {
                                             handleChangeFormData(
                                                 'type',
                                                 value as 'INCOME' | 'EXPENSE'
-                                            )
-                                        }
+                                            );
+                                            handleChangeFormData(
+                                                'categoryId',
+                                                null
+                                            );
+                                            setNewCategoryName('');
+                                        }}
                                     >
                                         <SelectTrigger className="w-full">
                                             <SelectValue />
