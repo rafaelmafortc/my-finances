@@ -72,6 +72,11 @@ export function TransactionDialog() {
             return;
         }
 
+        if (formData.categoryId === 'new' && !newCategoryName.trim()) {
+            toast.warning('Selecione ou crie uma categoria');
+            return;
+        }
+
         const payload = {
             ...formData,
             newCategoryName:
