@@ -7,3 +7,13 @@ type Transaction = {
     isFixed: boolean;
     categoryId: string | null;
 };
+
+type TransactionInput = {
+    description: string;
+    amount: number | string;
+    date: string | Date;
+    type: 'INCOME' | 'EXPENSE';
+    isFixed: boolean;
+    categoryId: string | null;
+    newCategoryName?: string;
+};

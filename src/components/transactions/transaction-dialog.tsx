@@ -25,12 +25,14 @@ import {
 } from '@/components/ui/select';
 import { useCategories } from '@/hooks/use-categories';
 import { useTransactions } from '@/hooks/use-transactions';
+import { useSelectedDate } from '@/providers/selected-date-provider';
 
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
     const { reloadCategories, categories } = useCategories();
-    const { reloadTransactions } = useTransactions();
+    const { month } = useSelectedDate();
+    const { postTransaction } = useTransactions(month);
 
     const [formData, setFormData] = useState<Transaction>({
         id: null,
@@ -77,16 +79,7 @@ export function TransactionDialog() {
         };
 
         try {
-            const res = await fetch('/api/transactions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(payload),
-            });
-
-            if (!res.ok) throw new Error('Erro ao criar transação');
-
+            await postTransaction(payload);
             setFormData({
                 id: null,
                 description: '',
@@ -98,11 +91,10 @@ export function TransactionDialog() {
             });
             setNewCategoryName('');
             setOpen(false);
-            reloadTransactions();
-            reloadCategories();
+            reloadCategories?.();
             toast.success('Sucesso ao salvar transação');
-        } catch (err) {
-            console.error(err);
+        } catch (e) {
+            console.error(e);
             toast.error('Erro ao salvar transação');
         }
     };

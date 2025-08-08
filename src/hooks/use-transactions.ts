@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
@@ -9,9 +10,27 @@ export function useTransactions(month?: string) {
     const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
         revalidateOnFocus: false,
         revalidateOnReconnect: false,
-        dedupingInterval: 3000,
         keepPreviousData: true,
     });
+
+    async function postTransaction(input: TransactionInput) {
+        const res = await fetch('/api/transactions', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(input),
+        });
+        if (!res.ok) throw new Error('Erro ao criar transação');
+
+        const created = await res.json();
+
+        await mutate((curr: any[] = []) => [created, ...(curr ?? [])], {
+            revalidate: false,
+            populateCache: true,
+            rollbackOnError: true,
+        });
+
+        return created;
+    }
 
     async function deleteTransaction(id: string) {
         if (!id) return;
@@ -22,6 +41,7 @@ export function useTransactions(month?: string) {
                     headers: { 'Content-Type': 'application/json' },
                 });
                 if (!res.ok) throw new Error('Erro ao deletar');
+                toast.success('Sucesso ao deletar transação');
                 return current.filter((t) => t.id !== id);
             },
             {
@@ -37,7 +57,7 @@ export function useTransactions(month?: string) {
         transactions: data ?? [],
         isLoading,
         isError: error,
+        postTransaction,
         deleteTransaction,
-        reloadTransactions: () => mutate(),
     };
 }
