@@ -3,17 +3,33 @@ import { NextResponse } from 'next/server';
 import { prisma } from '@/lib/prisma';
 import { getAuthenticatedUser } from '@/lib/route-service';
 
-export async function GET() {
+export async function GET(req: Request) {
     const { userId, response } = await getAuthenticatedUser();
-
     if (!userId && response) return response;
 
+    const { searchParams } = new URL(req.url);
+    const month = searchParams.get('month');
+
+    const where: any = { userId };
+
+    if (month) {
+        const [y, m] = month.split('-').map(Number);
+        if (!y || !m || m < 1 || m > 12) {
+            return NextResponse.json(
+                { error: 'Parâmetro month inválido. Use YYYY-MM.' },
+                { status: 400 }
+            );
+        }
+
+        const start = new Date(Date.UTC(y, m - 1, 1));
+        const end = new Date(Date.UTC(y, m, 1));
+        where.date = { gte: start, lt: end };
+    }
+
     const transactions = await prisma.transaction.findMany({
-        where: { userId },
+        where,
         orderBy: { date: 'desc' },
-        include: {
-            category: true,
-        },
+        include: { category: true },
     });
 
     return NextResponse.json(transactions);
@@ -54,7 +70,7 @@ export async function POST(req: Request) {
             data: {
                 userId,
                 description,
-                amount: Number(amount),
+                amount: Math.abs(Number(amount)),
                 date: new Date(date),
                 type,
                 isFixed,
