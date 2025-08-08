@@ -13,10 +13,31 @@ export function useTransactions(month?: string) {
         keepPreviousData: true,
     });
 
+    async function deleteTransaction(id: string) {
+        if (!id) return;
+        await mutate(
+            async (current: any[] = []) => {
+                const res = await fetch(`/api/transactions?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (!res.ok) throw new Error('Erro ao deletar');
+                return current.filter((t) => t.id !== id);
+            },
+            {
+                optimisticData: (current: any[] = []) =>
+                    current.filter((t) => t.id !== id),
+                rollbackOnError: true,
+                revalidate: true,
+            }
+        );
+    }
+
     return {
         transactions: data ?? [],
         isLoading,
         isError: error,
+        deleteTransaction,
         reloadTransactions: () => mutate(),
     };
 }

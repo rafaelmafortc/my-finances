@@ -86,3 +86,33 @@ export async function POST(req: Request) {
         );
     }
 }
+
+export async function DELETE(req: Request) {
+    const { userId, response } = await getAuthenticatedUser();
+    if (!userId && response) return response;
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    }
+
+    try {
+        const result = await prisma.transaction.deleteMany({
+            where: { id, userId },
+        });
+
+        if (result.count === 0) {
+            return NextResponse.json(
+                { error: 'Transaction not found' },
+                { status: 404 }
+            );
+        }
+
+        return new NextResponse(null, { status: 204 });
+    } catch (err) {
+        console.error('DELETE /api/transactions/:id', err);
+        return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    }
+}

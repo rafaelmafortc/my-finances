@@ -14,12 +14,18 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown } from 'lucide-react';
+import { ArrowUpDown, EllipsisVertical, Settings2, Trash } from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
     Table,
     TableBody,
@@ -127,11 +133,59 @@ export const columns: ColumnDef<TransactionColumn>[] = [
             </div>
         ),
     },
-];
+    {
+        id: 'actions',
+        header: () => <div className="text-right">Ações</div>,
+        cell: ({ row, table }) => {
+            const transactionId = row.original?.id;
 
+            return (
+                <div className="flex justify-end">
+                    <DropdownMenu>
+                        <DropdownMenuTrigger asChild>
+                            <Button
+                                variant="ghost"
+                                size="icon"
+                                aria-label="Ações"
+                            >
+                                <EllipsisVertical />
+                            </Button>
+                        </DropdownMenuTrigger>
+
+                        <DropdownMenuContent align="end" className="w-40">
+                            <DropdownMenuItem
+                                onClick={() => null}
+                                className="gap-2"
+                            >
+                                <Settings2 className="size-4" />
+                                Editar
+                            </DropdownMenuItem>
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    table.options.meta?.deleteTransaction?.(
+                                        transactionId
+                                    )
+                                }
+                                className="gap-2 text-red focus:text-red"
+                            >
+                                <Trash className="size-4 text-red" />
+                                Excluir
+                            </DropdownMenuItem>
+                        </DropdownMenuContent>
+                    </DropdownMenu>
+                </div>
+            );
+        },
+    },
+];
+declare module '@tanstack/table-core' {
+    interface TableMeta<TData extends unknown> {
+        deleteTransaction?: (id: string) => void;
+    }
+}
 export function TransactionsTable() {
     const { month } = useSelectedDate();
-    const { transactions } = useTransactions(month);
+    const { transactions, deleteTransaction } = useTransactions(month);
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
@@ -160,6 +214,7 @@ export function TransactionsTable() {
             columnVisibility,
             rowSelection,
         },
+        meta: { deleteTransaction },
     });
 
     React.useEffect(() => {
