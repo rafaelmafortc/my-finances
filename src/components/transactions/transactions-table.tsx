@@ -20,6 +20,7 @@ import { TransactionDialog } from '@/components/transactions/transaction-dialog'
 import { TypeBadge } from '@/components/type-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
     Table,
     TableBody,
@@ -116,6 +117,15 @@ export const columns: ColumnDef<TransactionColumn>[] = [
     {
         accessorKey: 'category.name',
         header: 'Categoria',
+    },
+    {
+        accessorKey: 'isFixed',
+        header: () => <div className="text-center">Fixa</div>,
+        cell: ({ row }) => (
+            <div className="text-center">
+                <Checkbox disabled checked={row.original.isFixed} />
+            </div>
+        ),
     },
 ];
 
