@@ -24,11 +24,14 @@ import {
     SelectValue,
 } from '@/components/ui/select';
 import { useCategories } from '@/hooks/use-categories';
+import { useTransactions } from '@/hooks/use-transactions';
 
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
-    const { categories } = useCategories();
+    const { reloadCategories, categories } = useCategories();
+    const { reloadTransactions } = useTransactions();
+
     const [formData, setFormData] = useState<Transaction>({
         id: null,
         description: '',
@@ -95,6 +98,8 @@ export function TransactionDialog() {
             });
             setNewCategoryName('');
             setOpen(false);
+            reloadTransactions();
+            reloadCategories();
             toast.success('Sucesso ao salvar transação');
         } catch (err) {
             console.error(err);

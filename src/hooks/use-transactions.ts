@@ -1,4 +1,4 @@
-import useSWR from 'swr';
+import useSWR, { mutate } from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
@@ -9,5 +9,6 @@ export function useTransactions() {
         transactions: data ?? [],
         isLoading,
         isError: error,
+        reloadTransactions: () => mutate('/api/transactions'),
     };
 }
