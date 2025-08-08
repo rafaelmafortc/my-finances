@@ -17,6 +17,7 @@ import {
 import { ArrowDownLeft, ArrowUpDown, ArrowUpRight } from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
+import { TypeBadge } from '@/components/type-badge';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -38,21 +39,6 @@ export type TransactionColumn = {
     type: 'INCOME' | 'EXPENSE';
     isFixed: boolean;
     category: Category;
-};
-
-const TypeBadge = ({ type }: { type: 'INCOME' | 'EXPENSE' }) => {
-    const isIncome = type === 'INCOME';
-    const Icon = isIncome ? ArrowUpRight : ArrowDownLeft;
-    const label = isIncome ? 'Receita' : 'Despesa';
-
-    return (
-        <div className="text-center">
-            <Badge variant="secondary">
-                <Icon className={isIncome ? 'text-lime' : 'text-red'} />
-                {label}
-            </Badge>
-        </div>
-    );
 };
 
 export const columns: ColumnDef<TransactionColumn>[] = [
@@ -121,7 +107,11 @@ export const columns: ColumnDef<TransactionColumn>[] = [
     {
         accessorKey: 'type',
         header: () => <div className="text-center">Data</div>,
-        cell: ({ row }) => <TypeBadge type={row.original.type} />,
+        cell: ({ row }) => (
+            <div className="text-center">
+                <TypeBadge type={row.original.type} />
+            </div>
+        ),
     },
     {
         accessorKey: 'category.name',
