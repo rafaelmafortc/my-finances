@@ -153,13 +153,13 @@ export const columns: ColumnDef<TransactionColumn>[] = [
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent align="end" className="w-40">
-                            <DropdownMenuItem
+                            {/* <DropdownMenuItem
                                 onClick={() => null}
                                 className="gap-2"
                             >
                                 <Settings2 className="size-4" />
                                 Editar
-                            </DropdownMenuItem>
+                            </DropdownMenuItem> */}
                             <DropdownMenuItem
                                 onClick={() =>
                                     table.options.meta?.deleteTransaction?.(
