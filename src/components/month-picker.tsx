@@ -1,7 +1,5 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-
 import { format } from 'date-fns';
 import { ptBR } from 'date-fns/locale';
 import { Calendar as CalendarIcon } from 'lucide-react';
@@ -13,30 +11,10 @@ import {
     PopoverContent,
     PopoverTrigger,
 } from '@/components/ui/popover';
-
-const LOCAL_STORAGE_KEY = 'filter-month';
+import { useSelectedDate } from '@/providers/selected-date-provider';
 
 export function MonthPicker() {
-    const [date, setDate] = useState<Date>();
-
-    useEffect(() => {
-        const storedDate = localStorage.getItem(LOCAL_STORAGE_KEY);
-        if (storedDate) {
-            setDate(new Date(storedDate));
-        } else {
-            setDate(new Date());
-        }
-    }, []);
-
-    const handleChange = (newDate: Date) => {
-        const normalizedDate = new Date(
-            newDate.getFullYear(),
-            newDate.getMonth(),
-            1
-        );
-        setDate(normalizedDate);
-        localStorage.setItem(LOCAL_STORAGE_KEY, normalizedDate.toISOString());
-    };
+    const { date, setSelectedDate } = useSelectedDate();
 
     return (
         <Popover>
@@ -50,19 +28,20 @@ export function MonthPicker() {
                     {date ? format(date, 'MM/yyyy') : 'Selecione um mês'}
                 </Button>
             </PopoverTrigger>
+
             <PopoverContent className="w-auto p-0 mx-3">
                 <Calendar
                     mode="single"
-                    month={date}
-                    onMonthChange={handleChange}
-                    captionLayout="dropdown"
-                    locale={ptBR}
-                    showOutsideDays={false}
+                    month={date ?? undefined}
+                    onMonthChange={setSelectedDate}
                     classNames={{
                         day: 'hidden',
                         week: 'hidden',
                         weekdays: 'hidden',
                     }}
+                    captionLayout="dropdown"
+                    locale={ptBR}
+                    showOutsideDays={false}
                 />
             </PopoverContent>
         </Popover>

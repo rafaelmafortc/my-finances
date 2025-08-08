@@ -30,6 +30,7 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTransactions } from '@/hooks/use-transactions';
+import { useSelectedDate } from '@/providers/selected-date-provider';
 
 export type TransactionColumn = {
     id: string;
@@ -129,7 +130,8 @@ export const columns: ColumnDef<TransactionColumn>[] = [
 ];
 
 export function TransactionsTable() {
-    const { transactions } = useTransactions();
+    const { month } = useSelectedDate();
+    const { transactions } = useTransactions(month);
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =

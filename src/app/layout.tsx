@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { Poppins } from 'next/font/google';
 
 import { Toaster } from '@/components/ui/sonner';
+import { SelectedDateProvider } from '@/providers/selected-date-provider';
 import { SessionProvider } from '@/providers/session-provider';
 import { UserProvider } from '@/providers/user-provider';
 
@@ -30,7 +31,9 @@ export default function RootLayout({
         <html lang="pt-BR" suppressHydrationWarning>
             <body className={poppins.className}>
                 <SessionProvider>
-                    <UserProvider>{children}</UserProvider>
+                    <UserProvider>
+                        <SelectedDateProvider>{children}</SelectedDateProvider>
+                    </UserProvider>
                 </SessionProvider>
                 <Toaster
                     toastOptions={{
