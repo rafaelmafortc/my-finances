@@ -14,11 +14,10 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowDownLeft, ArrowUpDown, ArrowUpRight } from 'lucide-react';
+import { ArrowUpDown } from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
