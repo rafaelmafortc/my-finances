@@ -3,3 +3,8 @@ type Category = {
     name: string;
     type: 'INCOME' | 'EXPENSE';
 };
+
+type CategoryInput = {
+    name: string;
+    type: 'INCOME' | 'EXPENSE';
+};

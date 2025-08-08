@@ -41,31 +41,9 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    const {
-        description,
-        amount,
-        date,
-        type,
-        isFixed,
-        categoryId,
-        newCategoryName,
-    } = body;
+    const { description, amount, date, type, isFixed, categoryId } = body;
 
     try {
-        let finalCategoryId = categoryId;
-
-        if (categoryId === 'new' && newCategoryName) {
-            const newCategory = await prisma.category.create({
-                data: {
-                    name: newCategoryName,
-                    type,
-                    userId,
-                },
-            });
-
-            finalCategoryId = newCategory.id;
-        }
-
         const transaction = await prisma.transaction.create({
             data: {
                 userId,
@@ -74,7 +52,7 @@ export async function POST(req: Request) {
                 date: new Date(date),
                 type,
                 isFixed,
-                categoryId: finalCategoryId,
+                categoryId,
             },
         });
 

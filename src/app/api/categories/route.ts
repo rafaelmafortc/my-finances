@@ -15,3 +15,29 @@ export async function GET() {
 
     return NextResponse.json(categories);
 }
+
+export async function POST(req: Request) {
+    const { userId, response } = await getAuthenticatedUser();
+    if (!userId && response) return response;
+
+    const body = await req.json();
+
+    const { name, type } = body;
+
+    try {
+        const category = await prisma.category.create({
+            data: {
+                userId,
+                name,
+                type,
+            },
+        });
+
+        return NextResponse.json(category, { status: 201 });
+    } catch (error) {
+        return NextResponse.json(
+            { error: 'Erro ao criar categoria' },
+            { status: 500 }
+        );
+    }
+}

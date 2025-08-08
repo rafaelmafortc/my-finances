@@ -30,7 +30,7 @@ import { useSelectedDate } from '@/providers/selected-date-provider';
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
-    const { reloadCategories, categories } = useCategories();
+    const { postCategory, categories } = useCategories();
     const { month } = useSelectedDate();
     const { postTransaction } = useTransactions(month);
 
@@ -77,13 +77,18 @@ export function TransactionDialog() {
             return;
         }
 
-        const payload = {
-            ...formData,
-            newCategoryName:
-                formData.categoryId === 'new' ? newCategoryName : undefined,
-        };
-
         try {
+            let payload = { ...formData };
+
+            if (formData.categoryId === 'new') {
+                const newCategory = await postCategory({
+                    name: newCategoryName,
+                    type: formData.type,
+                });
+
+                payload = { ...payload, categoryId: newCategory.id };
+            }
+
             await postTransaction(payload);
             setFormData({
                 id: null,
@@ -96,7 +101,6 @@ export function TransactionDialog() {
             });
             setNewCategoryName('');
             setOpen(false);
-            reloadCategories?.();
             toast.success('Sucesso ao salvar transação');
         } catch (e) {
             console.error(e);
