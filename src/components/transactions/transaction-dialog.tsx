@@ -47,6 +47,8 @@ export function TransactionDialog({
         isFixed: false,
         categoryId: null,
     });
+    const [loading, setLoading] = useState<boolean>(false);
+
     const filteredCategories = categories.filter(
         (category: Category) => category.type === formData.type
     );
@@ -82,6 +84,7 @@ export function TransactionDialog({
         }
 
         try {
+            setLoading(true);
             let payload = { ...formData };
 
             if (formData.categoryId === 'new') {
@@ -109,6 +112,8 @@ export function TransactionDialog({
         } catch (e) {
             console.error(e);
             toast.error('Erro ao salvar transação');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -275,6 +280,7 @@ export function TransactionDialog({
                         <Button
                             onClick={submitTransaction}
                             className="text-primary bg-cian hover:bg-cian/80"
+                            loading={loading}
                         >
                             Salvar
                         </Button>
