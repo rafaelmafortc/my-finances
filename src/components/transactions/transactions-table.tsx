@@ -113,7 +113,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
     },
     {
         accessorKey: 'type',
-        header: () => <div className="text-center">Data</div>,
+        header: () => <div className="text-center">Tipo</div>,
         cell: ({ row }) => (
             <div className="text-center">
                 <TypeBadge type={row.original.type} />
