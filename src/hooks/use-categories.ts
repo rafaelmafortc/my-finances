@@ -33,6 +33,30 @@ export function useCategories() {
         return created;
     }
 
+    async function putCategory(id: string, input: CategoryInput) {
+        if (!id) return;
+        await mutate(
+            async (current: any[] = []) => {
+                const res = await fetch(`/api/categories?id=${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(input),
+                });
+                if (!res.ok) {
+                    toast.error('Erro ao alterar categoria');
+                } else {
+                    toast.success('Sucesso ao alterar categoria');
+                }
+                return current;
+            },
+            {
+                rollbackOnError: true,
+                revalidate: true,
+                populateCache: true,
+            }
+        );
+    }
+
     async function deleteCategory(id: string) {
         if (!id) return;
         await mutate(
@@ -65,6 +89,7 @@ export function useCategories() {
         isLoading,
         isError: error,
         postCategory,
+        putCategory,
         deleteCategory,
     };
 }

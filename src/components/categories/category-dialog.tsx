@@ -23,26 +23,25 @@ import {
 } from '@/components/ui/select';
 import { useCategories } from '@/hooks/use-categories';
 
-const initialFormData: Category = {
-    id: null,
-    name: '',
-    type: 'EXPENSE',
-};
+const EMPTY_CATEGORY: Category = { id: null, name: '', type: 'EXPENSE' };
 
 export function CategoryDialog({
     open,
     onOpenChange,
+    category,
 }: {
     open: boolean;
     onOpenChange: (open: boolean) => void;
+    category?: Category | null;
 }) {
-    const { postCategory } = useCategories();
+    const { putCategory, postCategory } = useCategories();
 
-    const [formData, setFormData] = useState<Category>(initialFormData);
+    const [formData, setFormData] = useState<Category>(EMPTY_CATEGORY);
 
     useEffect(() => {
-        if (open) setFormData(initialFormData);
-    }, [open]);
+        if (!open) return;
+        setFormData(category ? { ...category } : EMPTY_CATEGORY);
+    }, [open, category]);
 
     const handleChangeFormData = (key: string, value: any) => {
         setFormData((prev) => ({
@@ -58,10 +57,17 @@ export function CategoryDialog({
         }
 
         try {
-            await postCategory({
-                name: formData.name,
-                type: formData.type,
-            });
+            if (formData.id) {
+                await putCategory(formData.id as string, {
+                    name: formData.name,
+                    type: formData.type,
+                });
+            } else {
+                await postCategory({
+                    name: formData.name,
+                    type: formData.type,
+                });
+            }
             onOpenChange(false);
             toast.success('Sucesso ao salvar categoria');
         } catch {
@@ -69,17 +75,23 @@ export function CategoryDialog({
         }
     };
 
+    const isEditing = !!formData.id;
+
     return (
         <React.Fragment>
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent className="w-full lg:m-0 lg:max-w-1/3 p-0 gap-0">
                     <div className="border-b py-2 px-4">
                         <DialogTitle className="text-lg font-semibold text-foreground">
-                            Adicionar categoria
+                            {isEditing
+                                ? 'Editar categoria'
+                                : 'Adicionar categoria'}
                         </DialogTitle>
                     </div>
                     <DialogDescription className="sr-only">
-                        Adicionar ou editar uma categoria
+                        {isEditing
+                            ? 'Editar uma categoria'
+                            : 'Adicionar uma categoria'}
                     </DialogDescription>
                     <div className="flex w-full overflow-y-auto max-h-[80dvh]">
                         <div className="flex-1 flex flex-col gap-4 p-6 overflow-y-auto">
@@ -131,7 +143,7 @@ export function CategoryDialog({
                                 onClick={submitCategory}
                                 className="text-primary bg-lime hover:bg-lime/80"
                             >
-                                Salvar
+                                {isEditing ? 'Salvar alterações' : 'Salvar'}
                             </Button>
                         </div>
                     </DialogFooter>

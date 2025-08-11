@@ -33,23 +33,20 @@ import { useCategories } from '@/hooks/use-categories';
 
 import { CategoryDialog } from './category-dialog';
 
-export type TransactionColumn = {
+export type CategoryColumn = {
     id: string;
-    description: string;
-    amount: number;
-    date: Date;
+    name: string;
     type: 'INCOME' | 'EXPENSE';
-    isFixed: boolean;
-    category: Category;
 };
 
 declare module '@tanstack/table-core' {
     interface TableMeta<TData extends unknown> {
         deleteCategory?: (id: string) => void;
+        onEditCategory?: (cat: Category) => void;
     }
 }
 
-export const columns: ColumnDef<TransactionColumn>[] = [
+export const columns: ColumnDef<CategoryColumn>[] = [
     {
         accessorKey: 'name',
         header: 'Nome',
@@ -70,7 +67,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
         id: 'actions',
         header: () => <div className="text-right">Ações</div>,
         cell: ({ row, table }) => {
-            const categoryId = row.original?.id;
+            const category = row.original;
 
             return (
                 <div className="flex justify-end">
@@ -87,7 +84,11 @@ export const columns: ColumnDef<TransactionColumn>[] = [
 
                         <DropdownMenuContent align="end">
                             <DropdownMenuItem
-                                onClick={() => null}
+                                onClick={() =>
+                                    table.options.meta?.onEditCategory?.(
+                                        category
+                                    )
+                                }
                                 className="gap-2"
                             >
                                 <Settings2 className="size-4" />
@@ -96,7 +97,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
                             <DropdownMenuItem
                                 onClick={() =>
                                     table.options.meta?.deleteCategory?.(
-                                        categoryId
+                                        category?.id
                                     )
                                 }
                                 className="gap-2 text-red focus:text-red"
@@ -121,6 +122,7 @@ export function CategoriesTable() {
         'ALL'
     );
     const [open, setOpen] = React.useState(false);
+    const [editing, setEditing] = React.useState<Category | null>(null);
 
     const table = useReactTable({
         data: categories ?? [],
@@ -131,7 +133,13 @@ export function CategoriesTable() {
         state: {
             columnFilters,
         },
-        meta: { deleteCategory },
+        meta: {
+            deleteCategory,
+            onEditCategory: (category) => {
+                setEditing(category);
+                setOpen(true);
+            },
+        },
     });
 
     React.useEffect(() => {
@@ -143,7 +151,11 @@ export function CategoriesTable() {
 
     return (
         <div className="w-full">
-            <CategoryDialog open={open} onOpenChange={setOpen} />
+            <CategoryDialog
+                open={open}
+                onOpenChange={setOpen}
+                category={editing}
+            />
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center justify-between py-4">
                 <Tabs
                     value={typeTab}
@@ -157,7 +169,10 @@ export function CategoriesTable() {
                 </Tabs>
                 <Button
                     className="text-primary bg-lime hover:bg-lime/80"
-                    onClick={() => setOpen(!open)}
+                    onClick={() => {
+                        setEditing(null);
+                        setOpen(!open);
+                    }}
                 >
                     <Plus />
                     Adicionar categoria
