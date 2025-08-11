@@ -2,10 +2,10 @@
 
 import * as React from 'react';
 
-import { NavHeader } from '@/components/nav/nav-header';
-import { NavMain } from '@/components/nav/nav-main';
-import { NavUser } from '@/components/nav/nav-user';
-import { SettingsDialog } from '@/components/settings-dialog';
+import { SettingsDialog } from '@/components/settings/settings-dialog';
+import { NavHeader } from '@/components/sidebar/nav/nav-header';
+import { NavMain } from '@/components/sidebar/nav/nav-main';
+import { NavUser } from '@/components/sidebar/nav/nav-user';
 import {
     Sidebar,
     SidebarContent,

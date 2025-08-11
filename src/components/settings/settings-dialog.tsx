@@ -1,7 +1,7 @@
 'use client';
 
-import { AccountSettings } from '@/components/settings-tabs/account-settings';
-import { PaymentSettings } from '@/components/settings-tabs/payment-settings';
+import { AccountSettings } from '@/components/settings/settings-tabs/account-settings';
+import { PaymentSettings } from '@/components/settings/settings-tabs/payment-settings';
 import {
     Dialog,
     DialogContent,

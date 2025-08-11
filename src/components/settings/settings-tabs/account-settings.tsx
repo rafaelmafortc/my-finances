@@ -3,11 +3,10 @@
 import Image from 'next/image';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useUser } from '@/providers/user-provider';
-
-import { Button } from '../ui/button';
 
 const colorClasses: Record<string, string> = {
     blue: 'bg-blue hover:bg-blue/80',
