@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { Plus, X } from 'lucide-react';
 import { toast } from 'sonner';
@@ -26,6 +26,16 @@ import {
 import { useCategories } from '@/hooks/use-categories';
 import { useTransactions } from '@/hooks/use-transactions';
 
+const EMPTY_TRANSACTION: Transaction = {
+    id: null,
+    description: '',
+    amount: 0,
+    date: new Date(),
+    type: 'EXPENSE',
+    isFixed: false,
+    categoryId: null,
+};
+
 export function TransactionDialog({
     open,
     onOpenChange,
@@ -38,16 +48,13 @@ export function TransactionDialog({
     const { postCategory, categories } = useCategories();
     const { postTransaction } = useTransactions();
 
-    const [formData, setFormData] = useState<Transaction>({
-        id: null,
-        description: '',
-        amount: 0,
-        date: new Date(),
-        type: 'EXPENSE',
-        isFixed: false,
-        categoryId: null,
-    });
+    const [formData, setFormData] = useState<Transaction>(EMPTY_TRANSACTION);
     const [loading, setLoading] = useState<boolean>(false);
+
+    useEffect(() => {
+        if (!open) return;
+        setFormData(transaction ? { ...transaction } : EMPTY_TRANSACTION);
+    }, [open, transaction]);
 
     const filteredCategories = categories.filter(
         (category: Category) => category.type === formData.type
