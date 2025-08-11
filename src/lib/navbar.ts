@@ -24,24 +24,11 @@ export const navbarMain = [
     //     url: '/fixes',
     //     icon: ArrowUpDown,
     // },
-    // {
-    //     title: 'Categorias',
-    //     url: '/categories',
-    //     icon: GalleryVerticalEnd,
-    // },
-];
-
-export const navbarSettings = [
     {
-        id: 'account',
-        title: 'Conta',
-        icon: CircleUser,
+        title: 'Categorias',
+        url: '/categories',
+        icon: GalleryVerticalEnd,
     },
-    // {
-    //     id: 'payment',
-    //     title: 'Pagamento',
-    //     icon: CreditCard,
-    // },
 ];
 
 export const pageHeader: Record<
@@ -56,12 +43,25 @@ export const pageHeader: Record<
         title: 'Dashboard',
         hasMonthPicker: true,
     },
-    // categories: {
-    //     title: 'Categorias',
-    //     hasMonthPicker: false,
-    // },
+    categories: {
+        title: 'Categorias',
+        hasMonthPicker: false,
+    },
     // fixes: {
     //     title: 'Fixos',
     //     hasMonthPicker: false,
     // },
 };
+
+export const navbarSettings = [
+    {
+        id: 'account',
+        title: 'Conta',
+        icon: CircleUser,
+    },
+    // {
+    //     id: 'payment',
+    //     title: 'Pagamento',
+    //     icon: CreditCard,
+    // },
+];
