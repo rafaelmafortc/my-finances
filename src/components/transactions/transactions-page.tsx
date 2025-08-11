@@ -7,7 +7,7 @@ import { TransactionsTable } from '@/components/transactions/transactions-table'
 import { useTransactions } from '@/hooks/use-transactions';
 import { useSelectedDate } from '@/providers/selected-date-provider';
 
-export default function TransactionsPageComponent() {
+export default function TransactionsPage() {
     const { month } = useSelectedDate();
 
     const { transactions, isLoading } = useTransactions(month);

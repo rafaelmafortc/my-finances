@@ -1,5 +1,5 @@
-import TransactionsPageComponent from '@/components/transactions/transactions-page';
+import TransactionsPage from '@/components/transactions/transactions-page';
 
-export default function TransactionsPage() {
-    return <TransactionsPageComponent />;
+export default function Transactions() {
+    return <TransactionsPage />;
 }
