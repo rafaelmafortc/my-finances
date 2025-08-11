@@ -162,8 +162,8 @@ export function CategoriesTable() {
                 >
                     <TabsList className="w-full">
                         <TabsTrigger value="ALL">Todas</TabsTrigger>
-                        <TabsTrigger value="INCOME">Receitas</TabsTrigger>
-                        <TabsTrigger value="EXPENSE">Despesas</TabsTrigger>
+                        <TabsTrigger value="INCOME">Receita</TabsTrigger>
+                        <TabsTrigger value="EXPENSE">Despesa</TabsTrigger>
                     </TabsList>
                 </Tabs>
                 <Button
