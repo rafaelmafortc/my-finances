@@ -3,8 +3,6 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { ChartPie, FileText, GalleryVerticalEnd } from 'lucide-react';
-
 import { Collapsible } from '@/components/ui/collapsible';
 import {
     SidebarGroup,
@@ -12,26 +10,7 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-
-export const navbarMain = [
-    {
-        title: 'Dashboard',
-        url: '/dashboard',
-        icon: ChartPie,
-        defaultOpen: true,
-    },
-    {
-        title: 'Transações',
-        url: '/transactions',
-        icon: FileText,
-    },
-
-    {
-        title: 'Categorias',
-        url: '/categories',
-        icon: GalleryVerticalEnd,
-    },
-];
+import { navbar } from '@/lib/navbar';
 
 export function NavMain() {
     const pathname = usePathname();
@@ -39,7 +18,7 @@ export function NavMain() {
     return (
         <SidebarGroup>
             <SidebarMenu>
-                {navbarMain.map((item) => (
+                {navbar.map((item) => (
                     <Collapsible
                         key={item.title}
                         asChild

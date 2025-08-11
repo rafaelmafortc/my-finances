@@ -10,24 +10,13 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-
-const pageHeader: Record<string, { title: string; hasMonthPicker: boolean }> = {
-    transactions: {
-        title: 'Transações',
-        hasMonthPicker: true,
-    },
-    dashboard: {
-        title: 'Dashboard',
-        hasMonthPicker: true,
-    },
-    categories: {
-        title: 'Categorias',
-        hasMonthPicker: false,
-    },
-};
+import { navbar } from '@/lib/navbar';
 
 export function PrivatePageHeader() {
-    const pathname = usePathname().split('/')[1].toString();
+    const pathname = usePathname();
+    const currentPage = navbar.find((n) => n.url === pathname);
+
+    if (!currentPage) return null;
 
     return (
         <header className="bg-sidebar border-b-2 flex justify-between h-16 shrink-0 items-center gap-2 transition-[width,height] ease-linear group-has-data-[collapsible=icon]/sidebar-wrapper:h-12">
@@ -39,13 +28,11 @@ export function PrivatePageHeader() {
                 />
                 <Breadcrumb>
                     <BreadcrumbItem>
-                        <BreadcrumbPage>
-                            {pageHeader[pathname].title}
-                        </BreadcrumbPage>
+                        <BreadcrumbPage>{currentPage.title}</BreadcrumbPage>
                     </BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            {pageHeader[pathname].hasMonthPicker && (
+            {currentPage.hasMonthPicker && (
                 <div className="px-4">
                     <MonthPicker />
                 </div>
