@@ -10,7 +10,21 @@ import {
 } from '@/components/ui/breadcrumb';
 import { Separator } from '@/components/ui/separator';
 import { SidebarTrigger } from '@/components/ui/sidebar';
-import { pageHeader } from '@/lib/navbar';
+
+const pageHeader: Record<string, { title: string; hasMonthPicker: boolean }> = {
+    transactions: {
+        title: 'Transações',
+        hasMonthPicker: true,
+    },
+    dashboard: {
+        title: 'Dashboard',
+        hasMonthPicker: true,
+    },
+    categories: {
+        title: 'Categorias',
+        hasMonthPicker: false,
+    },
+};
 
 export function PrivatePageHeader() {
     const pathname = usePathname().split('/')[1].toString();

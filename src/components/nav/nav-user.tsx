@@ -2,7 +2,7 @@
 
 import { signOut } from 'next-auth/react';
 
-import { LogOut, Settings, Settings2 } from 'lucide-react';
+import { CircleUser, LogOut, Settings } from 'lucide-react';
 
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import {
@@ -18,8 +18,20 @@ import {
     SidebarMenuItem,
     useSidebar,
 } from '@/components/ui/sidebar';
-import { navbarSettings } from '@/lib/navbar';
 import { useUser } from '@/providers/user-provider';
+
+export const navbarSettings = [
+    {
+        id: 'account',
+        title: 'Conta',
+        icon: CircleUser,
+    },
+    // {
+    //     id: 'payment',
+    //     title: 'Pagamento',
+    //     icon: CreditCard,
+    // },
+];
 
 export function NavUser({
     handleOpenSettings,
