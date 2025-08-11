@@ -10,12 +10,10 @@ import {
     getFilteredRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, EllipsisVertical, Settings2, Trash } from 'lucide-react';
+import { EllipsisVertical, Plus, Settings2, Trash } from 'lucide-react';
 
-import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
 import {
     DropdownMenu,
     DropdownMenuContent,
@@ -32,6 +30,8 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCategories } from '@/hooks/use-categories';
+
+import { CategoryDialog } from './category-dialog';
 
 export type TransactionColumn = {
     id: string;
@@ -120,6 +120,7 @@ export function CategoriesTable() {
     const [typeTab, setTypeTab] = React.useState<'ALL' | 'INCOME' | 'EXPENSE'>(
         'ALL'
     );
+    const [open, setOpen] = React.useState(false);
 
     const table = useReactTable({
         data: categories ?? [],
@@ -142,10 +143,11 @@ export function CategoriesTable() {
 
     return (
         <div className="w-full">
+            <CategoryDialog open={open} onOpenChange={setOpen} />
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center justify-between py-4">
                 <Tabs
                     value={typeTab}
-                    onValueChange={(v) => setTypeTab(v as any)}
+                    onValueChange={(type) => setTypeTab(type as any)}
                 >
                     <TabsList className="w-full">
                         <TabsTrigger value="ALL">Todas</TabsTrigger>
@@ -153,7 +155,13 @@ export function CategoriesTable() {
                         <TabsTrigger value="EXPENSE">Despesas</TabsTrigger>
                     </TabsList>
                 </Tabs>
-                <TransactionDialog />
+                <Button
+                    className="text-primary bg-lime hover:bg-lime/80"
+                    onClick={() => setOpen(!open)}
+                >
+                    <Plus />
+                    Adicionar categoria
+                </Button>
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>
