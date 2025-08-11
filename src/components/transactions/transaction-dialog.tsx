@@ -73,12 +73,10 @@ export function TransactionDialog({
             return;
         }
 
-        if (!formData.categoryId && !newCategoryName.trim()) {
-            toast.warning('Selecione ou crie uma categoria');
-            return;
-        }
-
-        if (formData.categoryId === 'new' && !newCategoryName.trim()) {
+        if (
+            (formData.categoryId === 'new' || !formData.categoryId) &&
+            !newCategoryName.trim()
+        ) {
             toast.warning('Selecione ou crie uma categoria');
             return;
         }
