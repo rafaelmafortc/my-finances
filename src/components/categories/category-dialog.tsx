@@ -37,6 +37,7 @@ export function CategoryDialog({
     const { putCategory, postCategory } = useCategories();
 
     const [formData, setFormData] = useState<Category>(EMPTY_CATEGORY);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
         if (!open) return;
@@ -57,6 +58,7 @@ export function CategoryDialog({
         }
 
         try {
+            setLoading(true);
             if (formData.id) {
                 await putCategory(formData.id as string, {
                     name: formData.name,
@@ -69,9 +71,8 @@ export function CategoryDialog({
                 });
             }
             onOpenChange(false);
-            toast.success('Sucesso ao salvar categoria');
-        } catch {
-            toast.error('Erro ao salvar categoria');
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -142,6 +143,7 @@ export function CategoryDialog({
                             <Button
                                 onClick={submitCategory}
                                 className="text-primary bg-lime hover:bg-lime/80"
+                                loading={loading}
                             >
                                 {isEditing ? 'Salvar alterações' : 'Salvar'}
                             </Button>
