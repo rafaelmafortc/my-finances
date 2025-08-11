@@ -1,6 +1,6 @@
 import Image from 'next/image';
 
-import founderImage from 'public/founder-image.jpg';
+import founderImage from '@/public/founder-image.jpg';
 
 export function Founder() {
     return (
