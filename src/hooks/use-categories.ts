@@ -1,3 +1,4 @@
+import { toast } from 'sonner';
 import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((res) => res.json());
@@ -32,10 +33,38 @@ export function useCategories() {
         return created;
     }
 
+    async function deleteCategory(id: string) {
+        if (!id) return;
+        await mutate(
+            async (current: any[] = []) => {
+                const res = await fetch(`/api/categories?id=${id}`, {
+                    method: 'DELETE',
+                    headers: { 'Content-Type': 'application/json' },
+                });
+                if (!res.ok) {
+                    const data = await res.json();
+                    let message = 'Erro ao deletar';
+                    if (data?.error) {
+                        message = data.error;
+                    }
+                    toast.error(message);
+                    return current;
+                }
+                toast.success('Sucesso ao deletar categoria');
+                return current.filter((t) => t.id !== id);
+            },
+            {
+                rollbackOnError: true,
+                revalidate: true,
+            }
+        );
+    }
+
     return {
         categories: data ?? [],
         isLoading,
         isError: error,
         postCategory,
+        deleteCategory,
     };
 }

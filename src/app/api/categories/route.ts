@@ -41,3 +41,46 @@ export async function POST(req: Request) {
         );
     }
 }
+
+export async function DELETE(req: Request) {
+    const { userId, response } = await getAuthenticatedUser();
+    if (!userId && response) return response;
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    }
+
+    try {
+        const transactionsCount = await prisma.transaction.count({
+            where: { userId, categoryId: id },
+        });
+
+        if (transactionsCount > 0) {
+            return NextResponse.json(
+                {
+                    error: 'Não é possivel deletar, existem transações cadastradas com essa categoria',
+                },
+                { status: 409 }
+            );
+        }
+
+        const result = await prisma.category.deleteMany({
+            where: { id, userId },
+        });
+
+        if (result.count === 0) {
+            return NextResponse.json(
+                { error: 'Category not found' },
+                { status: 404 }
+            );
+        }
+
+        return new NextResponse(null, { status: 204 });
+    } catch (err) {
+        console.error('DELETE /api/categories/:id', err);
+        return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    }
+}
