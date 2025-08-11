@@ -219,10 +219,10 @@ export function CategoriesTable() {
                                 </TableRow>
                             ))
                         ) : (
-                            <TableRow>
+                            <TableRow className="hover:bg-primary">
                                 <TableCell
                                     colSpan={columns.length}
-                                    className="h-24 text-center"
+                                    className="h-[52.5px] text-center"
                                 >
                                     Sem categorias cadastradas
                                 </TableCell>
