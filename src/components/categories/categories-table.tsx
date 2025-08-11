@@ -7,6 +7,7 @@ import {
     ColumnFiltersState,
     flexRender,
     getCoreRowModel,
+    getFilteredRowModel,
     useReactTable,
 } from '@tanstack/react-table';
 import { ArrowUpDown, EllipsisVertical, Settings2, Trash } from 'lucide-react';
@@ -125,6 +126,7 @@ export function CategoriesTable() {
         columns,
         onColumnFiltersChange: setColumnFilters,
         getCoreRowModel: getCoreRowModel(),
+        getFilteredRowModel: getFilteredRowModel(),
         state: {
             columnFilters,
         },
