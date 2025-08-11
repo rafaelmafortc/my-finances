@@ -14,7 +14,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, EllipsisVertical, Trash } from 'lucide-react';
+import { ArrowUpDown, EllipsisVertical, Plus, Trash } from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
@@ -184,6 +184,7 @@ declare module '@tanstack/table-core' {
 }
 export function TransactionsTable() {
     const { transactions, deleteTransaction } = useTransactions();
+    const [open, setOpen] = React.useState(false);
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =
@@ -224,6 +225,7 @@ export function TransactionsTable() {
 
     return (
         <div className="w-full">
+            <TransactionDialog open={open} onOpenChange={setOpen} />
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center justify-between py-4">
                 <Tabs
                     value={typeTab}
@@ -235,7 +237,13 @@ export function TransactionsTable() {
                         <TabsTrigger value="EXPENSE">Despesas</TabsTrigger>
                     </TabsList>
                 </Tabs>
-                <TransactionDialog />
+                <Button
+                    className="text-primary bg-cian hover:bg-cian/80"
+                    onClick={() => setOpen(!open)}
+                >
+                    <Plus />
+                    Adicionar transação
+                </Button>
             </div>
             <div className="overflow-hidden rounded-md border">
                 <Table>

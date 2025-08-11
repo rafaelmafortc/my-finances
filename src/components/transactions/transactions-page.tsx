@@ -1,13 +1,17 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
 
+import { Loader2, Plus } from 'lucide-react';
+
+import { Button } from '@/components//ui/button';
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TransactionsTable } from '@/components/transactions/transactions-table';
 import { useTransactions } from '@/hooks/use-transactions';
 
 export default function TransactionsPage() {
     const { transactions, isLoading } = useTransactions();
+    const [open, setOpen] = useState(false);
 
     return isLoading ? (
         <div className="flex items-center justify-center w-full h-screen">
@@ -17,6 +21,7 @@ export default function TransactionsPage() {
         <TransactionsTable />
     ) : (
         <div className="flex items-center justify-center min-h-full border-2 border-dashed rounded-lg p-4 border-accent">
+            <TransactionDialog open={open} onOpenChange={setOpen} />
             <div className="w-full max-w-md ">
                 <div className="flex flex-col items-center gap-4">
                     <div className="flex flex-col items-center text-center">
@@ -27,7 +32,13 @@ export default function TransactionsPage() {
                             Adicione sua primeira transação para começar
                         </p>
                     </div>
-                    <TransactionDialog />
+                    <Button
+                        className="text-primary bg-cian hover:bg-cian/80"
+                        onClick={() => setOpen(!open)}
+                    >
+                        <Plus />
+                        Adicionar transação
+                    </Button>
                 </div>
             </div>
         </div>
