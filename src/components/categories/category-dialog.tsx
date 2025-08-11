@@ -76,23 +76,19 @@ export function CategoryDialog({
         }
     };
 
-    const isEditing = !!formData.id;
-
     return (
         <React.Fragment>
             <Dialog open={open} onOpenChange={onOpenChange}>
                 <DialogContent className="w-full lg:m-0 lg:max-w-1/3 p-0 gap-0">
                     <div className="border-b py-2 px-4">
                         <DialogTitle className="text-lg font-semibold text-foreground">
-                            {isEditing
+                            {!!formData.id
                                 ? 'Editar categoria'
                                 : 'Adicionar categoria'}
                         </DialogTitle>
                     </div>
                     <DialogDescription className="sr-only">
-                        {isEditing
-                            ? 'Editar uma categoria'
-                            : 'Adicionar uma categoria'}
+                        Adicionar ou Editar uma categoria
                     </DialogDescription>
                     <div className="flex w-full overflow-y-auto max-h-[80dvh]">
                         <div className="flex-1 flex flex-col gap-4 p-6 overflow-y-auto">
