@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import { toast } from 'sonner';
 
@@ -23,6 +23,12 @@ import {
 } from '@/components/ui/select';
 import { useCategories } from '@/hooks/use-categories';
 
+const initialFormData: Category = {
+    id: null,
+    name: '',
+    type: 'EXPENSE',
+};
+
 export function CategoryDialog({
     open,
     onOpenChange,
@@ -32,11 +38,11 @@ export function CategoryDialog({
 }) {
     const { postCategory } = useCategories();
 
-    const [formData, setFormData] = useState<Category>({
-        id: null,
-        name: '',
-        type: 'EXPENSE',
-    });
+    const [formData, setFormData] = useState<Category>(initialFormData);
+
+    useEffect(() => {
+        if (open) setFormData(initialFormData);
+    }, [open]);
 
     const handleChangeFormData = (key: string, value: any) => {
         setFormData((prev) => ({
@@ -45,10 +51,21 @@ export function CategoryDialog({
         }));
     };
 
-    const submitTransaction = async () => {
+    const submitCategory = async () => {
         if (!formData.name.trim()) {
-            toast.warning('o Nome é obrigatória');
+            toast.warning('O nome é obrigatório');
             return;
+        }
+
+        try {
+            await postCategory({
+                name: formData.name,
+                type: formData.type,
+            });
+            onOpenChange(false);
+            toast.success('Sucesso ao salvar categoria');
+        } catch {
+            toast.error('Erro ao salvar categoria');
         }
     };
 
@@ -111,7 +128,7 @@ export function CategoryDialog({
                     <DialogFooter>
                         <div className="border-t py-2 px-4 w-full flex justify-end">
                             <Button
-                                onClick={submitTransaction}
+                                onClick={submitCategory}
                                 className="text-primary bg-lime hover:bg-lime/80"
                             >
                                 Salvar
