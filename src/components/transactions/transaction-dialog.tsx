@@ -25,14 +25,12 @@ import {
 } from '@/components/ui/select';
 import { useCategories } from '@/hooks/use-categories';
 import { useTransactions } from '@/hooks/use-transactions';
-import { useSelectedDate } from '@/providers/selected-date-provider';
 
 export function TransactionDialog() {
     const [open, setOpen] = useState(false);
 
     const { postCategory, categories } = useCategories();
-    const { month } = useSelectedDate();
-    const { postTransaction } = useTransactions(month);
+    const { postTransaction } = useTransactions();
 
     const [formData, setFormData] = useState<Transaction>({
         id: null,

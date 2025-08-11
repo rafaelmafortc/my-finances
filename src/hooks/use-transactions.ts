@@ -3,15 +3,16 @@ import useSWR from 'swr';
 
 const fetcher = (url: string) => fetch(url).then((r) => r.json());
 
-export function useTransactions(month?: string) {
-    const key = month
-        ? `/api/transactions?month=${month}`
-        : '/api/transactions';
-    const { data, error, isLoading, mutate } = useSWR(key, fetcher, {
-        revalidateOnFocus: false,
-        revalidateOnReconnect: false,
-        keepPreviousData: true,
-    });
+export function useTransactions() {
+    const { data, error, isLoading, mutate } = useSWR(
+        '/api/transactions',
+        fetcher,
+        {
+            revalidateOnFocus: false,
+            revalidateOnReconnect: false,
+            keepPreviousData: true,
+        }
+    );
 
     async function postTransaction(input: TransactionInput) {
         const res = await fetch('/api/transactions', {

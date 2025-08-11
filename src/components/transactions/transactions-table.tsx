@@ -14,7 +14,7 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, EllipsisVertical, Settings2, Trash } from 'lucide-react';
+import { ArrowUpDown, EllipsisVertical, Trash } from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
@@ -36,7 +36,6 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTransactions } from '@/hooks/use-transactions';
-import { useSelectedDate } from '@/providers/selected-date-provider';
 
 export type TransactionColumn = {
     id: string;
@@ -184,8 +183,7 @@ declare module '@tanstack/table-core' {
     }
 }
 export function TransactionsTable() {
-    const { month } = useSelectedDate();
-    const { transactions, deleteTransaction } = useTransactions(month);
+    const { transactions, deleteTransaction } = useTransactions();
 
     const [sorting, setSorting] = React.useState<SortingState>([]);
     const [columnFilters, setColumnFilters] =

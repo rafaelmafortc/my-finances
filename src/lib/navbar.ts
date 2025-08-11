@@ -14,7 +14,7 @@ export const navbar = [
         title: 'Transações',
         url: '/transactions',
         icon: FileText,
-        hasMonthPicker: true,
+        hasMonthPicker: false,
         defaultOpen: false,
     },
     {
