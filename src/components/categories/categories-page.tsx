@@ -1,12 +1,17 @@
 'use client';
 
-import { Loader2 } from 'lucide-react';
+import { useState } from 'react';
+
+import { Loader2, Plus } from 'lucide-react';
 
 import { CategoriesTable } from '@/components/categories/categories-table';
+import { CategoryDialog } from '@/components/categories/category-dialog';
+import { Button } from '@/components/ui/button';
 import { useCategories } from '@/hooks/use-categories';
 
 export default function CategoriesPage() {
     const { categories, isLoading } = useCategories();
+    const [open, setOpen] = useState(false);
 
     return isLoading ? (
         <div className="flex items-center justify-center w-full h-screen">
@@ -16,6 +21,7 @@ export default function CategoriesPage() {
         <CategoriesTable />
     ) : (
         <div className="flex items-center justify-center min-h-full border-2 border-dashed rounded-lg p-4 border-accent">
+            <CategoryDialog open={open} onOpenChange={setOpen} />
             <div className="w-full max-w-md ">
                 <div className="flex flex-col items-center gap-4">
                     <div className="flex flex-col items-center text-center">
@@ -26,6 +32,15 @@ export default function CategoriesPage() {
                             Adicione sua primeira categoria para começar
                         </p>
                     </div>
+                    <Button
+                        className="text-primary bg-lime hover:bg-lime/80"
+                        onClick={() => {
+                            setOpen(!open);
+                        }}
+                    >
+                        <Plus />
+                        Adicionar categoria
+                    </Button>
                 </div>
             </div>
         </div>

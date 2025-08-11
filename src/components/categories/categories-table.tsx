@@ -12,6 +12,7 @@ import {
 } from '@tanstack/react-table';
 import { EllipsisVertical, Plus, Settings2, Trash } from 'lucide-react';
 
+import { CategoryDialog } from '@/components/categories/category-dialog';
 import { TypeBadge } from '@/components/type-badge';
 import { Button } from '@/components/ui/button';
 import {
@@ -30,8 +31,6 @@ import {
 } from '@/components/ui/table';
 import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useCategories } from '@/hooks/use-categories';
-
-import { CategoryDialog } from './category-dialog';
 
 export type CategoryColumn = {
     id: string;
