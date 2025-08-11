@@ -145,7 +145,7 @@ export function CategoryDialog({
                                 className="text-primary bg-lime hover:bg-lime/80"
                                 loading={loading}
                             >
-                                {isEditing ? 'Salvar alterações' : 'Salvar'}
+                                Salvar
                             </Button>
                         </div>
                     </DialogFooter>
