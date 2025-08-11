@@ -85,7 +85,7 @@ export function CategoryDialog({
                         <div className="flex-1 flex flex-col gap-4 p-6 overflow-y-auto">
                             <div className="w-full">
                                 <Label className="mb-2 block text-sm font-medium">
-                                    Descrição
+                                    Nome
                                 </Label>
                                 <Input
                                     value={formData?.name}
@@ -99,7 +99,7 @@ export function CategoryDialog({
                             </div>
                             <div className="w-full">
                                 <Label className="mb-2 block text-sm font-medium">
-                                    Tipo de transação
+                                    Tipo da categoria
                                 </Label>
                                 <Select
                                     value={formData.type}
