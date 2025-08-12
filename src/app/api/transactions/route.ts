@@ -45,6 +45,32 @@ export async function POST(req: Request) {
     }
 }
 
+export async function PUT(req: Request) {
+    const { userId, response } = await getAuthenticatedUser();
+    if (!userId && response) return response;
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+
+    if (!id) {
+        return NextResponse.json({ error: 'Missing id' }, { status: 400 });
+    }
+
+    const body = await req.json();
+
+    try {
+        const updated = await prisma.transaction.update({
+            where: { id, userId },
+            data: body,
+        });
+
+        return NextResponse.json(updated);
+    } catch (err) {
+        console.error('PUT /api/transactions/:id', err);
+        return NextResponse.json({ error: 'Internal error' }, { status: 500 });
+    }
+}
+
 export async function DELETE(req: Request) {
     const { userId, response } = await getAuthenticatedUser();
     if (!userId && response) return response;
