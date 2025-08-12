@@ -33,6 +33,30 @@ export function useTransactions() {
         return created;
     }
 
+    async function putTransaction(id: string, input: CategoryInput) {
+        if (!id) return;
+        await mutate(
+            async (current: any[] = []) => {
+                const res = await fetch(`/api/transactions?id=${id}`, {
+                    method: 'PUT',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(input),
+                });
+                if (!res.ok) {
+                    toast.error('Erro ao alterar transação');
+                } else {
+                    toast.success('Sucesso ao alterar transação');
+                }
+                return current;
+            },
+            {
+                rollbackOnError: true,
+                revalidate: true,
+                populateCache: true,
+            }
+        );
+    }
+
     async function deleteTransaction(id: string) {
         if (!id) return;
         await mutate(
@@ -59,6 +83,7 @@ export function useTransactions() {
         isLoading,
         isError: error,
         postTransaction,
+        putTransaction,
         deleteTransaction,
     };
 }
