@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 import { prisma } from '@/lib/prisma';
 import { getAuthenticatedUser } from '@/lib/route-service';
+
+const categorySchema = z.object({
+    name: z.string().min(1),
+    type: z.enum(['INCOME', 'EXPENSE']),
+});
 
 export async function GET() {
     const { userId, response } = await getAuthenticatedUser();
@@ -22,14 +29,14 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    const { name, type } = body;
+    const parsed = categorySchema.parse(body);
 
     try {
         const category = await prisma.category.create({
             data: {
                 userId,
-                name,
-                type,
+                name: parsed.name,
+                type: parsed.type,
             },
         });
 
@@ -55,10 +62,15 @@ export async function PUT(req: Request) {
 
     const body = await req.json();
 
+    const parsed = categorySchema.parse(body);
+
     try {
         const updated = await prisma.category.update({
             where: { id, userId },
-            data: body,
+            data: {
+                name: parsed.name,
+                type: parsed.type,
+            },
         });
 
         return NextResponse.json(updated);
