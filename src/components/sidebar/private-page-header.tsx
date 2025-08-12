@@ -2,7 +2,6 @@
 
 import { usePathname } from 'next/navigation';
 
-import { MonthPicker } from '@/components/month-picker';
 import {
     Breadcrumb,
     BreadcrumbItem,
@@ -32,11 +31,6 @@ export function PrivatePageHeader() {
                     </BreadcrumbItem>
                 </Breadcrumb>
             </div>
-            {currentPage.hasMonthPicker && (
-                <div className="px-4">
-                    <MonthPicker />
-                </div>
-            )}
         </header>
     );
 }
