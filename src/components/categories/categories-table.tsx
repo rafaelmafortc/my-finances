@@ -41,7 +41,7 @@ export type CategoryColumn = {
 declare module '@tanstack/table-core' {
     interface TableMeta<TData extends unknown> {
         deleteCategory?: (id: string) => void;
-        onEditCategory?: (cat: Category) => void;
+        onEditCategory?: (category: Category) => void;
     }
 }
 

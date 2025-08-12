@@ -1,7 +1,24 @@
 import { NextResponse } from 'next/server';
 
+import { z } from 'zod';
+
 import { prisma } from '@/lib/prisma';
 import { getAuthenticatedUser } from '@/lib/route-service';
+
+const transactionSchema = z.object({
+    description: z.string().min(1),
+    amount: z
+        .union([z.number(), z.string()])
+        .transform((v) => {
+            const n = typeof v === 'string' ? Number(v.replace(',', '.')) : v;
+            return Math.abs(n);
+        })
+        .refine((n) => Number.isFinite(n), 'amount inválido'),
+    date: z.coerce.date(),
+    type: z.enum(['INCOME', 'EXPENSE']),
+    isFixed: z.boolean().optional().default(false),
+    categoryId: z.string().min(1),
+});
 
 export async function GET() {
     const { userId, response } = await getAuthenticatedUser();
@@ -21,18 +38,18 @@ export async function POST(req: Request) {
 
     const body = await req.json();
 
-    const { description, amount, date, type, isFixed, categoryId } = body;
+    const parsed = transactionSchema.parse(body);
 
     try {
         const transaction = await prisma.transaction.create({
             data: {
                 userId,
-                description,
-                amount: Math.abs(Number(amount)),
-                date: new Date(date),
-                type,
-                isFixed,
-                categoryId,
+                description: parsed.description,
+                amount: parsed.amount,
+                date: parsed.date,
+                type: parsed.type,
+                isFixed: parsed.isFixed,
+                categoryId: parsed.categoryId,
             },
         });
 
@@ -58,10 +75,20 @@ export async function PUT(req: Request) {
 
     const body = await req.json();
 
+    const parsed = transactionSchema.parse(body);
+
     try {
         const updated = await prisma.transaction.update({
             where: { id, userId },
-            data: body,
+            data: {
+                userId,
+                description: parsed.description,
+                amount: parsed.amount,
+                date: parsed.date,
+                type: parsed.type,
+                isFixed: parsed.isFixed,
+                categoryId: parsed.categoryId,
+            },
         });
 
         return NextResponse.json(updated);

@@ -46,7 +46,7 @@ export function TransactionDialog({
     transaction?: Transaction | null;
 }) {
     const { postCategory, categories } = useCategories();
-    const { postTransaction } = useTransactions();
+    const { putTransaction, postTransaction } = useTransactions();
 
     const [formData, setFormData] = useState<Transaction>(EMPTY_TRANSACTION);
     const [loading, setLoading] = useState<boolean>(false);
@@ -101,22 +101,15 @@ export function TransactionDialog({
                 payload = { ...payload, categoryId: newCategory.id };
             }
 
-            await postTransaction(payload);
-            setFormData({
-                id: null,
-                description: '',
-                amount: 0,
-                date: new Date(),
-                type: 'EXPENSE',
-                isFixed: false,
-                categoryId: null,
-            });
+            if (formData.id) {
+                await putTransaction(formData.id as string, payload);
+            } else {
+                await postTransaction(payload);
+            }
             setNewCategoryName('');
             onOpenChange(false);
-            toast.success('Sucesso ao salvar transação');
         } catch (e) {
             console.error(e);
-            toast.error('Erro ao salvar transação');
         } finally {
             setLoading(false);
         }
@@ -127,7 +120,9 @@ export function TransactionDialog({
             <DialogContent className="w-full lg:m-0 sm:max-w-1/2 p-0 gap-0">
                 <div className="border-b py-2 px-4">
                     <DialogTitle className="text-lg font-semibold text-foreground">
-                        Adicionar Transação
+                        {!!formData.id
+                            ? 'Editar transação'
+                            : 'Adicionar transação'}
                     </DialogTitle>
                 </div>
                 <DialogDescription className="sr-only">

@@ -33,7 +33,7 @@ export function useTransactions() {
         return created;
     }
 
-    async function putTransaction(id: string, input: CategoryInput) {
+    async function putTransaction(id: string, input: TransactionInput) {
         if (!id) return;
         await mutate(
             async (current: any[] = []) => {

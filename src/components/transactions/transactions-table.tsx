@@ -14,7 +14,13 @@ import {
     getSortedRowModel,
     useReactTable,
 } from '@tanstack/react-table';
-import { ArrowUpDown, EllipsisVertical, Plus, Trash } from 'lucide-react';
+import {
+    ArrowUpDown,
+    EllipsisVertical,
+    Plus,
+    Settings2,
+    Trash,
+} from 'lucide-react';
 
 import { TransactionDialog } from '@/components/transactions/transaction-dialog';
 import { TypeBadge } from '@/components/type-badge';
@@ -44,8 +50,16 @@ export type TransactionColumn = {
     date: Date;
     type: 'INCOME' | 'EXPENSE';
     isFixed: boolean;
+    categoryId: string;
     category: Category;
 };
+
+declare module '@tanstack/table-core' {
+    interface TableMeta<TData extends unknown> {
+        deleteTransaction?: (id: string) => void;
+        onEditTransaction?: (transaction: Transaction) => void;
+    }
+}
 
 export const columns: ColumnDef<TransactionColumn>[] = [
     {
@@ -136,7 +150,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
         id: 'actions',
         header: () => <div className="text-right">Ações</div>,
         cell: ({ row, table }) => {
-            const transactionId = row.original?.id;
+            const transaction = row.original;
 
             return (
                 <div className="flex justify-end">
@@ -152,17 +166,21 @@ export const columns: ColumnDef<TransactionColumn>[] = [
                         </DropdownMenuTrigger>
 
                         <DropdownMenuContent align="end" className="w-40">
-                            {/* <DropdownMenuItem
-                                onClick={() => null}
+                            <DropdownMenuItem
+                                onClick={() =>
+                                    table.options.meta?.onEditTransaction?.(
+                                        transaction
+                                    )
+                                }
                                 className="gap-2"
                             >
                                 <Settings2 className="size-4" />
                                 Editar
-                            </DropdownMenuItem> */}
+                            </DropdownMenuItem>
                             <DropdownMenuItem
                                 onClick={() =>
                                     table.options.meta?.deleteTransaction?.(
-                                        transactionId
+                                        transaction?.id
                                     )
                                 }
                                 className="gap-2 text-red focus:text-red"
@@ -177,11 +195,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
         },
     },
 ];
-declare module '@tanstack/table-core' {
-    interface TableMeta<TData extends unknown> {
-        deleteTransaction?: (id: string) => void;
-    }
-}
+
 export function TransactionsTable() {
     const { transactions, deleteTransaction } = useTransactions();
     const [open, setOpen] = React.useState(false);
@@ -195,6 +209,7 @@ export function TransactionsTable() {
     const [typeTab, setTypeTab] = React.useState<'ALL' | 'INCOME' | 'EXPENSE'>(
         'ALL'
     );
+    const [editing, setEditing] = React.useState<Transaction | null>(null);
 
     const table = useReactTable({
         data: transactions ?? [],
@@ -213,7 +228,13 @@ export function TransactionsTable() {
             columnVisibility,
             rowSelection,
         },
-        meta: { deleteTransaction },
+        meta: {
+            deleteTransaction,
+            onEditTransaction: (transaction) => {
+                setEditing(transaction);
+                setOpen(true);
+            },
+        },
     });
 
     React.useEffect(() => {
@@ -225,7 +246,11 @@ export function TransactionsTable() {
 
     return (
         <div className="w-full">
-            <TransactionDialog open={open} onOpenChange={setOpen} />
+            <TransactionDialog
+                open={open}
+                onOpenChange={setOpen}
+                transaction={editing}
+            />
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center justify-between py-4">
                 <Tabs
                     value={typeTab}
@@ -239,7 +264,10 @@ export function TransactionsTable() {
                 </Tabs>
                 <Button
                     className="text-primary bg-cian hover:bg-cian/80"
-                    onClick={() => setOpen(!open)}
+                    onClick={() => {
+                        setEditing(null);
+                        setOpen(!open);
+                    }}
                 >
                     <Plus />
                     Adicionar transação
