@@ -15,7 +15,6 @@ import {
     useReactTable,
 } from '@tanstack/react-table';
 import {
-    ArrowUpDown,
     ChevronLeft,
     ChevronRight,
     EllipsisVertical,
@@ -82,21 +81,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
     },
     {
         accessorKey: 'amount',
-        header: ({ column }) => {
-            return (
-                <div className="text-right">
-                    <Button
-                        variant="ghost"
-                        onClick={() =>
-                            column.toggleSorting(column.getIsSorted() === 'asc')
-                        }
-                    >
-                        Valor
-                        <ArrowUpDown />
-                    </Button>
-                </div>
-            );
-        },
+        header: () => <div className="text-right">Valor</div>,
         cell: ({ row }) => {
             const raw = row.getValue<number | string>('amount');
             const amount =
@@ -114,21 +99,7 @@ export const columns: ColumnDef<TransactionColumn>[] = [
     },
     {
         accessorKey: 'date',
-        header: ({ column }) => {
-            return (
-                <div className="text-right">
-                    <Button
-                        variant="ghost"
-                        onClick={() =>
-                            column.toggleSorting(column.getIsSorted() === 'asc')
-                        }
-                    >
-                        Data
-                        <ArrowUpDown />
-                    </Button>
-                </div>
-            );
-        },
+        header: () => <div className="text-right">Data</div>,
         cell: ({ row }) => (
             <div className="text-right">
                 {new Date(row.getValue('date')).toLocaleDateString('pt-BR')}
