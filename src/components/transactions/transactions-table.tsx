@@ -33,6 +33,15 @@ import {
     DropdownMenuItem,
     DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from '@/components/ui/select';
 import {
     Table,
     TableBody,
@@ -41,17 +50,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useTransactions } from '@/hooks/use-transactions';
-
-import { Label } from '../ui/label';
-import {
-    Select,
-    SelectContent,
-    SelectItem,
-    SelectTrigger,
-    SelectValue,
-} from '../ui/select';
 
 export type TransactionColumn = {
     id: string;
@@ -188,9 +187,6 @@ export function TransactionsTable() {
     const [columnVisibility, setColumnVisibility] =
         React.useState<VisibilityState>({});
     const [rowSelection, setRowSelection] = React.useState({});
-    const [typeTab, setTypeTab] = React.useState<'ALL' | 'INCOME' | 'EXPENSE'>(
-        'ALL'
-    );
     const [editing, setEditing] = React.useState<Transaction | null>(null);
 
     const table = useReactTable({
@@ -219,13 +215,6 @@ export function TransactionsTable() {
         },
     });
 
-    React.useEffect(() => {
-        const col = table.getColumn('type');
-        if (!col) return;
-        if (typeTab === 'ALL') col.setFilterValue(undefined);
-        else col.setFilterValue(typeTab);
-    }, [typeTab, table]);
-
     return (
         <div className="w-full">
             <TransactionDialog
@@ -234,16 +223,20 @@ export function TransactionsTable() {
                 transaction={editing}
             />
             <div className="flex flex-col-reverse gap-4 sm:flex-row sm:items-center justify-between py-4">
-                <Tabs
-                    value={typeTab}
-                    onValueChange={(v) => setTypeTab(v as any)}
-                >
-                    <TabsList className="w-full">
-                        <TabsTrigger value="ALL">Todas</TabsTrigger>
-                        <TabsTrigger value="INCOME">Receitas</TabsTrigger>
-                        <TabsTrigger value="EXPENSE">Despesas</TabsTrigger>
-                    </TabsList>
-                </Tabs>
+                <Input
+                    placeholder="Filtrar descrição..."
+                    value={
+                        (table
+                            .getColumn('description')
+                            ?.getFilterValue() as string) ?? ''
+                    }
+                    onChange={(event) => {
+                        table
+                            .getColumn('description')
+                            ?.setFilterValue(event.target.value);
+                    }}
+                    className="h-8 w-full sm:w-[250px]"
+                />
                 <Button
                     className="text-primary bg-cian hover:bg-cian/80"
                     onClick={() => {
