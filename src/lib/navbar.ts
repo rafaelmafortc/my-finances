@@ -1,4 +1,5 @@
 import {
+    ArrowDownUp,
     ChartPie,
     FileText,
     GalleryVerticalEnd,
@@ -26,5 +27,10 @@ export const navbar: Array<{
         title: 'Categorias',
         url: '/categories',
         icon: GalleryVerticalEnd,
+    },
+    {
+        title: 'Fixos',
+        url: '/fixes',
+        icon: ArrowDownUp,
     },
 ] as const;
