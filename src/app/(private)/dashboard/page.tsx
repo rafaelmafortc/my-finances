@@ -1,5 +1,9 @@
-import { WorkInProgressCard } from '@/components/work-in-progress';
+import PeriodFilter from '@/components/dashboard/period-filter';
 
 export default function Dashboard() {
-    return <WorkInProgressCard />;
+    return (
+        <div>
+            <PeriodFilter />
+        </div>
+    );
 }
