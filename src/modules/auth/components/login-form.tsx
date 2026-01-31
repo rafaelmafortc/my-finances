@@ -20,7 +20,7 @@ export function LoginForm() {
 
   return (
     <div className="flex w-full flex-col items-center">
-      <Card className="w-full max-w-sm rounded-2xl bg-card px-6 shadow-lg border border-border/60 dark:bg-white/5 dark:border-white/10 backdrop-blur-sm">
+      <Card className="w-full max-w-sm rounded-2xl bg-card px-6 inset-shadow-sm border border-border/60 backdrop-blur-sm">
         <CardHeader className="flex flex-col items-center gap-3 text-center">
           <CardTitle>Bem vindo!</CardTitle>
           <CardDescription>Faça login para acessar sua conta.</CardDescription>
