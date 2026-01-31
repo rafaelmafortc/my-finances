@@ -15,7 +15,7 @@ export function LoginForm() {
   const router = useRouter();
 
   const handleLogin = () => {
-    router.push('/');
+    router.push('/wallet');
   };
 
   return (
