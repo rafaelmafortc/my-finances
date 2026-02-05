@@ -1,7 +1,12 @@
+import { PageShell } from '@/components/layout/page-shell';
+
 export default function Page() {
   return (
-    <div>
-      <h1>Wallet</h1>
-    </div>
+    <PageShell
+      title="Carteira"
+      subtitle="Acompanhe suas receitas e despesas mensais"
+    >
+      <div>BODY</div>
+    </PageShell>
   );
 }

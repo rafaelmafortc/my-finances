@@ -19,7 +19,7 @@ export function AppSidebar() {
 
   return (
     <>
-      {/* Desktop Sidebar - Always collapsed (icon only) */}
+      {/* Desktop Sidebar */}
       <aside className="hidden md:flex fixed left-0 top-0 z-30 h-screen w-10 flex-col border-r border-border bg-card">
         <div className="p-1.5 pt-2">
           <div

@@ -12,7 +12,7 @@ export default async function Page() {
           <Link href="/">
             <PiggyBank className="size-6" />
           </Link>
-          <span className="text-xl">MyFinances</span>
+          <span className="text-lg">MyFinances</span>
         </div>
         <div className="flex w-full max-w-sm flex-col gap-6 items-center">
           <LoginForm />
