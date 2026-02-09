@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Geist } from 'next/font/google';
 
+import { SessionProvider } from '@/providers/session-provider';
+
 import './globals.css';
 
 export const metadata: Metadata = {
@@ -24,7 +26,9 @@ export default function RootLayout({
       className={`antialiased ${geist.className}`}
       suppressHydrationWarning
     >
-      <body>{children}</body>
+      <body>
+        <SessionProvider>{children}</SessionProvider>
+      </body>
     </html>
   );
 }
