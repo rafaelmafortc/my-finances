@@ -6,6 +6,9 @@ import './globals.css';
 export const metadata: Metadata = {
   title: 'MyFinances',
   description: 'powered by Rafael Mafort',
+  icons: {
+    icon: '/piggy-bank.svg',
+  },
 };
 
 const geist = Geist({ subsets: ['latin'] });
