@@ -1,14 +1,14 @@
-import { ChartColumnIncreasing, Home } from 'lucide-react';
+import { FileChartColumn, TrendingUp } from 'lucide-react';
 
 export const navigation = [
   {
-    name: 'Carteira',
-    href: '/wallet',
-    icon: Home,
+    name: 'Extrato',
+    href: '/statement',
+    icon: FileChartColumn,
   },
   {
     name: 'Investimentos',
     href: '/investments',
-    icon: ChartColumnIncreasing,
+    icon: TrendingUp,
   },
 ];

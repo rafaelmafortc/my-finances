@@ -19,7 +19,7 @@ export function LoginForm() {
   const handleLoginGoogle = () => {
     setIsLoading(true);
     try {
-      signIn('google', { callbackUrl: '/wallet' });
+      signIn('google', { callbackUrl: '/statement' });
     } catch (error) {
       setIsLoading(false);
     }

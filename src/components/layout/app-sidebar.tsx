@@ -33,7 +33,7 @@ export function AppSidebar() {
         </div>
 
         <TooltipProvider delayDuration={0}>
-          <nav className="flex flex-1 flex-col items-center justify-center gap-6">
+          <nav className="flex flex-1 flex-col items-center justify-center gap-2">
             {navigation.map((item) => {
               const isActive = pathname === item.href;
               return (
@@ -43,7 +43,7 @@ export function AppSidebar() {
                       prefetch
                       href={item.href}
                       className={cn(
-                        'flex items-center justify-center rounded-md transition-colors',
+                        'flex items-center justify-center rounded-md transition-colors p-2',
                         isActive
                           ? 'bg-accent text-accent-foreground'
                           : 'text-muted-foreground hover:bg-accent/50 hover:text-foreground'
