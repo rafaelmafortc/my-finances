@@ -1,7 +1,12 @@
+import { PageShell } from '@/components/layout/page-shell';
+
 export default function Page() {
   return (
-    <div>
-      <h1>Investimentos</h1>
-    </div>
+    <PageShell
+      title="Investimentos"
+      subtitle="Gerencie sua carteira e alocação de ativos"
+    >
+      <div>Investimentos</div>
+    </PageShell>
   );
 }

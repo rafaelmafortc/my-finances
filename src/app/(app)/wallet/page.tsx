@@ -6,7 +6,7 @@ export default function Page() {
       title="Carteira"
       subtitle="Acompanhe suas receitas e despesas mensais"
     >
-      <div>BODY</div>
+      <div>Carteira</div>
     </PageShell>
   );
 }
