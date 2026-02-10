@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { AlertTriangle, Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -93,14 +94,14 @@ export function InvestmentsTable({
   return (
     <>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle>Carteira</CardTitle>
           {investments.length > 0 && (
             <CardAction>
               <InvestmentDialog
                 investmentClasses={investmentClasses}
                 trigger={
-                  <Button size="sm" variant="outline" icon={Plus}>
+                  <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
                     Novo investimento
                   </Button>
                 }
@@ -130,83 +131,164 @@ export function InvestmentsTable({
               </EmptyContent>
             </Empty>
           ) : (
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Produto</TableHead>
-                  <TableHead>Classe</TableHead>
-                  <TableHead className="text-right">%</TableHead>
-                  <TableHead className="text-right">Valor</TableHead>
-                  <TableHead className="w-[100px]">Ações</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
+            <>
+              {/* Mobile Cards View */}
+              <div className="md:hidden space-y-3 w-full">
                 {investments.map((investment) => (
-                  <TableRow key={investment.id}>
-                    <TableCell>{investment.product}</TableCell>
-                    <TableCell>
-                      {investment.investmentClass?.name || '-'}
-                    </TableCell>
-                    <TableCell className="text-right">
-                      {Number(investment.percentage).toFixed(2)}%
-                    </TableCell>
-                    <TableCell className="text-right">
-                      R$ {formatCurrencyBR(Number(investment.value))}
-                    </TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
-                        <InvestmentDialog
-                          investment={investment}
-                          investmentClasses={investmentClasses}
-                          trigger={
+                  <div
+                    key={investment.id}
+                    className="rounded-lg border border-border bg-card p-3 sm:p-4 space-y-3 w-full min-w-0"
+                  >
+                  <div className="flex items-start justify-between gap-2">
+                    <div className="flex-1 min-w-0">
+                      <p className="font-medium text-sm">{investment.product}</p>
+                      <p className="text-xs text-muted-foreground mt-1">
+                        {investment.investmentClass?.name || 'Sem classe'}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="font-semibold text-sm">
+                        R$ {formatCurrencyBR(Number(investment.value))}
+                      </p>
+                      <p className="text-xs text-muted-foreground">
+                        {Number(investment.percentage).toFixed(2)}%
+                      </p>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-2 pt-2 border-t border-border">
+                    <InvestmentDialog
+                      investment={investment}
+                      investmentClasses={investmentClasses}
+                      trigger={
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          className="flex-1"
+                        >
+                          <Pencil className="size-4 mr-2" />
+                          Editar
+                        </Button>
+                      }
+                    />
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="sm"
+                      className="flex-1 text-destructive hover:text-destructive"
+                      onClick={() => {
+                        setInvestmentToDeleteId(investment.id);
+                        setDeleteDialogOpen(true);
+                      }}
+                    >
+                      <Trash2 className="size-4 mr-2" />
+                      Excluir
+                    </Button>
+                  </div>
+                </div>
+              ))}
+              <div className="rounded-lg border border-border bg-muted p-4">
+                <div className="flex items-center justify-between">
+                  <span className="font-semibold text-sm">Total</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-semibold text-sm">
+                      {totalPercentage.toFixed(2)}%
+                    </span>
+                    {Math.abs(totalPercentage - 100) > 0.01 && (
+                      <Tooltip>
+                        <TooltipTrigger asChild>
+                          <AlertTriangle className="size-4 text-warning" />
+                        </TooltipTrigger>
+                        <TooltipContent>
+                          A carteira não está 100% alocada
+                        </TooltipContent>
+                      </Tooltip>
+                    )}
+                  </div>
+                </div>
+              </div>
+              </div>
+              {/* Desktop Table View */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Produto</TableHead>
+                      <TableHead>Classe</TableHead>
+                      <TableHead className="text-right">%</TableHead>
+                      <TableHead className="text-right">Valor</TableHead>
+                      <TableHead className="w-[100px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {investments.map((investment) => (
+                      <TableRow key={investment.id}>
+                        <TableCell>{investment.product}</TableCell>
+                        <TableCell>
+                          {investment.investmentClass?.name || '-'}
+                        </TableCell>
+                        <TableCell className="text-right">
+                          {Number(investment.percentage).toFixed(2)}%
+                        </TableCell>
+                        <TableCell className="text-right">
+                          R$ {formatCurrencyBR(Number(investment.value))}
+                        </TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            <InvestmentDialog
+                              investment={investment}
+                              investmentClasses={investmentClasses}
+                              trigger={
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon-xs"
+                                  aria-label="Editar"
+                                >
+                                  <Pencil className="size-4" />
+                                </Button>
+                              }
+                            />
                             <Button
                               type="button"
                               variant="ghost"
                               size="icon-xs"
-                              aria-label="Editar"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => {
+                                setInvestmentToDeleteId(investment.id);
+                                setDeleteDialogOpen(true);
+                              }}
                             >
-                              <Pencil className="size-4" />
+                              <Trash2 className="size-4" />
+                              <span className="sr-only">Excluir</span>
                             </Button>
-                          }
-                        />
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          className="text-destructive hover:text-destructive"
-                          onClick={() => {
-                            setInvestmentToDeleteId(investment.id);
-                            setDeleteDialogOpen(true);
-                          }}
-                        >
-                          <Trash2 className="size-4" />
-                          <span className="sr-only">Excluir</span>
-                        </Button>
-                      </div>
-                    </TableCell>
-                  </TableRow>
-                ))}
-                <TableRow className="font-semibold bg-muted">
-                  <TableCell colSpan={2}>Total</TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex items-center justify-end gap-2">
-                      {totalPercentage.toFixed(2)}%
-                      {Math.abs(totalPercentage - 100) > 0.01 && (
-                        <Tooltip>
-                          <TooltipTrigger asChild>
-                            <AlertTriangle className="size-4 text-warning" />
-                          </TooltipTrigger>
-                          <TooltipContent>
-                            A carteira não está 100% alocada
-                          </TooltipContent>
-                        </Tooltip>
-                      )}
-                    </div>
-                  </TableCell>
-                  <TableCell colSpan={2} />
-                </TableRow>
-              </TableBody>
-            </Table>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                    <TableRow className="font-semibold bg-muted">
+                      <TableCell colSpan={2}>Total</TableCell>
+                      <TableCell className="text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          {totalPercentage.toFixed(2)}%
+                          {Math.abs(totalPercentage - 100) > 0.01 && (
+                            <Tooltip>
+                              <TooltipTrigger asChild>
+                                <AlertTriangle className="size-4 text-warning" />
+                              </TooltipTrigger>
+                              <TooltipContent>
+                                A carteira não está 100% alocada
+                              </TooltipContent>
+                            </Tooltip>
+                          )}
+                        </div>
+                      </TableCell>
+                      <TableCell colSpan={2} />
+                    </TableRow>
+                  </TableBody>
+                </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>

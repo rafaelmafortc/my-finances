@@ -18,6 +18,7 @@ type HalfDonutChartProps = {
 };
 
 const CHART_HEIGHT = 280;
+const CHART_HEIGHT_MOBILE = 220;
 
 type TooltipParams = {
   data?: { name: string; value: number };
@@ -172,7 +173,7 @@ export function HalfDonutChart({
     <div
       ref={containerRef}
       style={{ width: '100%', height: CHART_HEIGHT }}
-      className={isInteractive ? 'cursor-pointer' : ''}
+      className={`${isInteractive ? 'cursor-pointer' : ''} h-[220px] sm:h-[280px]`}
     />
   );
 }

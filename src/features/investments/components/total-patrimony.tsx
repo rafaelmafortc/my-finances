@@ -66,46 +66,50 @@ export function TotalPatrimony() {
   };
 
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
       {isEditingPatrimony ? (
         <>
-          <div className="flex items-center gap-2">
-            <span className="text-sm text-muted-foreground">
+          <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
+            <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
               Patrimônio Total:
             </span>
             <Input
               value={totalPatrimony}
               onChange={(e) => setTotalPatrimony(maskCurrencyBR(e.target.value))}
-              className="w-32"
+              className="w-full sm:w-32"
               placeholder="0,00"
             />
-            <Button size="sm" variant="outline" onClick={handleSavePatrimony}>
-              Salvar
-            </Button>
-            <Button size="sm" variant="ghost" onClick={handleCancelPatrimony}>
-              Cancelar
-            </Button>
+            <div className="flex gap-2">
+              <Button size="sm" variant="outline" onClick={handleSavePatrimony} className="flex-1 sm:flex-none">
+                Salvar
+              </Button>
+              <Button size="sm" variant="ghost" onClick={handleCancelPatrimony} className="flex-1 sm:flex-none">
+                Cancelar
+              </Button>
+            </div>
           </div>
           {patrimonyError && (
             <p className="text-destructive text-xs">{patrimonyError}</p>
           )}
         </>
       ) : (
-        <div className="flex items-center gap-2">
-          <span className="text-sm text-muted-foreground">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full sm:w-auto">
+          <span className="text-xs sm:text-sm text-muted-foreground whitespace-nowrap">
             Patrimônio Total:
           </span>
-          <span className="text-sm font-medium">
-            R$ {totalPatrimony || '0,00'}
-          </span>
-          <Button
-            variant="ghost"
-            size="icon-xs"
-            onClick={() => setIsEditingPatrimony(true)}
-            aria-label="Editar patrimônio"
-          >
-            <Pencil className="size-4" />
-          </Button>
+          <div className="flex items-center gap-2">
+            <span className="text-xs sm:text-sm font-medium">
+              R$ {totalPatrimony || '0,00'}
+            </span>
+            <Button
+              variant="ghost"
+              size="icon-xs"
+              onClick={() => setIsEditingPatrimony(true)}
+              aria-label="Editar patrimônio"
+            >
+              <Pencil className="size-4" />
+            </Button>
+          </div>
         </div>
       )}
     </div>

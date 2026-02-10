@@ -86,7 +86,7 @@ export function AppSidebar() {
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-30 flex h-14 items-center justify-around border-t border-border bg-card px-2">
+      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t border-border bg-card px-2 shadow-lg" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (

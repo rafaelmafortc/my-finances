@@ -94,12 +94,12 @@ export function StatementPage({
   }, [transactions, selectedYear, selectedMonth]);
 
   const actions = (
-    <div className="flex items-center gap-2">
+    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
       <Select
         value={selectedMonth}
         onValueChange={(value) => setSelectedMonth(value)}
       >
-        <SelectTrigger size="sm">
+        <SelectTrigger size="sm" className="w-full sm:w-auto">
           <SelectValue placeholder="Mês" />
         </SelectTrigger>
         <SelectContent>
@@ -115,7 +115,7 @@ export function StatementPage({
         value={selectedYear}
         onValueChange={(value) => setSelectedYear(value)}
       >
-        <SelectTrigger size="sm">
+        <SelectTrigger size="sm" className="w-full sm:w-auto">
           <SelectValue placeholder="Ano" />
         </SelectTrigger>
         <SelectContent>

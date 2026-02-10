@@ -12,6 +12,12 @@ export const metadata: Metadata = {
   icons: {
     icon: '/piggy-bank.svg',
   },
+  viewport: {
+    width: 'device-width',
+    initialScale: 1,
+    maximumScale: 1,
+    userScalable: false,
+  },
 };
 
 const geist = Geist({ subsets: ['latin'] });

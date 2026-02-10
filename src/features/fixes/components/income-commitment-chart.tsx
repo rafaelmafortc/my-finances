@@ -83,16 +83,18 @@ export function IncomeCommitmentChart({
             centerLabel={() => `${percentage.toFixed(0)}%`}
           />
           {showHighCommitmentWarning && (
-            <div className="flex items-center gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 mt-4 text-xs text-warning w-full">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 mt-4 text-xs text-warning w-full">
               <AlertTriangle className="size-4 shrink-0" aria-hidden />
-              <span className="font-medium">
-                Comprometimento de renda elevado.
-              </span>
-              <span className="font-base">
-                Idealmente, tente manter seus gastos fixos abaixo de 30% da sua
-                renda para ter margem suficiente para investimentos, lazer e
-                imprevistos.
-              </span>
+              <div className="flex-1">
+                <span className="font-medium block sm:inline">
+                  Comprometimento de renda elevado.{' '}
+                </span>
+                <span className="font-base">
+                  Idealmente, tente manter seus gastos fixos abaixo de 30% da sua
+                  renda para ter margem suficiente para investimentos, lazer e
+                  imprevistos.
+                </span>
+              </div>
             </div>
           )}
         </div>

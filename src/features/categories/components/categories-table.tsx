@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -77,13 +78,13 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
   return (
     <>
       <Card>
-        <CardHeader className="flex flex-row items-center justify-between">
+        <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
           <CardTitle>Categorias</CardTitle>
           {categories.length > 0 && (
             <CardAction>
               <CategoryDialog
                 trigger={
-                  <Button size="sm" variant="outline" icon={Plus}>
+                  <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
                     Nova categoria
                   </Button>
                 }
@@ -111,7 +112,51 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
               </EmptyContent>
             </Empty>
           ) : (
-            <Table>
+            <>
+              {/* Mobile Cards View */}
+              <div className="md:hidden space-y-3 w-full">
+                {categories.map((category) => (
+                  <div
+                    key={category.id}
+                    className="rounded-lg border border-border bg-card p-3 sm:p-4 w-full min-w-0"
+                  >
+                  <div className="flex items-center justify-between">
+                    <p className="font-medium text-sm">{category.name}</p>
+                    <div className="flex items-center gap-2">
+                      <CategoryDialog
+                        category={category}
+                        trigger={
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                          >
+                            <Pencil className="size-4 mr-2" />
+                            Editar
+                          </Button>
+                        }
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="text-destructive hover:text-destructive"
+                        onClick={() => {
+                          setCategoryToDeleteId(category.id);
+                          setDeleteDialogOpen(true);
+                        }}
+                      >
+                        <Trash2 className="size-4 mr-2" />
+                        Excluir
+                      </Button>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              </div>
+              {/* Desktop Table View */}
+              <div className="hidden md:block">
+                <Table>
               <TableHeader>
                 <TableRow>
                   <TableHead>Nome</TableHead>
@@ -156,6 +201,8 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                 ))}
               </TableBody>
             </Table>
+              </div>
+            </>
           )}
         </CardContent>
       </Card>

@@ -11,6 +11,7 @@ import {
 } from 'lucide-react';
 import { toast } from 'sonner';
 
+
 import {
   AlertDialog,
   AlertDialogAction,
@@ -94,14 +95,14 @@ export function FixedTransactionsTable({
 
   return (
     <Card>
-      <CardHeader className="flex flex-row items-center justify-between">
+      <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <CardTitle>Transações Fixas</CardTitle>
         {fixedTransactions.length > 0 && (
           <CardAction>
             <FixedTransactionDialog
               categories={categories}
               trigger={
-                <Button size="sm" variant="outline" icon={Plus}>
+                <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
                   Nova fixa
                 </Button>
               }
@@ -141,7 +142,92 @@ export function FixedTransactionsTable({
             </EmptyContent>
           </Empty>
         ) : (
-          <Table>
+          <>
+            {/* Mobile Cards View */}
+            <div className="md:hidden space-y-3 w-full">
+              {fixedTransactions.map((t) => (
+                <div
+                  key={t.id}
+                  className="rounded-lg border border-border bg-card p-3 sm:p-4 space-y-3 w-full min-w-0"
+                >
+                <div className="flex items-start justify-between gap-2">
+                  <div className="flex-1 min-w-0">
+                    <p className="font-medium text-sm">{t.description}</p>
+                    <p className="text-xs text-muted-foreground mt-1">
+                      {t.categoryName}
+                    </p>
+                  </div>
+                  <div
+                    className={`text-right font-semibold ${
+                      t.type === 'INCOME' ? 'text-success' : 'text-destructive'
+                    }`}
+                  >
+                    {formatCurrencyWithSign(t.value, t.type === 'INCOME')}
+                  </div>
+                </div>
+                <div className="flex flex-wrap items-center gap-2 text-xs">
+                  {t.type === 'INCOME' ? (
+                    <span className="inline-flex items-center gap-1 text-success">
+                      <ArrowUpCircle className="size-3" />
+                      Entrada
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1 text-destructive">
+                      <ArrowDownCircle className="size-3" />
+                      Saída
+                    </span>
+                  )}
+                  <span className="text-muted-foreground">•</span>
+                  <span className="text-muted-foreground">
+                    Dia {t.dayOfMonth}
+                  </span>
+                </div>
+                <div className="flex items-center gap-2 pt-2 border-t border-border">
+                  <FixedTransactionDialog
+                    categories={categories}
+                    editTransaction={{
+                      id: t.id,
+                      description: t.description,
+                      categoryId: t.categoryId,
+                      type: t.type,
+                      value: String(t.value),
+                      dayOfMonth: t.dayOfMonth,
+                    }}
+                    onSubmit={async (data) => {
+                      await updateFixedTransaction({ ...data, id: t.id });
+                    }}
+                    trigger={
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1"
+                      >
+                        <Pencil className="size-4 mr-2" />
+                        Editar
+                      </Button>
+                    }
+                  />
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="flex-1 text-destructive hover:text-destructive"
+                    onClick={() => {
+                      setTransactionToDeleteId(t.id);
+                      setDeleteDialogOpen(true);
+                    }}
+                  >
+                    <Trash2 className="size-4 mr-2" />
+                    Excluir
+                  </Button>
+                </div>
+              </div>
+            ))}
+            </div>
+            {/* Desktop Table View */}
+            <div className="hidden md:block">
+              <Table>
             <TableHeader>
               <TableRow>
                 <TableHead>Descrição</TableHead>
@@ -225,6 +311,8 @@ export function FixedTransactionsTable({
               ))}
             </TableBody>
           </Table>
+            </div>
+          </>
         )}
       </CardContent>
 

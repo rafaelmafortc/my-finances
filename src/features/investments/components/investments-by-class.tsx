@@ -105,8 +105,8 @@ export function InvestmentsByClass({
         </div>
       </CardHeader>
       <CardContent>
-        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
-          <div className="flex items-center justify-center">
+        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">
+          <div className="flex items-center justify-center min-h-[200px] sm:min-h-[250px]">
             <PieChart
               data={currentData}
               total={total}
