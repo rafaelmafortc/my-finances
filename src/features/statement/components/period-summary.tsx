@@ -106,7 +106,7 @@ export function PeriodSummary({
               aria-valuemax={100}
             />
           </div>
-          <div className="flex gap-3 text-muted-foreground text-xs">
+          <div className="flex gap-3 justify-between text-muted-foreground text-xs">
             <span className="flex items-center gap-1.5">
               <span className="bg-emerald-500 size-1.5 rounded-full" />
               {incomePct.toFixed(1)}%
