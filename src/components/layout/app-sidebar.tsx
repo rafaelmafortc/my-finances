@@ -22,14 +22,16 @@ export function AppSidebar() {
       {/* Desktop Sidebar */}
       <aside className="hidden md:flex fixed left-0 top-0 z-30 h-screen w-10 flex-col border-r border-border bg-card">
         <div className="p-1.5 pt-2">
-          <div
+          <Link
+            prefetch
+            href={'/'}
             className={
               'flex items-center justify-center rounded-md transition-colors text-muted-foreground'
             }
           >
             <PiggyBank className="text-foreground size-5" />
             <span className="sr-only">myFinances</span>
-          </div>
+          </Link>
         </div>
 
         <TooltipProvider delayDuration={0}>
