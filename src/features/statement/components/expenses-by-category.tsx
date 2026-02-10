@@ -29,28 +29,40 @@ function buildExpensesData(transactions: Transaction[]): CategoryExpense[] {
   const expenses = transactions.filter((t) => t.type === 'EXPENSE');
   const byCategory = new Map<
     string,
-    { value: number; items: { name: string; value: number }[] }
+    {
+      value: number;
+      items: Map<string, number>;
+    }
   >();
 
   for (const t of expenses) {
-    const name = t.categoryName || 'Outros';
+    const categoryName = t.categoryName || 'Outros';
+    const transactionName = t.description.trim();
     const value = Number(t.value);
-    const existing = byCategory.get(name);
-    if (existing) {
-      existing.value += value;
-      existing.items.push({ name: t.description, value });
+
+    const categoryData = byCategory.get(categoryName);
+    if (categoryData) {
+      // Agrupa por categoria E nome (description)
+      const existingItemValue = categoryData.items.get(transactionName) || 0;
+      categoryData.items.set(transactionName, existingItemValue + value);
+      categoryData.value += value;
     } else {
-      byCategory.set(name, {
+      const itemsMap = new Map<string, number>();
+      itemsMap.set(transactionName, value);
+      byCategory.set(categoryName, {
         value,
-        items: [{ name: t.description, value }],
+        items: itemsMap,
       });
     }
   }
 
-  return Array.from(byCategory.entries()).map(([name, { value, items }]) => ({
-    name,
+  return Array.from(byCategory.entries()).map(([categoryName, { value, items }]) => ({
+    name: categoryName,
     value,
-    subcategories: items,
+    subcategories: Array.from(items.entries()).map(([itemName, itemValue]) => ({
+      name: itemName,
+      value: itemValue,
+    })),
   }));
 }
 

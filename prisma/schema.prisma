@@ -92,8 +92,6 @@ model FixedTransaction {
   updatedAt   DateTime        @default(now()) @updatedAt
   category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
-
-  @@unique([userId, description, type])
 }
 
 model VerificationToken {
