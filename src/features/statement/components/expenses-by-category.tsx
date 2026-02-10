@@ -55,14 +55,20 @@ function buildExpensesData(transactions: Transaction[]): CategoryExpense[] {
     }
   }
 
-  return Array.from(byCategory.entries()).map(([categoryName, { value, items }]) => ({
-    name: categoryName,
-    value,
-    subcategories: Array.from(items.entries()).map(([itemName, itemValue]) => ({
-      name: itemName,
-      value: itemValue,
-    })),
-  }));
+  const categories = Array.from(byCategory.entries()).map(
+    ([categoryName, { value, items }]) => ({
+      name: categoryName,
+      value,
+      subcategories: Array.from(items.entries())
+        .map(([itemName, itemValue]) => ({
+          name: itemName,
+          value: itemValue,
+        }))
+        .sort((a, b) => b.value - a.value),
+    })
+  );
+
+  return categories.sort((a, b) => b.value - a.value);
 }
 
 export function ExpensesByCategory({

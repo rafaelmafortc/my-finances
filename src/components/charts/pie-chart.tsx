@@ -78,6 +78,7 @@ export function PieChart({ data, total, onSegmentClick }: PieChartProps) {
     const seriesData = data.map((d) => ({ name: d.name, value: d.value }));
 
     chart.setOption({
+      color: PIE_CHART_PALETTE,
       tooltip: {
         trigger: 'item',
         backgroundColor: 'lab(5.26802% 0 0)',
