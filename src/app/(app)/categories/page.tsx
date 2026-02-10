@@ -1,12 +1,22 @@
 import { PageShell } from '@/components/layout/page-shell';
 import { CategoriesTable, getCategories } from '@/features/categories';
+import {
+  InvestmentClassesTable,
+  getInvestmentClasses,
+} from '@/features/investment-classes';
 
 export default async function Page() {
-  const categories = await getCategories();
+  const [categories, investmentClasses] = await Promise.all([
+    getCategories(),
+    getInvestmentClasses(),
+  ]);
 
   return (
     <PageShell title="Categorias" subtitle="Gerencie suas categorias">
-      <CategoriesTable categories={categories} />
+      <div className="space-y-6">
+        <CategoriesTable categories={categories} />
+        <InvestmentClassesTable investmentClasses={investmentClasses} />
+      </div>
     </PageShell>
   );
 }
