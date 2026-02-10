@@ -1,7 +1,8 @@
 'use client';
 
-import * as echarts from 'echarts';
 import { useEffect, useRef } from 'react';
+
+import * as echarts from 'echarts';
 
 export type PieChartDataItem = {
   name: string;
@@ -9,7 +10,6 @@ export type PieChartDataItem = {
   color?: string;
 };
 
-/** ECharts default palette – use for legend/list so colors match the chart. */
 export const PIE_CHART_PALETTE = [
   '#5470c6',
   '#91cc75',
@@ -29,12 +29,6 @@ export function getPieChartColor(index: number): string {
 type PieChartProps = {
   data: PieChartDataItem[];
   total: number;
-  innerRadius?: number;
-  outerRadius?: number;
-  paddingAngle?: number;
-  stroke?: string;
-  strokeWidth?: number;
-  cursor?: 'pointer' | 'default';
   onSegmentClick?: (item: PieChartDataItem, index: number) => void;
 };
 
@@ -64,21 +58,12 @@ function tooltipFormatter(total: number) {
   };
 }
 
-export function PieChart({
-  data,
-  total,
-  innerRadius = 70,
-  outerRadius = 110,
-  paddingAngle = 3,
-  stroke = 'hsl(var(--border))',
-  strokeWidth = 2,
-  cursor = 'pointer',
-  onSegmentClick,
-}: PieChartProps) {
+export function PieChart({ data, total, onSegmentClick }: PieChartProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const chartRef = useRef<echarts.ECharts | null>(null);
   const onSegmentClickRef = useRef(onSegmentClick);
   onSegmentClickRef.current = onSegmentClick;
+  const isInteractive = Boolean(onSegmentClick);
 
   useEffect(() => {
     if (!containerRef.current || data.length === 0) return;
@@ -88,24 +73,30 @@ export function PieChart({
     }
 
     const chart = chartRef.current;
+    const cursor: 'pointer' | 'default' = isInteractive ? 'pointer' : 'default';
     const seriesData = data.map((d) => ({ name: d.name, value: d.value }));
 
     chart.setOption({
       tooltip: {
         trigger: 'item',
-        backgroundColor: 'hsl(var(--card))',
-        borderColor: 'hsl(var(--border))',
+        backgroundColor: 'lab(5.26802% 0 0)',
+        borderColor: 'lab(5.26802% 0 0)',
         borderWidth: 1,
+        borderRadius: 8,
+        padding: 8,
         textStyle: { color: 'hsl(var(--foreground))', fontSize: 12 },
         formatter: tooltipFormatter(total),
       },
       series: [
         {
           type: 'pie',
-          radius: [`${(innerRadius / outerRadius) * 100}%`, '100%'],
+          radius: ['60%', '90%'],
           center: ['50%', '50%'],
+          padAngle: 3,
+          itemStyle: {
+            borderRadius: 1,
+          },
           data: seriesData,
-          itemStyle: { borderColor: stroke, borderWidth: strokeWidth },
           emphasis: { scale: false },
           label: { show: false },
           labelLine: { show: false },
@@ -125,16 +116,7 @@ export function PieChart({
     return () => {
       chart.off('click');
     };
-  }, [
-    data,
-    total,
-    innerRadius,
-    outerRadius,
-    stroke,
-    strokeWidth,
-    onSegmentClick,
-    cursor,
-  ]);
+  }, [data, total, onSegmentClick, isInteractive]);
 
   useEffect(() => {
     const chart = chartRef.current;
@@ -150,7 +132,7 @@ export function PieChart({
     <div
       ref={containerRef}
       style={{ width: '100%', height: CHART_HEIGHT }}
-      className={cursor === 'pointer' ? 'cursor-pointer' : ''}
+      className={isInteractive ? 'cursor-pointer' : ''}
     />
   );
 }

@@ -119,12 +119,6 @@ export function ExpensesByCategory({
             <PieChart
               data={currentData}
               total={total}
-              innerRadius={70}
-              outerRadius={110}
-              paddingAngle={3}
-              stroke="hsl(var(--border))"
-              strokeWidth={2}
-              cursor={selectedCategory ? 'default' : 'pointer'}
               onSegmentClick={selectedCategory ? undefined : handleItemClick}
             />
           </div>
