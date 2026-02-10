@@ -59,7 +59,7 @@ export function TransactionDialog({
   categories,
   onSuccess,
   trigger,
-  defaultType = 'INCOME',
+  defaultType = 'EXPENSE',
   editTransaction,
   onSubmit,
 }: Props) {
