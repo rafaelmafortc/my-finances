@@ -21,8 +21,6 @@ export async function proxy(request: NextRequest) {
     secret: process.env.NEXTAUTH_SECRET,
   });
 
-  console.log('authToken', authToken);
-
   if (!authToken && publicRoute) {
     return NextResponse.next();
   }
