@@ -114,8 +114,8 @@ export async function applyFixedTransactionsToMonth(
     include: { category: true },
   });
 
-  const startDate = new Date(year, month, 1);
-  const endDate = new Date(year, month + 1, 0);
+  const startDate = new Date(Date.UTC(year, month, 1, 0, 0, 0, 0));
+  const endDate = new Date(Date.UTC(year, month + 1, 0, 23, 59, 59, 999));
 
   await prisma.transaction.deleteMany({
     where: {
@@ -129,8 +129,9 @@ export async function applyFixedTransactionsToMonth(
   });
 
   const transactionsToCreate = fixedTransactions.map((fixed) => {
-    const day = Math.min(fixed.dayOfMonth, endDate.getDate());
-    const date = new Date(year, month, day);
+    const lastDayOfMonth = endDate.getUTCDate();
+    const day = Math.min(fixed.dayOfMonth, lastDayOfMonth);
+    const date = new Date(Date.UTC(year, month, day, 12, 0, 0, 0));
     return {
       userId,
       date,

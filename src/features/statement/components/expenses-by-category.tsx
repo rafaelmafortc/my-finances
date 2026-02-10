@@ -42,7 +42,6 @@ function buildExpensesData(transactions: Transaction[]): CategoryExpense[] {
 
     const categoryData = byCategory.get(categoryName);
     if (categoryData) {
-      // Agrupa por categoria E nome (description)
       const existingItemValue = categoryData.items.get(transactionName) || 0;
       categoryData.items.set(transactionName, existingItemValue + value);
       categoryData.value += value;
