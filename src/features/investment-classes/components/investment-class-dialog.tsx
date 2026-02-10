@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+
 import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
@@ -16,11 +17,11 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 
-import type { InvestmentClass } from '../types/investment-class';
 import {
   createInvestmentClass,
   updateInvestmentClass,
 } from '../actions/investment-class';
+import type { InvestmentClass } from '../types/investment-class';
 
 type InvestmentClassDialogProps = {
   investmentClass?: InvestmentClass;

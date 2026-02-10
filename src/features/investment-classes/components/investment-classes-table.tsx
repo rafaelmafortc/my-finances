@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   AlertDialog,
@@ -41,8 +41,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import type { InvestmentClass } from '../types/investment-class';
 import { deleteInvestmentClass } from '../actions/investment-class';
+import type { InvestmentClass } from '../types/investment-class';
 import { InvestmentClassDialog } from './investment-class-dialog';
 
 type InvestmentClassesTableProps = {

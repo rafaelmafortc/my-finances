@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import { toast } from 'sonner';
-
 import {
   ArrowDownCircle,
   ArrowUpCircle,
@@ -11,6 +9,7 @@ import {
   Plus,
   Trash2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   AlertDialog,

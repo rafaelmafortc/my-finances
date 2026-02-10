@@ -2,8 +2,6 @@
 
 import { useState } from 'react';
 
-import { toast } from 'sonner';
-
 import {
   ArrowDownCircle,
   ArrowUpCircle,
@@ -13,6 +11,7 @@ import {
   Receipt,
   Trash2,
 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   AlertDialog,
@@ -48,6 +47,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import type { Category } from '@/features/categories';
 import { formatCurrencyWithSign, formatDateBR } from '@/lib/format';
 
 import {
@@ -55,7 +55,6 @@ import {
   deleteTransaction,
   updateTransaction,
 } from '../actions/transaction';
-import type { Category } from '@/features/categories';
 import type { Transaction } from '../types/transaction';
 import { TransactionDialog } from './transaction-dialog';
 
@@ -85,9 +84,7 @@ export function TransactionsTable({
         setTransactionToDeleteId(null);
       } catch (error) {
         const errorMessage =
-          error instanceof Error
-            ? error.message
-            : 'Erro ao excluir transação';
+          error instanceof Error ? error.message : 'Erro ao excluir transação';
         toast.error(errorMessage);
       }
     }
@@ -101,9 +98,7 @@ export function TransactionsTable({
       await applyFixedTransactionsToMonth(currentYear, currentMonth);
     } catch (err) {
       const errorMessage =
-        err instanceof Error
-          ? err.message
-          : 'Erro ao aplicar transações fixas';
+        err instanceof Error ? err.message : 'Erro ao aplicar transações fixas';
       toast.error(errorMessage);
     } finally {
       setApplyingFixes(false);

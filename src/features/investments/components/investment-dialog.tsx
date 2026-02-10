@@ -1,11 +1,11 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import { Check, CirclePlus, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -29,14 +29,13 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-
 import {
-  createInvestmentClass,
   type InvestmentClass,
+  createInvestmentClass,
 } from '@/features/investment-classes';
 
-import type { Investment } from '../types/investment';
 import { createInvestment, updateInvestment } from '../actions/investment';
+import type { Investment } from '../types/investment';
 
 type InvestmentDialogProps = {
   investment?: Investment;
@@ -101,9 +100,7 @@ export function InvestmentDialog({
       router.refresh();
     } catch (error) {
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Erro ao criar classe';
+        error instanceof Error ? error.message : 'Erro ao criar classe';
       toast.error(errorMessage);
     } finally {
       setCreatingClass(false);
@@ -130,7 +127,11 @@ export function InvestmentDialog({
     }
 
     const percentageNum = parseFloat(percentage);
-    if (Number.isNaN(percentageNum) || percentageNum <= 0 || percentageNum > 100) {
+    if (
+      Number.isNaN(percentageNum) ||
+      percentageNum <= 0 ||
+      percentageNum > 100
+    ) {
       setError('Percentual deve estar entre 0 e 100');
       return;
     }

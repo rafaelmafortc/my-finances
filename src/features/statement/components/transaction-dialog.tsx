@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import { CalendarIcon, Check, CirclePlus, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Calendar } from '@/components/ui/calendar';
@@ -35,12 +35,12 @@ import {
   TooltipContent,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
+import { createCategory } from '@/features/categories';
+import type { Category } from '@/features/categories';
 import { formatCurrencyBR, formatDateBR } from '@/lib/format';
 import { maskCurrencyBR, maskDDMMYYYY } from '@/lib/mask';
 import { parseCurrencyBR, parseDDMMYYYY } from '@/lib/parse';
 
-import { createCategory } from '@/features/categories';
-import type { Category } from '@/features/categories';
 import type {
   EditTransactionForm,
   TransactionFormSubmit,
@@ -134,9 +134,7 @@ export function TransactionDialog({
       router.refresh();
     } catch (error) {
       const errorMessage =
-        error instanceof Error
-          ? error.message
-          : 'Erro ao criar categoria';
+        error instanceof Error ? error.message : 'Erro ao criar categoria';
       toast.error(errorMessage);
     } finally {
       setCreatingCategory(false);

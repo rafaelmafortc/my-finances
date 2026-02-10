@@ -10,8 +10,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
-
 import type { Category } from '@/features/categories';
+
 import type { Transaction } from '../types/transaction';
 import { ExpensesByCategory } from './expenses-by-category';
 import { PeriodSummary } from './period-summary';
@@ -149,4 +149,3 @@ export function StatementPage({
     </PageShell>
   );
 }
-

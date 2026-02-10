@@ -17,8 +17,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-
 import type { Category } from '@/features/categories';
+
 import type { Transaction } from '../types/transaction';
 
 type CategoryExpense = PieChartDataItem & {

@@ -10,12 +10,7 @@ import {
   getPieChartColor,
 } from '@/components/charts/pie-chart';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import type { Investment } from '../types/investment';
 
@@ -154,12 +149,11 @@ export function InvestmentsByClass({
                     <span className="text-sm text-foreground">
                       {investment.name}
                     </span>
-                    {!selectedClass &&
-                      investmentsData[index]?.investments && (
-                        <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
-                          {investmentsData[index].investments?.length} ativos
-                        </span>
-                      )}
+                    {!selectedClass && investmentsData[index]?.investments && (
+                      <span className="rounded bg-muted px-1.5 py-0.5 text-[10px] text-muted-foreground">
+                        {investmentsData[index].investments?.length} ativos
+                      </span>
+                    )}
                   </div>
                   <div className="flex items-center gap-4">
                     <span className="text-sm font-medium text-foreground">

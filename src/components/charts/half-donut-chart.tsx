@@ -65,7 +65,7 @@ export function HalfDonutChart({
 
     const chart = chartRef.current;
     const cursor: 'pointer' | 'default' = isInteractive ? 'pointer' : 'default';
-    
+
     const getComputedColor = (cssVar: string) => {
       if (typeof window === 'undefined') return cssVar;
       const root = document.documentElement;
@@ -100,7 +100,7 @@ export function HalfDonutChart({
     const labelText =
       typeof centerLabel === 'function'
         ? centerLabel(total)
-        : centerLabel ?? `${total.toLocaleString('pt-BR')}`;
+        : (centerLabel ?? `${total.toLocaleString('pt-BR')}`);
 
     chart.setOption({
       tooltip: {

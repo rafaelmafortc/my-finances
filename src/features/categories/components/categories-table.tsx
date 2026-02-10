@@ -3,9 +3,9 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
-import { toast } from 'sonner';
 
 import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { toast } from 'sonner';
 
 import {
   AlertDialog,
@@ -41,8 +41,8 @@ import {
   TableRow,
 } from '@/components/ui/table';
 
-import type { Category } from '../types/category';
 import { deleteCategory } from '../actions/category';
+import type { Category } from '../types/category';
 import { CategoryDialog } from './category-dialog';
 
 type CategoriesTableProps = {

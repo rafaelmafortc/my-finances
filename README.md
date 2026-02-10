@@ -34,6 +34,7 @@ src/
 ### 1. Features como Módulos Independentes
 
 Cada feature é um módulo autocontido que agrupa:
+
 - **Actions**: Server Actions do Next.js para operações no servidor
 - **Components**: Componentes React específicos da feature
 - **Types**: Definições TypeScript relacionadas
@@ -55,6 +56,7 @@ export * from './types/[feature-name]';
 ### 3. Server Actions
 
 Server Actions devem:
+
 - Estar em arquivos com `'use server'` no topo
 - Ser organizadas por feature em `features/[feature]/actions/`
 - Retornar dados ou lançar erros (não retornar objetos de erro)
@@ -71,13 +73,13 @@ export async function create[Entity](data: CreateInput) {
   if (!data.name?.trim()) {
     throw new Error('Nome é obrigatório');
   }
-  
+
   // Lógica de negócio
   const result = await prisma.entity.create({ data });
-  
+
   // Revalidação
   revalidatePath('/[route]');
-  
+
   return result;
 }
 ```
@@ -85,6 +87,7 @@ export async function create[Entity](data: CreateInput) {
 ### 4. Componentes
 
 Componentes devem:
+
 - Estar em `features/[feature]/components/`
 - Ser nomeados em PascalCase
 - Usar `'use client'` quando necessário (interatividade, hooks, eventos)
@@ -116,7 +119,8 @@ try {
   await createEntity(data);
   // Sucesso: apenas fechar diálogo/atualizar UI, SEM toast
 } catch (error) {
-  const errorMessage = error instanceof Error ? error.message : 'Erro ao salvar';
+  const errorMessage =
+    error instanceof Error ? error.message : 'Erro ao salvar';
   toast.error(errorMessage);
   // Opcional: também mostrar erro no formulário
   setError(errorMessage);
@@ -146,6 +150,7 @@ import { createEntity } from '../../../features/entities/actions/entity';
 ### 7. Tipos TypeScript
 
 Tipos devem:
+
 - Estar em `features/[feature]/types/[feature-name].ts`
 - Ser exportados via barrel export
 - Usar nomes descritivos e consistentes
@@ -170,6 +175,7 @@ export type Create[Entity]Input = {
 ### Criando uma Nova Feature
 
 1. **Criar estrutura de pastas:**
+
    ```
    src/features/[feature-name]/
    ├── actions/
@@ -182,12 +188,14 @@ export type Create[Entity]Input = {
    ```
 
 2. **Definir tipos primeiro:**
+
    ```typescript
    // types/[feature-name].ts
    export type Entity = { ... };
    ```
 
 3. **Criar Server Actions:**
+
    ```typescript
    // actions/[feature-name].ts
    'use server';
@@ -195,6 +203,7 @@ export type Create[Entity]Input = {
    ```
 
 4. **Criar componentes:**
+
    ```typescript
    // components/[component-name].tsx
    'use client';
@@ -273,6 +282,7 @@ Ao trabalhar com IA assistida, siga estas diretrizes:
 ## Exemplo Completo
 
 ### Estrutura
+
 ```
 features/products/
 ├── actions/
@@ -286,6 +296,7 @@ features/products/
 ```
 
 ### Uso em uma página
+
 ```typescript
 // app/products/page.tsx
 import { ProductTable, getProducts } from '@/features/products';
@@ -297,11 +308,17 @@ export default async function Page() {
 ```
 
 ### Uso em componente
+
 ```typescript
 // features/products/components/product-dialog.tsx
 'use client';
-import { createProduct, updateProduct, type Product } from '@/features/products';
 import { toast } from 'sonner';
+
+import {
+  type Product,
+  createProduct,
+  updateProduct,
+} from '@/features/products';
 
 export function ProductDialog({ product }: { product?: Product }) {
   const handleSubmit = async (data: FormData) => {
