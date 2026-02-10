@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 
@@ -66,9 +67,10 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
       setCategoryToDeleteId(null);
       router.refresh();
     } catch (error) {
-      setDeleteError(
-        error instanceof Error ? error.message : 'Erro ao excluir categoria'
-      );
+      const errorMessage =
+        error instanceof Error ? error.message : 'Erro ao excluir categoria';
+      setDeleteError(errorMessage);
+      toast.error(errorMessage);
     }
   };
 

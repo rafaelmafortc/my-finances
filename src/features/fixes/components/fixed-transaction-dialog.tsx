@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { Check, CirclePlus, X } from 'lucide-react';
 
@@ -117,7 +118,12 @@ export function FixedTransactionDialog({
       setCategoryId(newId);
       setIsAddingCategory(false);
       router.refresh();
-    } catch {
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Erro ao criar categoria';
+      toast.error(errorMessage);
     } finally {
       setCreatingCategory(false);
     }
@@ -159,7 +165,10 @@ export function FixedTransactionDialog({
       setOpen(false);
       onSuccess?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao salvar');
+      const errorMessage =
+        err instanceof Error ? err.message : 'Erro ao salvar';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

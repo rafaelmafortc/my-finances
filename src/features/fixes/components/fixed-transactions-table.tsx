@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
   ArrowDownCircle,
   ArrowUpCircle,
@@ -69,9 +71,17 @@ export function FixedTransactionsTable({
 
   const handleConfirmDelete = async () => {
     if (transactionToDeleteId) {
-      await deleteFixedTransaction(transactionToDeleteId);
-      setDeleteDialogOpen(false);
-      setTransactionToDeleteId(null);
+      try {
+        await deleteFixedTransaction(transactionToDeleteId);
+        setDeleteDialogOpen(false);
+        setTransactionToDeleteId(null);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : 'Erro ao excluir transação fixa';
+        toast.error(errorMessage);
+      }
     }
   };
 

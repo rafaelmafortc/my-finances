@@ -2,6 +2,8 @@
 
 import { useState } from 'react';
 
+import { toast } from 'sonner';
+
 import {
   ArrowDownCircle,
   ArrowUpCircle,
@@ -77,9 +79,17 @@ export function TransactionsTable({
 
   const handleConfirmDelete = async () => {
     if (transactionToDeleteId) {
-      await deleteTransaction(transactionToDeleteId);
-      setDeleteDialogOpen(false);
-      setTransactionToDeleteId(null);
+      try {
+        await deleteTransaction(transactionToDeleteId);
+        setDeleteDialogOpen(false);
+        setTransactionToDeleteId(null);
+      } catch (error) {
+        const errorMessage =
+          error instanceof Error
+            ? error.message
+            : 'Erro ao excluir transação';
+        toast.error(errorMessage);
+      }
     }
   };
 
@@ -90,7 +100,11 @@ export function TransactionsTable({
         await import('@/features/fixes/actions/fixed-transaction');
       await applyFixedTransactionsToMonth(currentYear, currentMonth);
     } catch (err) {
-      console.error('Erro ao aplicar fixos:', err);
+      const errorMessage =
+        err instanceof Error
+          ? err.message
+          : 'Erro ao aplicar transações fixas';
+      toast.error(errorMessage);
     } finally {
       setApplyingFixes(false);
     }

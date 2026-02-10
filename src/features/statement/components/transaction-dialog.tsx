@@ -3,6 +3,7 @@
 import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
+import { toast } from 'sonner';
 
 import { CalendarIcon, Check, CirclePlus, X } from 'lucide-react';
 
@@ -131,8 +132,12 @@ export function TransactionDialog({
       setCategoryId(newId);
       setIsAddingCategory(false);
       router.refresh();
-    } catch {
-      // erro já tratado ou mostrar toast
+    } catch (error) {
+      const errorMessage =
+        error instanceof Error
+          ? error.message
+          : 'Erro ao criar categoria';
+      toast.error(errorMessage);
     } finally {
       setCreatingCategory(false);
     }
@@ -185,7 +190,10 @@ export function TransactionDialog({
       setOpen(false);
       onSuccess?.();
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'Erro ao salvar');
+      const errorMessage =
+        err instanceof Error ? err.message : 'Erro ao salvar';
+      setError(errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
