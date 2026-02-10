@@ -5,10 +5,8 @@ import { useState } from 'react';
 import {
   ArrowDownCircle,
   ArrowUpCircle,
-  Calendar,
   Pencil,
   Plus,
-  Receipt,
   Trash2,
 } from 'lucide-react';
 
@@ -35,7 +33,6 @@ import {
   EmptyContent,
   EmptyDescription,
   EmptyHeader,
-  EmptyMedia,
   EmptyTitle,
 } from '@/components/ui/empty';
 import {
@@ -46,139 +43,107 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { formatCurrencyWithSign, formatDateBR } from '@/lib/format';
+import type { Category } from '@/features/statement/types/category';
+import { formatCurrencyWithSign } from '@/lib/format';
 
 import {
-  createTransaction,
-  deleteTransaction,
-  updateTransaction,
-} from '../actions/transaction';
-import type { Category } from '../types/category';
-import type { Transaction } from '../types/transaction';
-import { TransactionDialog } from './transaction-dialog';
+  deleteFixedTransaction,
+  updateFixedTransaction,
+} from '../actions/fixed-transaction';
+import type { FixedTransaction } from '../types/fixed-transaction';
+import { FixedTransactionDialog } from './fixed-transaction-dialog';
 
-export function TransactionsTable({
-  transactions,
-  categories,
-  currentYear,
-  currentMonth,
-}: {
-  transactions: Transaction[];
+type FixedTransactionsTableProps = {
+  fixedTransactions: FixedTransaction[];
   categories: Category[];
-  currentYear: number;
-  currentMonth: number;
-}) {
+};
+
+export function FixedTransactionsTable({
+  fixedTransactions,
+  categories,
+}: FixedTransactionsTableProps) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [transactionToDeleteId, setTransactionToDeleteId] = useState<
     string | null
   >(null);
 
-  const [applyingFixes, setApplyingFixes] = useState(false);
-
   const handleConfirmDelete = async () => {
     if (transactionToDeleteId) {
-      await deleteTransaction(transactionToDeleteId);
+      await deleteFixedTransaction(transactionToDeleteId);
       setDeleteDialogOpen(false);
       setTransactionToDeleteId(null);
     }
   };
 
-  const handleApplyFixes = async () => {
-    setApplyingFixes(true);
-    try {
-      const { applyFixedTransactionsToMonth } =
-        await import('@/features/fixes/actions/fixed-transaction');
-      await applyFixedTransactionsToMonth(currentYear, currentMonth);
-    } catch (err) {
-      console.error('Erro ao aplicar fixos:', err);
-    } finally {
-      setApplyingFixes(false);
-    }
-  };
+  const totalIncome = fixedTransactions
+    .filter((t) => t.type === 'INCOME')
+    .reduce((acc, t) => acc + Number(t.value), 0);
+
+  const totalExpenses = fixedTransactions
+    .filter((t) => t.type === 'EXPENSE')
+    .reduce((acc, t) => acc + Number(t.value), 0);
 
   return (
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
-        <CardTitle>Transações</CardTitle>
-        {transactions.length > 0 && (
-          <CardAction>
-            <div className="flex items-center gap-2">
-              <Button
-                size="sm"
-                variant="ghost"
-                icon={Calendar}
-                onClick={handleApplyFixes}
-                isLoading={applyingFixes}
-              >
-                Cadastrar fixos
+        <CardTitle>Transações Fixas</CardTitle>
+        <CardAction>
+          <FixedTransactionDialog
+            categories={categories}
+            trigger={
+              <Button size="sm" variant="outline" icon={Plus}>
+                Nova fixa
               </Button>
-              <TransactionDialog
-                categories={categories}
-                trigger={
-                  <Button size="sm" variant="outline" icon={Plus}>
-                    Nova transação
-                  </Button>
-                }
-                onSubmit={async (data) => {
-                  await createTransaction(data);
-                }}
-              />
-            </div>
-          </CardAction>
-        )}
+            }
+            onSubmit={async (data) => {
+              const { createFixedTransaction } =
+                await import('../actions/fixed-transaction');
+              await createFixedTransaction(data);
+            }}
+          />
+        </CardAction>
       </CardHeader>
       <CardContent>
-        {transactions.length === 0 ? (
+        {fixedTransactions.length === 0 ? (
           <Empty>
             <EmptyHeader>
-              <EmptyTitle>Nenhuma transação</EmptyTitle>
+              <EmptyTitle>Nenhuma transação fixa</EmptyTitle>
               <EmptyDescription>
-                Cadastre sua primeira transação para acompanhar receitas e
-                despesas.
+                Cadastre suas transações fixas para acompanhar seu
+                comprometimento de renda.
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <div className="flex gap-2">
-                <Button
-                  size="sm"
-                  variant="ghost"
-                  icon={Calendar}
-                  onClick={handleApplyFixes}
-                  isLoading={applyingFixes}
-                >
-                  Cadastrar fixos
-                </Button>
-                <TransactionDialog
-                  categories={categories}
-                  trigger={
-                    <Button size="sm" variant="outline" icon={Plus}>
-                      Nova transação
-                    </Button>
-                  }
-                  onSubmit={async (data) => {
-                    await createTransaction(data);
-                  }}
-                />
-              </div>
+              <FixedTransactionDialog
+                categories={categories}
+                trigger={
+                  <Button size="sm" variant="outline" icon={Plus}>
+                    Nova fixa
+                  </Button>
+                }
+                onSubmit={async (data) => {
+                  const { createFixedTransaction } =
+                    await import('../actions/fixed-transaction');
+                  await createFixedTransaction(data);
+                }}
+              />
             </EmptyContent>
           </Empty>
         ) : (
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>Data</TableHead>
                 <TableHead>Descrição</TableHead>
                 <TableHead>Categoria</TableHead>
                 <TableHead>Tipo</TableHead>
-                <TableHead>Fixo</TableHead>
+                <TableHead>Dia do Mês</TableHead>
                 <TableHead className="text-right">Valor</TableHead>
                 <TableHead className="w-[100px]">Ações</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {transactions.map((t) => (
+              {fixedTransactions.map((t) => (
                 <TableRow key={t.id}>
-                  <TableCell>{formatDateBR(t.date)}</TableCell>
                   <TableCell>{t.description}</TableCell>
                   <TableCell>{t.categoryName}</TableCell>
                   <TableCell>
@@ -194,13 +159,7 @@ export function TransactionsTable({
                       </span>
                     )}
                   </TableCell>
-                  <TableCell>
-                    {t.isFixed ? (
-                      <span className="text-xs text-muted-foreground">Sim</span>
-                    ) : (
-                      <span className="text-xs text-muted-foreground">-</span>
-                    )}
-                  </TableCell>
+                  <TableCell>{t.dayOfMonth}</TableCell>
                   <TableCell
                     className={
                       t.type === 'INCOME'
@@ -212,18 +171,18 @@ export function TransactionsTable({
                   </TableCell>
                   <TableCell>
                     <div className="flex items-center gap-1">
-                      <TransactionDialog
+                      <FixedTransactionDialog
                         categories={categories}
                         editTransaction={{
                           id: t.id,
-                          date: new Date(t.date).toISOString(),
                           description: t.description,
                           categoryId: t.categoryId,
                           type: t.type,
                           value: String(t.value),
+                          dayOfMonth: t.dayOfMonth,
                         }}
                         onSubmit={async (data) => {
-                          await updateTransaction({ ...data, id: t.id });
+                          await updateFixedTransaction({ ...data, id: t.id });
                         }}
                         trigger={
                           <Button
@@ -261,9 +220,9 @@ export function TransactionsTable({
       <AlertDialog open={deleteDialogOpen} onOpenChange={setDeleteDialogOpen}>
         <AlertDialogContent>
           <AlertDialogHeader>
-            <AlertDialogTitle>Excluir transação</AlertDialogTitle>
+            <AlertDialogTitle>Excluir transação fixa</AlertDialogTitle>
             <AlertDialogDescription>
-              Esta ação não pode ser desfeita. A transação será removida
+              Esta ação não pode ser desfeita. A transação fixa será removida
               permanentemente.
             </AlertDialogDescription>
           </AlertDialogHeader>

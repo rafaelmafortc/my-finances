@@ -67,7 +67,7 @@ function Button({
       {isLoading ? (
         <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
       ) : Icon ? (
-        <span className="inline-flex items-center gap-1">
+        <span className="inline-flex items-center gap-2">
           <Icon className="size-4 shrink-0" />
           {children}
         </span>

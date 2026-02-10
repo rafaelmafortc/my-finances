@@ -2,40 +2,41 @@ import type { TransactionType } from '@/prisma/generated/client';
 
 export type { TransactionType };
 
-export type Transaction = {
+export type FixedTransaction = {
   id: string;
-  date: Date;
   description: string;
   value: number;
   type: TransactionType;
   categoryName: string;
   categoryId: string;
-  isFixed?: boolean;
+  dayOfMonth: number;
 };
 
-export type CreateTransactionInput = {
-  date: string;
+export type CreateFixedTransactionInput = {
   description: string;
   categoryId: string;
   type: TransactionType;
   value: string;
+  dayOfMonth: number;
 };
 
-export type UpdateTransactionInput = CreateTransactionInput & { id: string };
-
-export type TransactionFormSubmit = {
-  date: string;
-  description: string;
-  categoryId: string;
-  type: TransactionType;
-  value: string;
-};
-
-export type EditTransactionForm = {
+export type UpdateFixedTransactionInput = CreateFixedTransactionInput & {
   id: string;
-  date: string;
+};
+
+export type FixedTransactionFormSubmit = {
   description: string;
   categoryId: string;
   type: TransactionType;
   value: string;
+  dayOfMonth: number;
+};
+
+export type EditFixedTransactionForm = {
+  id: string;
+  description: string;
+  categoryId: string;
+  type: TransactionType;
+  value: string;
+  dayOfMonth: number;
 };

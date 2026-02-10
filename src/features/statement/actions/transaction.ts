@@ -28,6 +28,7 @@ export async function getTransactions() {
     type: t.type,
     categoryName: t.category.name,
     categoryId: t.categoryId,
+    isFixed: t.isFixed,
   }));
 }
 

@@ -143,6 +143,8 @@ export function StatementPage({
       <TransactionsTable
         transactions={filteredTransactions}
         categories={categories}
+        currentYear={Number(selectedYear)}
+        currentMonth={Number(selectedMonth)}
       />
     </PageShell>
   );
