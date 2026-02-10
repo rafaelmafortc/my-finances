@@ -1,5 +1,6 @@
 import { PageShell } from '@/components/layout/page-shell';
 import {
+  ExpensesByCategory,
   PeriodSummary,
   StatementTable,
   getCategories,
@@ -18,6 +19,10 @@ export default async function Page() {
       subtitle="Acompanhe suas receitas e despesas mensais"
     >
       <PeriodSummary transactions={transactions} />
+      <ExpensesByCategory
+        transactions={transactions}
+        categories={categories}
+      />
       <StatementTable transactions={transactions} categories={categories} />
     </PageShell>
   );
