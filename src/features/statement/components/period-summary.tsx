@@ -33,8 +33,8 @@ export function PeriodSummary({
       <CardContent className="space-y-5">
         <div className="flex flex-col gap-4 sm:flex-row sm:justify-between sm:gap-0">
           <div className="flex items-center gap-3">
-            <div className="bg-emerald-500/10 flex size-9 shrink-0 items-center justify-center rounded-lg">
-              <ArrowUpCircle className="size-4 text-emerald-500" aria-hidden />
+            <div className="bg-success/10 flex size-9 shrink-0 items-center justify-center rounded-lg">
+              <ArrowUpCircle className="size-4 text-success" aria-hidden />
             </div>
             <div className="min-w-0 flex-1">
               <span className="text-muted-foreground block text-xs uppercase tracking-wider">
@@ -64,11 +64,11 @@ export function PeriodSummary({
           <div className="flex items-center gap-3">
             <div
               className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${
-                result >= 0 ? 'bg-emerald-500/10' : 'bg-destructive/10'
+                result >= 0 ? 'bg-success/10' : 'bg-destructive/10'
               }`}
             >
               <TrendingUp
-                className={`size-4 ${result >= 0 ? 'text-emerald-500' : 'text-destructive'}`}
+                className={`size-4 ${result >= 0 ? 'text-success' : 'text-destructive'}`}
                 aria-hidden
               />
             </div>
@@ -78,7 +78,7 @@ export function PeriodSummary({
               </span>
               <span
                 className={`mt-0.5 block text-base font-semibold tabular-nums ${
-                  result >= 0 ? 'text-emerald-500' : 'text-destructive'
+                  result >= 0 ? 'text-success' : 'text-destructive'
                 }`}
               >
                 R$ {formatCurrencyBR(result)}
@@ -90,7 +90,7 @@ export function PeriodSummary({
         <div className="space-y-1.5">
           <div className="bg-muted flex h-2 w-full overflow-hidden rounded-full">
             <div
-              className="bg-emerald-500 transition-[width]"
+              className="bg-success transition-[width]"
               style={{ width: `${incomePct}%` }}
               role="progressbar"
               aria-valuenow={incomePct}
@@ -108,7 +108,7 @@ export function PeriodSummary({
           </div>
           <div className="flex gap-3 justify-between text-muted-foreground text-xs">
             <span className="flex items-center gap-1.5">
-              <span className="bg-emerald-500 size-1.5 rounded-full" />
+              <span className="bg-success size-1.5 rounded-full" />
               {incomePct.toFixed(1)}%
             </span>
             <span className="flex items-center gap-1.5">

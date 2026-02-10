@@ -140,7 +140,7 @@ export function StatementTable({
                   <TableCell>{t.categoryName}</TableCell>
                   <TableCell>
                     {t.type === 'INCOME' ? (
-                      <span className="inline-flex items-center gap-1.5 text-emerald-600 dark:text-emerald-400">
+                      <span className="inline-flex items-center gap-1.5 text-success">
                         <ArrowUpCircle className="size-4" />
                         Entrada
                       </span>
@@ -154,7 +154,7 @@ export function StatementTable({
                   <TableCell
                     className={
                       t.type === 'INCOME'
-                        ? 'text-emerald-600 dark:text-emerald-400 text-right'
+                        ? 'text-success text-right'
                         : 'text-destructive text-right'
                     }
                   >
