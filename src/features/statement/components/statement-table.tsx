@@ -85,7 +85,7 @@ export function StatementTable({
             <TransactionDialog
               categories={categories}
               trigger={
-                <Button size="sm" icon={Plus}>
+                <Button size="sm" variant="outline" icon={Plus}>
                   Nova transação
                 </Button>
               }
@@ -100,9 +100,6 @@ export function StatementTable({
         {transactions.length === 0 ? (
           <Empty>
             <EmptyHeader>
-              <EmptyMedia variant="icon">
-                <Receipt className="size-6" />
-              </EmptyMedia>
               <EmptyTitle>Nenhuma transação</EmptyTitle>
               <EmptyDescription>
                 Cadastre sua primeira transação para acompanhar receitas e
@@ -113,7 +110,7 @@ export function StatementTable({
               <TransactionDialog
                 categories={categories}
                 trigger={
-                  <Button size="sm" icon={Plus}>
+                  <Button size="sm" variant="outline" icon={Plus}>
                     Nova transação
                   </Button>
                 }
