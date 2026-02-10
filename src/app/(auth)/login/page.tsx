@@ -2,7 +2,7 @@ import Link from 'next/link';
 
 import { PiggyBank } from 'lucide-react';
 
-import { LoginForm } from '@/modules/auth';
+import { LoginForm } from '@/features/auth';
 
 export default async function Page() {
   return (

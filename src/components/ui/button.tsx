@@ -44,11 +44,14 @@ function Button({
   size = 'sm',
   asChild = false,
   isLoading = false,
+  icon: Icon,
+  children,
   ...props
 }: React.ComponentProps<'button'> &
   VariantProps<typeof buttonVariants> & {
     asChild?: boolean;
     isLoading?: boolean;
+    icon?: React.ComponentType<{ className?: string }>;
   }) {
   const Comp = asChild ? Slot : 'button';
 
@@ -62,8 +65,13 @@ function Button({
     >
       {isLoading ? (
         <div className="h-4 w-4 animate-spin rounded-full border-2 border-current border-t-transparent" />
+      ) : Icon ? (
+        <span className="inline-flex items-center gap-1">
+          <Icon className="size-4 shrink-0" />
+          {children}
+        </span>
       ) : (
-        props.children
+        children
       )}
     </Comp>
   );

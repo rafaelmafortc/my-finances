@@ -1,4 +1,5 @@
 import type { NextAuthOptions } from 'next-auth';
+import { getServerSession } from 'next-auth';
 import NextAuth from 'next-auth';
 import GoogleProvider from 'next-auth/providers/google';
 
@@ -26,3 +27,7 @@ export const authOptions: NextAuthOptions = {
 const handler = NextAuth(authOptions);
 
 export { handler as GET, handler as POST };
+
+export async function getSession() {
+  return getServerSession(authOptions);
+}
