@@ -56,7 +56,7 @@ import type { Category } from '../types/category';
 import type { Transaction } from '../types/transaction';
 import { TransactionDialog } from './transaction-dialog';
 
-export function StatementTable({
+export function TransactionsTable({
   transactions,
   categories,
 }: {
@@ -231,3 +231,4 @@ export function StatementTable({
     </Card>
   );
 }
+

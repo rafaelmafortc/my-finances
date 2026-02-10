@@ -13,7 +13,7 @@ export function PageShell({ title, subtitle, actions, children }: Props) {
   return (
     <div className="flex-1">
       <div className="mx-auto flex min-h-screen max-w-6xl flex-col px-4 py-6 md:px-8 md:py-8">
-        <header className="mb-8 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <header className="mb-8 flex flex-col gap-4 items-end md:flex-row md:justify-between">
           <div>
             <h1 className="text-xl font-semibold tracking-tight">{title}</h1>
             {subtitle && (
