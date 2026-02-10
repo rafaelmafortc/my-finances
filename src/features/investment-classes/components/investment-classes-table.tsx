@@ -79,15 +79,17 @@ export function InvestmentClassesTable({
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Classes de Investimento</CardTitle>
-          <CardAction>
-            <InvestmentClassDialog
-              trigger={
-                <Button size="sm" variant="outline" icon={Plus}>
-                  Nova classe
-                </Button>
-              }
-            />
-          </CardAction>
+          {investmentClasses.length > 0 && (
+            <CardAction>
+              <InvestmentClassDialog
+                trigger={
+                  <Button size="sm" variant="outline" icon={Plus}>
+                    Nova classe
+                  </Button>
+                }
+              />
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent>
           {investmentClasses.length === 0 ? (

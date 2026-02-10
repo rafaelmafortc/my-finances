@@ -79,15 +79,17 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Categorias</CardTitle>
-          <CardAction>
-            <CategoryDialog
-              trigger={
-                <Button size="sm" variant="outline" icon={Plus}>
-                  Nova categoria
-                </Button>
-              }
-            />
-          </CardAction>
+          {categories.length > 0 && (
+            <CardAction>
+              <CategoryDialog
+                trigger={
+                  <Button size="sm" variant="outline" icon={Plus}>
+                    Nova categoria
+                  </Button>
+                }
+              />
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent>
           {categories.length === 0 ? (

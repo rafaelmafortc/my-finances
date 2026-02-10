@@ -96,21 +96,23 @@ export function FixedTransactionsTable({
     <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <CardTitle>Transações Fixas</CardTitle>
-        <CardAction>
-          <FixedTransactionDialog
-            categories={categories}
-            trigger={
-              <Button size="sm" variant="outline" icon={Plus}>
-                Nova fixa
-              </Button>
-            }
-            onSubmit={async (data) => {
-              const { createFixedTransaction } =
-                await import('../actions/fixed-transaction');
-              await createFixedTransaction(data);
-            }}
-          />
-        </CardAction>
+        {fixedTransactions.length > 0 && (
+          <CardAction>
+            <FixedTransactionDialog
+              categories={categories}
+              trigger={
+                <Button size="sm" variant="outline" icon={Plus}>
+                  Nova fixa
+                </Button>
+              }
+              onSubmit={async (data) => {
+                const { createFixedTransaction } =
+                  await import('../actions/fixed-transaction');
+                await createFixedTransaction(data);
+              }}
+            />
+          </CardAction>
+        )}
       </CardHeader>
       <CardContent>
         {fixedTransactions.length === 0 ? (

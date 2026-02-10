@@ -4,6 +4,7 @@ import {
   EmergencyReserveCard,
   InvestmentsByClass,
   InvestmentsTable,
+  TotalPatrimony,
   getInvestments,
 } from '@/features/investments';
 import { getTransactions } from '@/features/statement';
@@ -19,6 +20,7 @@ export default async function Page() {
     <PageShell
       title="Investimentos"
       subtitle="Gerencie sua carteira e alocação de ativos"
+      actions={<TotalPatrimony />}
     >
       <div className="space-y-6">
         <EmergencyReserveCard transactions={transactions} />

@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
@@ -32,7 +32,6 @@ import {
   EmptyHeader,
   EmptyTitle,
 } from '@/components/ui/empty';
-import { Input } from '@/components/ui/input';
 import {
   Table,
   TableBody,
@@ -43,14 +42,8 @@ import {
 } from '@/components/ui/table';
 import type { InvestmentClass } from '@/features/investment-classes';
 import { formatCurrencyBR } from '@/lib/format';
-import { maskCurrencyBR } from '@/lib/mask';
-import { parseCurrencyBR } from '@/lib/parse';
 
-import {
-  deleteInvestment,
-  getTotalPatrimony,
-  updateTotalPatrimony,
-} from '../actions/investment';
+import { deleteInvestment } from '../actions/investment';
 import type { Investment } from '../types/investment';
 import { InvestmentDialog } from './investment-dialog';
 
@@ -69,19 +62,6 @@ export function InvestmentsTable({
     string | null
   >(null);
   const [deleteError, setDeleteError] = useState<string | null>(null);
-  const [totalPatrimony, setTotalPatrimony] = useState<string>('');
-  const [isEditingPatrimony, setIsEditingPatrimony] = useState(false);
-  const [patrimonyError, setPatrimonyError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const loadPatrimony = async () => {
-      const patrimony = await getTotalPatrimony();
-      if (patrimony !== null) {
-        setTotalPatrimony(formatCurrencyBR(patrimony));
-      }
-    };
-    loadPatrimony();
-  }, []);
 
   const handleConfirmDelete = async () => {
     if (!investmentToDeleteId) return;
@@ -100,40 +80,6 @@ export function InvestmentsTable({
     }
   };
 
-  const handleSavePatrimony = async () => {
-    setPatrimonyError(null);
-    const parsed = parseCurrencyBR(totalPatrimony);
-    if (parsed < 0) {
-      setPatrimonyError('Patrimônio não pode ser negativo');
-      return;
-    }
-
-    try {
-      await updateTotalPatrimony(parsed);
-      setIsEditingPatrimony(false);
-      router.refresh();
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : 'Erro ao atualizar patrimônio';
-      setPatrimonyError(errorMessage);
-      toast.error(errorMessage);
-    }
-  };
-
-  const handleCancelPatrimony = () => {
-    setIsEditingPatrimony(false);
-    setPatrimonyError(null);
-    const loadPatrimony = async () => {
-      const patrimony = await getTotalPatrimony();
-      if (patrimony !== null) {
-        setTotalPatrimony(formatCurrencyBR(patrimony));
-      } else {
-        setTotalPatrimony('');
-      }
-    };
-    loadPatrimony();
-  };
-
   const totalPercentage = investments.reduce(
     (acc, inv) => acc + Number(inv.percentage),
     0
@@ -144,56 +90,8 @@ export function InvestmentsTable({
       <Card>
         <CardHeader className="flex flex-row items-center justify-between">
           <CardTitle>Carteira</CardTitle>
-          <CardAction>
-            <div className="flex items-center gap-2">
-              {isEditingPatrimony ? (
-                <>
-                  <div className="flex items-center gap-2">
-                    <Input
-                      value={totalPatrimony}
-                      onChange={(e) =>
-                        setTotalPatrimony(maskCurrencyBR(e.target.value))
-                      }
-                      className="w-32"
-                      placeholder="0,00"
-                    />
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      onClick={handleSavePatrimony}
-                    >
-                      Salvar
-                    </Button>
-                    <Button
-                      size="sm"
-                      variant="ghost"
-                      onClick={handleCancelPatrimony}
-                    >
-                      Cancelar
-                    </Button>
-                  </div>
-                  {patrimonyError && (
-                    <p className="text-destructive text-xs">{patrimonyError}</p>
-                  )}
-                </>
-              ) : (
-                <div className="flex items-center gap-2">
-                  <span className="text-sm text-muted-foreground">
-                    Patrimônio Total:
-                  </span>
-                  <span className="text-sm font-medium">
-                    R$ {totalPatrimony || '0,00'}
-                  </span>
-                  <Button
-                    variant="ghost"
-                    size="icon-xs"
-                    onClick={() => setIsEditingPatrimony(true)}
-                    aria-label="Editar patrimônio"
-                  >
-                    <Pencil className="size-4" />
-                  </Button>
-                </div>
-              )}
+          {investments.length > 0 && (
+            <CardAction>
               <InvestmentDialog
                 investmentClasses={investmentClasses}
                 trigger={
@@ -202,8 +100,8 @@ export function InvestmentsTable({
                   </Button>
                 }
               />
-            </div>
-          </CardAction>
+            </CardAction>
+          )}
         </CardHeader>
         <CardContent>
           {investments.length === 0 ? (
