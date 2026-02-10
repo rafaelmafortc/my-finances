@@ -1,8 +1,18 @@
 'use client';
 
-import { ArrowDownCircle, ArrowUpCircle, TrendingUp } from 'lucide-react';
+import {
+  AlertTriangle,
+  ArrowDownCircle,
+  ArrowUpCircle,
+  TrendingUp,
+} from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import { formatCurrencyBR } from '@/lib/format';
 
 import type { Transaction } from '../types/transaction';
@@ -21,9 +31,24 @@ export function PeriodSummary({
   const totalIncome = sumByType(transactions, 'INCOME');
   const totalExpenses = sumByType(transactions, 'EXPENSE');
   const result = totalIncome - totalExpenses;
-  const total = totalIncome + totalExpenses;
-  const incomePct = total > 0 ? (totalIncome / total) * 100 : 0;
-  const expensePct = total > 0 ? (totalExpenses / total) * 100 : 0;
+
+  let incomePct = 0;
+  let expensePct = 0;
+  let rawExpensePct = 0;
+
+  if (totalIncome > 0) {
+    rawExpensePct = (totalExpenses / totalIncome) * 100;
+    const clampedExpensePct =
+      rawExpensePct < 0 ? 0 : rawExpensePct > 100 ? 100 : rawExpensePct;
+    expensePct = clampedExpensePct;
+    incomePct = 100 - clampedExpensePct;
+  } else if (totalExpenses > 0) {
+    expensePct = 100;
+    incomePct = 0;
+    rawExpensePct = 100;
+  }
+
+  const showHighExpenseWarning = expensePct > 75;
 
   return (
     <Card>
@@ -56,7 +81,7 @@ export function PeriodSummary({
               <span className="text-muted-foreground block text-xs uppercase tracking-wider">
                 Despesas
               </span>
-              <span className="mt-0.5 block text-base font-semibold tabular-nums text-destructive">
+              <span className="mt-0.5 block text-base font-semibold tabular-nums">
                 R$ {formatCurrencyBR(totalExpenses)}
               </span>
             </div>
@@ -116,6 +141,16 @@ export function PeriodSummary({
               {expensePct.toFixed(1)}%
             </span>
           </div>
+          {showHighExpenseWarning && (
+            <div className="flex items-center gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 mt-4 text-xs text-warning">
+              <AlertTriangle className="size-4 shrink-0" aria-hidden />
+              <span className="font-medium">Despesas em nível de alerta.</span>
+              <span className="font-base">
+                Idealmente, tente manter suas despesas abaixo de 75% das
+                receitas para ter margem para investimentos e imprevistos.
+              </span>
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
