@@ -18,6 +18,7 @@ export function parseDDMMYYYY(str: string): Date | null {
   const year = parseInt(cleaned.slice(4, 8), 10);
   const d = new Date(year, month, day);
   if (isNaN(d.getTime())) return null;
-  if (d.getDate() !== day || d.getMonth() !== month || d.getFullYear() !== year) return null;
+  if (d.getDate() !== day || d.getMonth() !== month || d.getFullYear() !== year)
+    return null;
   return d;
 }
