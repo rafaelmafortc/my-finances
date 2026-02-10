@@ -1,5 +1,6 @@
 'use client';
 
+import { signOut } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
@@ -68,16 +69,19 @@ export function AppSidebar() {
         </TooltipProvider>
 
         <div className="p-1.5 pb-4">
-          <Link
-            prefetch
-            href={'/login'}
-            className={
-              'flex items-center justify-center rounded-md transition-colors text-muted-foreground'
-            }
-          >
-            <LogOut className="text-destructive size-4" />
-            <span className="sr-only">Sair</span>
-          </Link>
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <button
+                type="button"
+                onClick={() => signOut({ callbackUrl: '/login' })}
+                className="flex w-full items-center justify-center rounded-md transition-colors text-muted-foreground hover:bg-accent/50 hover:text-destructive"
+              >
+                <LogOut className="text-destructive size-4" />
+                <span className="sr-only">Sair</span>
+              </button>
+            </TooltipTrigger>
+            <TooltipContent side="right">Sair</TooltipContent>
+          </Tooltip>
         </div>
       </aside>
 
@@ -100,15 +104,15 @@ export function AppSidebar() {
             </Link>
           );
         })}
-        <Link
-          prefetch
+        <button
+          type="button"
           key="logout"
-          href={'/login'}
-          className="flex flex-col items-center gap-1 text-muted-foreground"
+          onClick={() => signOut({ callbackUrl: '/login' })}
+          className="flex flex-col items-center gap-1 text-muted-foreground hover:text-destructive"
         >
           <LogOut className="size-4" />
           <span className="text-xs">Sair</span>
-        </Link>
+        </button>
       </nav>
     </>
   );
