@@ -4,7 +4,7 @@ import { useState } from 'react';
 
 import { useRouter } from 'next/navigation';
 
-import { Pencil, Plus, Trash2 } from 'lucide-react';
+import { AlertTriangle, Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
 import {
@@ -40,6 +40,11 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from '@/components/ui/tooltip';
 import type { InvestmentClass } from '@/features/investment-classes';
 import { formatCurrencyBR } from '@/lib/format';
 
@@ -181,21 +186,24 @@ export function InvestmentsTable({
                     </TableCell>
                   </TableRow>
                 ))}
-                <TableRow className="font-semibold">
+                <TableRow className="font-semibold bg-muted">
                   <TableCell colSpan={2}>Total</TableCell>
                   <TableCell className="text-right">
-                    {totalPercentage.toFixed(2)}%
+                    <div className="flex items-center justify-end gap-2">
+                      {totalPercentage.toFixed(2)}%
+                      {Math.abs(totalPercentage - 100) > 0.01 && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <AlertTriangle className="size-4 text-warning" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            A carteira não está 100% alocada
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
                   </TableCell>
-                  <TableCell className="text-right">
-                    R${' '}
-                    {formatCurrencyBR(
-                      investments.reduce(
-                        (acc, inv) => acc + Number(inv.value),
-                        0
-                      )
-                    )}
-                  </TableCell>
-                  <TableCell />
+                  <TableCell colSpan={2} />
                 </TableRow>
               </TableBody>
             </Table>
