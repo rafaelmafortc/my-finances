@@ -17,10 +17,8 @@ export default async function Page() {
       title="Extrato"
       subtitle="Acompanhe suas receitas e despesas mensais"
     >
-      <div className="space-y-6">
-        <PeriodSummary transactions={transactions} />
-        <StatementTable transactions={transactions} categories={categories} />
-      </div>
+      <PeriodSummary transactions={transactions} />
+      <StatementTable transactions={transactions} categories={categories} />
     </PageShell>
   );
 }
