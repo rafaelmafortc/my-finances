@@ -32,8 +32,8 @@ import { formatCurrencyBR } from '@/lib/format';
 import { maskCurrencyBR } from '@/lib/mask';
 import { parseCurrencyBR } from '@/lib/parse';
 
-import { createCategory } from '@/features/statement/actions/categories';
-import type { Category } from '@/features/statement/types/category';
+import { createCategory } from '@/features/categories';
+import type { Category } from '@/features/categories';
 import type {
   EditFixedTransactionForm,
   FixedTransactionFormSubmit,

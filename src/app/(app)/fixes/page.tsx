@@ -1,5 +1,5 @@
 import { PageShell } from '@/components/layout/page-shell';
-import { getCategories } from '@/features/statement';
+import { getCategories } from '@/features/categories';
 import {
   FixedTransactionsTable,
   IncomeCommitmentChart,

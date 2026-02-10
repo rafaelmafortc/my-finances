@@ -38,8 +38,8 @@ import { formatCurrencyBR, formatDateBR } from '@/lib/format';
 import { maskCurrencyBR, maskDDMMYYYY } from '@/lib/mask';
 import { parseCurrencyBR, parseDDMMYYYY } from '@/lib/parse';
 
-import { createCategory } from '../actions/categories';
-import type { Category } from '../types/category';
+import { createCategory } from '@/features/categories';
+import type { Category } from '@/features/categories';
 import type {
   EditTransactionForm,
   TransactionFormSubmit,

@@ -1,4 +1,9 @@
-import { ArrowUpDown, FileChartColumn, TrendingUp } from 'lucide-react';
+import {
+  ArrowUpDown,
+  FileChartColumn,
+  Layers2,
+  TrendingUp,
+} from 'lucide-react';
 
 export const navigation = [
   {
@@ -15,5 +20,10 @@ export const navigation = [
     name: 'Investimentos',
     href: '/investments',
     icon: TrendingUp,
+  },
+  {
+    name: 'Categorias',
+    href: '/categories',
+    icon: Layers2,
   },
 ];
