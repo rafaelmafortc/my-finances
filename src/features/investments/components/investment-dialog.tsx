@@ -79,7 +79,7 @@ export function InvestmentDialog({
       setNewClassName('');
       setIsAddingClass(false);
     }
-  }, [open, investment, isEdit, investmentClasses]);
+  }, [open, investment, isEdit]);
 
   const handleOpen = (isOpen: boolean) => {
     setOpen(isOpen);
