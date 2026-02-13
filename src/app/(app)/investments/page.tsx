@@ -1,5 +1,5 @@
 import { PageShell } from '@/components/layout/page-shell';
-import { getInvestmentClasses } from '@/features/investment-classes';
+import { getInvestmentClasses } from '@/features/categories';
 import {
   EmergencyReserveCard,
   InvestmentsByClass,

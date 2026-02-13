@@ -32,7 +32,7 @@ import {
 import {
   type InvestmentClass,
   createInvestmentClass,
-} from '@/features/investment-classes';
+} from '@/features/categories';
 
 import { createInvestment, updateInvestment } from '../actions/investment';
 import type { Investment } from '../types/investment';

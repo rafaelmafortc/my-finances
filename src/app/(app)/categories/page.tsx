@@ -1,9 +1,10 @@
 import { PageShell } from '@/components/layout/page-shell';
-import { CategoriesTable, getCategories } from '@/features/categories';
 import {
-  InvestmentClassesTable,
+  CategoriesTable,
+  getCategories,
   getInvestmentClasses,
-} from '@/features/investment-classes';
+  InvestmentClassesTable,
+} from '@/features/categories';
 
 export default async function Page() {
   const [categories, investmentClasses] = await Promise.all([
