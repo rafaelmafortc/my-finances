@@ -1,11 +1,20 @@
 'use client';
 
-import { signOut } from 'next-auth/react';
+import { signOut, useSession } from 'next-auth/react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-import { LogOut, PiggyBank } from 'lucide-react';
+import { LogOut, PiggyBank, User } from 'lucide-react';
 
+import { Avatar, AvatarFallback } from '@/components/ui/avatar';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import {
   Tooltip,
   TooltipContent,
@@ -17,6 +26,9 @@ import { cn } from '@/lib/utils';
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const { data: session } = useSession();
+  const userLabel = session?.user?.email ?? session?.user?.name ?? 'Usuário';
+  const initial = (userLabel.trim().charAt(0) || '?').toUpperCase();
 
   return (
     <>
@@ -69,24 +81,55 @@ export function AppSidebar() {
         </TooltipProvider>
 
         <div className="p-1.5 pb-4">
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <button
-                type="button"
+          <DropdownMenu modal={false}>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <DropdownMenuTrigger asChild>
+                  <Avatar className="size-7 rounded-lg border-none">
+                    <AvatarFallback className="rounded-lg bg-primary/20 font-semibold text-primary text-sm">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
+                </DropdownMenuTrigger>
+              </TooltipTrigger>
+              <TooltipContent side="right">Conta</TooltipContent>
+            </Tooltip>
+            <DropdownMenuContent
+              side="right"
+              align="end"
+              sideOffset={4}
+              className="min-w-56 rounded-lg"
+            >
+              <DropdownMenuLabel className="p-0 font-normal">
+                <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                  <Avatar className="h-8 w-8 rounded-lg border-none">
+                    <AvatarFallback className="rounded-lg bg-primary/20 font-semibold text-primary text-sm">
+                      {initial}
+                    </AvatarFallback>
+                  </Avatar>
+                  <div className="grid flex-1 text-left text-sm leading-tight">
+                    <span className="truncate text-smaller">{userLabel}</span>
+                  </div>
+                </div>
+              </DropdownMenuLabel>
+              <DropdownMenuSeparator />
+              <DropdownMenuItem
                 onClick={() => signOut({ callbackUrl: '/login' })}
-                className="flex w-full items-center justify-center rounded-md transition-colors text-muted-foreground hover:bg-accent/50 hover:text-destructive"
+                variant="destructive"
               >
-                <LogOut className="text-destructive size-4" />
-                <span className="sr-only">Sair</span>
-              </button>
-            </TooltipTrigger>
-            <TooltipContent side="right">Sair</TooltipContent>
-          </Tooltip>
+                <LogOut />
+                Deslogar
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </div>
       </aside>
 
       {/* Mobile Bottom Navigation */}
-      <nav className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t border-border bg-card px-2 shadow-lg" style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}>
+      <nav
+        className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t border-border bg-card p-2 shadow-lg"
+        style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
+      >
         {navigation.map((item) => {
           const isActive = pathname === item.href;
           return (
@@ -104,15 +147,41 @@ export function AppSidebar() {
             </Link>
           );
         })}
-        <button
-          type="button"
-          key="logout"
-          onClick={() => signOut({ callbackUrl: '/login' })}
-          className="flex flex-col items-center gap-1 text-muted-foreground hover:text-destructive"
-        >
-          <LogOut className="size-4" />
-          <span className="text-xs">Sair</span>
-        </button>
+        <DropdownMenu modal={false}>
+          <DropdownMenuTrigger asChild>
+            <button className="flex flex-col items-center justify-center gap-1 transition-colors text-muted-foreground">
+              <User className="size-4" />
+              <span className="text-xs">Conta</span>
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent
+            side="top"
+            align="end"
+            sideOffset={4}
+            className="min-w-56 rounded-lg mb-2"
+          >
+            <DropdownMenuLabel className="p-0 font-normal">
+              <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
+                <Avatar className="h-8 w-8 rounded-lg border-none">
+                  <AvatarFallback className="rounded-lg bg-primary/20 font-semibold text-primary text-sm">
+                    {initial}
+                  </AvatarFallback>
+                </Avatar>
+                <div className="grid flex-1 text-left text-sm leading-tight">
+                  <span className="truncate text-smaller">{userLabel}</span>
+                </div>
+              </div>
+            </DropdownMenuLabel>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem
+              onClick={() => signOut({ callbackUrl: '/login' })}
+              variant="destructive"
+            >
+              <LogOut />
+              Deslogar
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </nav>
     </>
   );
