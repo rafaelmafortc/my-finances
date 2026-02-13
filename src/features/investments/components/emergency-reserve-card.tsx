@@ -5,7 +5,7 @@ import { useMemo } from 'react';
 import { FileOutput, Shield } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import type { Transaction } from '@/features/statement/types/transaction';
+import type { Transaction } from '@/features/statement';
 import { formatCurrencyBR } from '@/lib/format';
 
 type MonthlyExpense = {

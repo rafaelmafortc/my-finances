@@ -90,9 +90,9 @@ export function IncomeCommitmentChart({
                   Comprometimento de renda elevado.{' '}
                 </span>
                 <span className="font-base">
-                  Idealmente, tente manter seus gastos fixos abaixo de 30% da sua
-                  renda para ter margem suficiente para investimentos, lazer e
-                  imprevistos.
+                  Idealmente, tente manter seus gastos fixos abaixo de 30% da
+                  sua renda para ter margem suficiente para investimentos, lazer
+                  e imprevistos.
                 </span>
               </div>
             </div>

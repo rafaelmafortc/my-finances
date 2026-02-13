@@ -1,9 +1,9 @@
 import { PageShell } from '@/components/layout/page-shell';
 import {
   CategoriesTable,
+  InvestmentClassesTable,
   getCategories,
   getInvestmentClasses,
-  InvestmentClassesTable,
 } from '@/features/categories';
 
 export default async function Page() {

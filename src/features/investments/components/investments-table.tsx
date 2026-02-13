@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { AlertTriangle, Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -101,7 +100,12 @@ export function InvestmentsTable({
               <InvestmentDialog
                 investmentClasses={investmentClasses}
                 trigger={
-                  <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    icon={Plus}
+                    className="w-full sm:w-auto"
+                  >
                     Novo investimento
                   </Button>
                 }
@@ -139,74 +143,76 @@ export function InvestmentsTable({
                     key={investment.id}
                     className="rounded-lg border border-border bg-card p-3 sm:p-4 space-y-3 w-full min-w-0"
                   >
-                  <div className="flex items-start justify-between gap-2">
-                    <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm">{investment.product}</p>
-                      <p className="text-xs text-muted-foreground mt-1">
-                        {investment.investmentClass?.name || 'Sem classe'}
-                      </p>
+                    <div className="flex items-start justify-between gap-2">
+                      <div className="flex-1 min-w-0">
+                        <p className="font-medium text-sm">
+                          {investment.product}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          {investment.investmentClass?.name || 'Sem classe'}
+                        </p>
+                      </div>
+                      <div className="text-right">
+                        <p className="font-semibold text-sm">
+                          R$ {formatCurrencyBR(Number(investment.value))}
+                        </p>
+                        <p className="text-xs text-muted-foreground">
+                          {Number(investment.percentage).toFixed(2)}%
+                        </p>
+                      </div>
                     </div>
-                    <div className="text-right">
-                      <p className="font-semibold text-sm">
-                        R$ {formatCurrencyBR(Number(investment.value))}
-                      </p>
-                      <p className="text-xs text-muted-foreground">
-                        {Number(investment.percentage).toFixed(2)}%
-                      </p>
+                    <div className="flex items-center gap-2 pt-2 border-t border-border">
+                      <InvestmentDialog
+                        investment={investment}
+                        investmentClasses={investmentClasses}
+                        trigger={
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            className="flex-1"
+                          >
+                            <Pencil className="size-4 mr-2" />
+                            Editar
+                          </Button>
+                        }
+                      />
+                      <Button
+                        type="button"
+                        variant="ghost"
+                        size="sm"
+                        className="flex-1 text-destructive hover:text-destructive"
+                        onClick={() => {
+                          setInvestmentToDeleteId(investment.id);
+                          setDeleteDialogOpen(true);
+                        }}
+                      >
+                        <Trash2 className="size-4 mr-2" />
+                        Excluir
+                      </Button>
                     </div>
                   </div>
-                  <div className="flex items-center gap-2 pt-2 border-t border-border">
-                    <InvestmentDialog
-                      investment={investment}
-                      investmentClasses={investmentClasses}
-                      trigger={
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="sm"
-                          className="flex-1"
-                        >
-                          <Pencil className="size-4 mr-2" />
-                          Editar
-                        </Button>
-                      }
-                    />
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="sm"
-                      className="flex-1 text-destructive hover:text-destructive"
-                      onClick={() => {
-                        setInvestmentToDeleteId(investment.id);
-                        setDeleteDialogOpen(true);
-                      }}
-                    >
-                      <Trash2 className="size-4 mr-2" />
-                      Excluir
-                    </Button>
+                ))}
+                <div className="rounded-lg border border-border bg-muted p-4">
+                  <div className="flex items-center justify-between">
+                    <span className="font-semibold text-sm">Total</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-semibold text-sm">
+                        {totalPercentage.toFixed(2)}%
+                      </span>
+                      {Math.abs(totalPercentage - 100) > 0.01 && (
+                        <Tooltip>
+                          <TooltipTrigger asChild>
+                            <AlertTriangle className="size-4 text-warning" />
+                          </TooltipTrigger>
+                          <TooltipContent>
+                            A carteira não está 100% alocada
+                          </TooltipContent>
+                        </Tooltip>
+                      )}
+                    </div>
                   </div>
                 </div>
-              ))}
-              <div className="rounded-lg border border-border bg-muted p-4">
-                <div className="flex items-center justify-between">
-                  <span className="font-semibold text-sm">Total</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-semibold text-sm">
-                      {totalPercentage.toFixed(2)}%
-                    </span>
-                    {Math.abs(totalPercentage - 100) > 0.01 && (
-                      <Tooltip>
-                        <TooltipTrigger asChild>
-                          <AlertTriangle className="size-4 text-warning" />
-                        </TooltipTrigger>
-                        <TooltipContent>
-                          A carteira não está 100% alocada
-                        </TooltipContent>
-                      </Tooltip>
-                    )}
-                  </div>
-                </div>
-              </div>
               </div>
               {/* Desktop Table View */}
               <div className="hidden md:block">

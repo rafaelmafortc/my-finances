@@ -7,7 +7,6 @@ import { useRouter } from 'next/navigation';
 import { Pencil, Plus, Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
 
-
 import {
   AlertDialog,
   AlertDialogAction,
@@ -84,7 +83,12 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
             <CardAction>
               <CategoryDialog
                 trigger={
-                  <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    icon={Plus}
+                    className="w-full sm:w-auto"
+                  >
                     Nova categoria
                   </Button>
                 }
@@ -120,87 +124,83 @@ export function CategoriesTable({ categories }: CategoriesTableProps) {
                     key={category.id}
                     className="rounded-lg border border-border bg-card p-3 sm:p-4 w-full min-w-0"
                   >
-                  <div className="flex items-center justify-between">
-                    <p className="font-medium text-sm">{category.name}</p>
-                    <div className="flex items-center gap-2">
-                      <CategoryDialog
-                        category={category}
-                        trigger={
-                          <Button
-                            type="button"
-                            variant="ghost"
-                            size="sm"
-                          >
-                            <Pencil className="size-4 mr-2" />
-                            Editar
-                          </Button>
-                        }
-                      />
-                      <Button
-                        type="button"
-                        variant="ghost"
-                        size="sm"
-                        className="text-destructive hover:text-destructive"
-                        onClick={() => {
-                          setCategoryToDeleteId(category.id);
-                          setDeleteDialogOpen(true);
-                        }}
-                      >
-                        <Trash2 className="size-4 mr-2" />
-                        Excluir
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              ))}
-              </div>
-              {/* Desktop Table View */}
-              <div className="hidden md:block">
-                <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nome</TableHead>
-                  <TableHead className="w-[100px]">Ações</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {categories.map((category) => (
-                  <TableRow key={category.id}>
-                    <TableCell>{category.name}</TableCell>
-                    <TableCell>
-                      <div className="flex items-center gap-1">
+                    <div className="flex items-center justify-between">
+                      <p className="font-medium text-sm">{category.name}</p>
+                      <div className="flex items-center gap-2">
                         <CategoryDialog
                           category={category}
                           trigger={
-                            <Button
-                              type="button"
-                              variant="ghost"
-                              size="icon-xs"
-                              aria-label="Editar"
-                            >
-                              <Pencil className="size-4" />
+                            <Button type="button" variant="ghost" size="sm">
+                              <Pencil className="size-4 mr-2" />
+                              Editar
                             </Button>
                           }
                         />
                         <Button
                           type="button"
                           variant="ghost"
-                          size="icon-xs"
+                          size="sm"
                           className="text-destructive hover:text-destructive"
                           onClick={() => {
                             setCategoryToDeleteId(category.id);
                             setDeleteDialogOpen(true);
                           }}
                         >
-                          <Trash2 className="size-4" />
-                          <span className="sr-only">Excluir</span>
+                          <Trash2 className="size-4 mr-2" />
+                          Excluir
                         </Button>
                       </div>
-                    </TableCell>
-                  </TableRow>
+                    </div>
+                  </div>
                 ))}
-              </TableBody>
-            </Table>
+              </div>
+              {/* Desktop Table View */}
+              <div className="hidden md:block">
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Nome</TableHead>
+                      <TableHead className="w-[100px]">Ações</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {categories.map((category) => (
+                      <TableRow key={category.id}>
+                        <TableCell>{category.name}</TableCell>
+                        <TableCell>
+                          <div className="flex items-center gap-1">
+                            <CategoryDialog
+                              category={category}
+                              trigger={
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon-xs"
+                                  aria-label="Editar"
+                                >
+                                  <Pencil className="size-4" />
+                                </Button>
+                              }
+                            />
+                            <Button
+                              type="button"
+                              variant="ghost"
+                              size="icon-xs"
+                              className="text-destructive hover:text-destructive"
+                              onClick={() => {
+                                setCategoryToDeleteId(category.id);
+                                setDeleteDialogOpen(true);
+                              }}
+                            >
+                              <Trash2 className="size-4" />
+                              <span className="sr-only">Excluir</span>
+                            </Button>
+                          </div>
+                        </TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
               </div>
             </>
           )}

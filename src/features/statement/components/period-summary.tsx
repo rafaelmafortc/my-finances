@@ -145,7 +145,9 @@ export function PeriodSummary({
             <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 mt-4 text-xs text-warning">
               <AlertTriangle className="size-4 shrink-0" aria-hidden />
               <div className="flex-1">
-                <span className="font-medium block sm:inline">Despesas em nível de alerta.{' '}</span>
+                <span className="font-medium block sm:inline">
+                  Despesas em nível de alerta.{' '}
+                </span>
                 <span className="font-base">
                   Idealmente, tente manter suas despesas abaixo de 75% das
                   receitas para ter margem para investimentos e imprevistos.

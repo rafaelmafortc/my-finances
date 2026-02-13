@@ -75,15 +75,27 @@ export function TotalPatrimony() {
             </span>
             <Input
               value={totalPatrimony}
-              onChange={(e) => setTotalPatrimony(maskCurrencyBR(e.target.value))}
+              onChange={(e) =>
+                setTotalPatrimony(maskCurrencyBR(e.target.value))
+              }
               className="w-full sm:w-32"
               placeholder="0,00"
             />
             <div className="flex gap-2">
-              <Button size="sm" variant="outline" onClick={handleSavePatrimony} className="flex-1 sm:flex-none">
+              <Button
+                size="sm"
+                variant="outline"
+                onClick={handleSavePatrimony}
+                className="flex-1 sm:flex-none"
+              >
                 Salvar
               </Button>
-              <Button size="sm" variant="ghost" onClick={handleCancelPatrimony} className="flex-1 sm:flex-none">
+              <Button
+                size="sm"
+                variant="ghost"
+                onClick={handleCancelPatrimony}
+                className="flex-1 sm:flex-none"
+              >
                 Cancelar
               </Button>
             </div>

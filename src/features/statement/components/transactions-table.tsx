@@ -125,7 +125,12 @@ export function TransactionsTable({
               <TransactionDialog
                 categories={categories}
                 trigger={
-                  <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    icon={Plus}
+                    className="w-full sm:w-auto"
+                  >
                     Nova transação
                   </Button>
                 }
@@ -162,7 +167,12 @@ export function TransactionsTable({
                 <TransactionDialog
                   categories={categories}
                   trigger={
-                    <Button size="sm" variant="outline" icon={Plus} className="w-full sm:w-auto">
+                    <Button
+                      size="sm"
+                      variant="outline"
+                      icon={Plus}
+                      className="w-full sm:w-auto"
+                    >
                       Nova transação
                     </Button>
                   }
@@ -184,21 +194,27 @@ export function TransactionsTable({
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="flex-1 min-w-0">
-                      <p className="font-medium text-sm truncate">{t.description}</p>
+                      <p className="font-medium text-sm truncate">
+                        {t.description}
+                      </p>
                       <p className="text-xs text-muted-foreground mt-1">
                         {formatDateBR(t.date)}
                       </p>
                     </div>
                     <div
                       className={`text-right font-semibold shrink-0 ${
-                        t.type === 'INCOME' ? 'text-success' : 'text-destructive'
+                        t.type === 'INCOME'
+                          ? 'text-success'
+                          : 'text-destructive'
                       }`}
                     >
                       {formatCurrencyWithSign(t.value, t.type === 'INCOME')}
                     </div>
                   </div>
                   <div className="flex flex-wrap items-center gap-2 text-xs">
-                    <span className="text-muted-foreground">{t.categoryName}</span>
+                    <span className="text-muted-foreground">
+                      {t.categoryName}
+                    </span>
                     <span className="text-muted-foreground">•</span>
                     {t.type === 'INCOME' ? (
                       <span className="inline-flex items-center gap-1 text-success">
@@ -296,9 +312,13 @@ export function TransactionsTable({
                       </TableCell>
                       <TableCell>
                         {t.isFixed ? (
-                          <span className="text-xs text-muted-foreground">Sim</span>
+                          <span className="text-xs text-muted-foreground">
+                            Sim
+                          </span>
                         ) : (
-                          <span className="text-xs text-muted-foreground">-</span>
+                          <span className="text-xs text-muted-foreground">
+                            -
+                          </span>
                         )}
                       </TableCell>
                       <TableCell
