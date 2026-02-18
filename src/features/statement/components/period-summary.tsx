@@ -86,27 +86,18 @@ export function PeriodSummary({
           </div>
           <div className="flex items-center gap-3">
             <div
-              className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${
-                spendingMargin >= 0 ? 'bg-muted' : 'bg-destructive/10'
-              }`}
+              className={`flex size-9 shrink-0 items-center justify-center rounded-lg bg-muted`}
             >
-              <Wallet
-                className={`size-4 ${spendingMargin >= 0 ? 'text-muted-foreground' : 'text-destructive'}`}
-                aria-hidden
-              />
+              <Wallet className={`size-4 text-muted-foreground`} aria-hidden />
             </div>
             <div className="min-w-0 flex-1">
               <span className="text-muted-foreground block text-xs uppercase tracking-wider">
-                Margem para gastos
+                Margem para gastos (75%)
               </span>
               <span
-                className={`mt-0.5 block text-base font-semibold tabular-nums ${
-                  spendingMargin >= 0
-                    ? 'text-muted-foreground'
-                    : 'text-destructive'
-                }`}
+                className={`mt-0.5 block text-base font-semibold tabular-nums`}
               >
-                R$ {formatCurrencyBR(spendingMargin)}
+                R$ {formatCurrencyBR(spendingMargin >= 0 ? spendingMargin : 0)}
               </span>
             </div>
           </div>
