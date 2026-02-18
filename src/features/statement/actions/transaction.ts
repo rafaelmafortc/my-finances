@@ -3,8 +3,8 @@
 import { revalidatePath } from 'next/cache';
 
 import { getCurrentUserId } from '@/features/auth';
-import { parseDateOnly } from '@/lib/parse';
 import { prisma } from '@/lib/prisma';
+import { parseDateOnly } from '@/utils/parse';
 
 import type {
   CreateTransactionInput,

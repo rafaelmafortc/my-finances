@@ -5,7 +5,7 @@ import {
   TrendingUp,
 } from 'lucide-react';
 
-export const navigation = [
+export const NAVIGATION = [
   {
     name: 'Extrato',
     href: '/statement',
@@ -26,4 +26,4 @@ export const navigation = [
     href: '/categories',
     icon: Layers2,
   },
-];
+] as const;

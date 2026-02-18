@@ -6,7 +6,7 @@ import { FileOutput, Shield } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import type { Transaction } from '@/features/statement';
-import { formatCurrencyBR } from '@/lib/format';
+import { formatCurrencyBR } from '@/utils/format';
 
 type MonthlyExpense = {
   month: number;

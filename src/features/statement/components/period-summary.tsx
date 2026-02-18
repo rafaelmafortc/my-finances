@@ -5,15 +5,11 @@ import {
   ArrowDownCircle,
   ArrowUpCircle,
   TrendingUp,
+  Wallet,
 } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipTrigger,
-} from '@/components/ui/tooltip';
-import { formatCurrencyBR } from '@/lib/format';
+import { formatCurrencyBR } from '@/utils/format';
 
 import type { Transaction } from '../types/transaction';
 
@@ -31,6 +27,8 @@ export function PeriodSummary({
   const totalIncome = sumByType(transactions, 'INCOME');
   const totalExpenses = sumByType(transactions, 'EXPENSE');
   const result = totalIncome - totalExpenses;
+  const recommendedInvestment = totalIncome * 0.25;
+  const spendingMargin = totalIncome - recommendedInvestment - totalExpenses;
 
   let incomePct = 0;
   let expensePct = 0;
@@ -83,6 +81,32 @@ export function PeriodSummary({
               </span>
               <span className="mt-0.5 block text-base font-semibold tabular-nums">
                 R$ {formatCurrencyBR(totalExpenses)}
+              </span>
+            </div>
+          </div>
+          <div className="flex items-center gap-3">
+            <div
+              className={`flex size-9 shrink-0 items-center justify-center rounded-lg ${
+                spendingMargin >= 0 ? 'bg-muted' : 'bg-destructive/10'
+              }`}
+            >
+              <Wallet
+                className={`size-4 ${spendingMargin >= 0 ? 'text-muted-foreground' : 'text-destructive'}`}
+                aria-hidden
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <span className="text-muted-foreground block text-xs uppercase tracking-wider">
+                Margem para gastos
+              </span>
+              <span
+                className={`mt-0.5 block text-base font-semibold tabular-nums ${
+                  spendingMargin >= 0
+                    ? 'text-muted-foreground'
+                    : 'text-destructive'
+                }`}
+              >
+                R$ {formatCurrencyBR(spendingMargin)}
               </span>
             </div>
           </div>

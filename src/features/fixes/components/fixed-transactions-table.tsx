@@ -45,7 +45,7 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import type { Category } from '@/features/categories';
-import { formatCurrencyWithSign } from '@/lib/format';
+import { formatCurrencyWithSign } from '@/utils/format';
 
 import {
   deleteFixedTransaction,

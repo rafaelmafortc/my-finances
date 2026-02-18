@@ -6,7 +6,7 @@ import { AlertTriangle } from 'lucide-react';
 
 import { HalfDonutChart } from '@/components/charts/half-donut-chart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { formatCurrencyBR } from '@/lib/format';
+import { formatCurrencyBR } from '@/utils/format';
 
 import type { FixedTransaction } from '../types/fixed-transaction';
 

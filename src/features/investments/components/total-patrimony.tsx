@@ -9,9 +9,9 @@ import { toast } from 'sonner';
 
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { formatCurrencyBR } from '@/lib/format';
-import { maskCurrencyBR } from '@/lib/mask';
-import { parseCurrencyBR } from '@/lib/parse';
+import { formatCurrencyBR } from '@/utils/format';
+import { maskCurrencyBR } from '@/utils/mask';
+import { parseCurrencyBR } from '@/utils/parse';
 
 import { getTotalPatrimony, updateTotalPatrimony } from '../actions/investment';
 

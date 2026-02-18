@@ -31,9 +31,9 @@ import {
 } from '@/components/ui/tooltip';
 import { createCategory } from '@/features/categories';
 import type { Category } from '@/features/categories';
-import { formatCurrencyBR } from '@/lib/format';
-import { maskCurrencyBR } from '@/lib/mask';
-import { parseCurrencyBR } from '@/lib/parse';
+import { formatCurrencyBR } from '@/utils/format';
+import { maskCurrencyBR } from '@/utils/mask';
+import { parseCurrencyBR } from '@/utils/parse';
 
 import type {
   EditFixedTransactionForm,

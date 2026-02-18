@@ -46,7 +46,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip';
 import type { InvestmentClass } from '@/features/categories';
-import { formatCurrencyBR } from '@/lib/format';
+import { formatCurrencyBR } from '@/utils/format';
 
 import { deleteInvestment } from '../actions/investment';
 import type { Investment } from '../types/investment';

@@ -37,9 +37,9 @@ import {
 } from '@/components/ui/tooltip';
 import { createCategory } from '@/features/categories';
 import type { Category } from '@/features/categories';
-import { formatCurrencyBR, formatDateBR } from '@/lib/format';
-import { maskCurrencyBR, maskDDMMYYYY } from '@/lib/mask';
-import { parseCurrencyBR, parseDDMMYYYY } from '@/lib/parse';
+import { formatCurrencyBR, formatDateBR } from '@/utils/format';
+import { maskCurrencyBR, maskDDMMYYYY } from '@/utils/mask';
+import { parseCurrencyBR, parseDDMMYYYY } from '@/utils/parse';
 
 import type {
   EditTransactionForm,

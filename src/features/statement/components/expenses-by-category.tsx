@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from 'react';
 
-import { ArrowLeft, Plus } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 
 import {
   PieChart,
@@ -10,14 +10,7 @@ import {
   getPieChartColor,
 } from '@/components/charts/pie-chart';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardAction,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
-import type { Category } from '@/features/categories';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 import type { Transaction } from '../types/transaction';
 
@@ -73,10 +66,8 @@ function buildExpensesData(transactions: Transaction[]): CategoryExpense[] {
 
 export function ExpensesByCategory({
   transactions,
-  categories,
 }: {
   transactions: Transaction[];
-  categories: Category[];
 }) {
   const [selectedCategory, setSelectedCategory] =
     useState<CategoryExpense | null>(null);

@@ -21,7 +21,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip';
-import { navigation } from '@/lib/navigation';
+import { NAVIGATION } from '@/constants/navigation';
 import { cn } from '@/lib/utils';
 
 export function AppSidebar() {
@@ -49,7 +49,7 @@ export function AppSidebar() {
 
         <TooltipProvider delayDuration={0}>
           <nav className="flex flex-1 flex-col items-center justify-center gap-2">
-            {navigation.map((item) => {
+            {NAVIGATION.map((item) => {
               const isActive = pathname === item.href;
               return (
                 <Tooltip key={item.name}>
@@ -130,7 +130,7 @@ export function AppSidebar() {
         className="md:hidden fixed bottom-0 left-0 right-0 z-50 flex h-14 items-center justify-around border-t border-border bg-card p-2 shadow-lg"
         style={{ paddingBottom: 'max(0.5rem, env(safe-area-inset-bottom))' }}
       >
-        {navigation.map((item) => {
+        {NAVIGATION.map((item) => {
           const isActive = pathname === item.href;
           return (
             <Link
