@@ -4,6 +4,7 @@ import {
   AlertTriangle,
   ArrowDownCircle,
   ArrowUpCircle,
+  TrendingDown,
   TrendingUp,
   Wallet,
 } from 'lucide-react';
@@ -107,10 +108,12 @@ export function PeriodSummary({
                 result >= 0 ? 'bg-success/10' : 'bg-destructive/10'
               }`}
             >
-              <TrendingUp
-                className={`size-4 ${result >= 0 ? 'text-success' : 'text-destructive'}`}
-                aria-hidden
-              />
+              {' '}
+              {result >= 0 ? (
+                <TrendingUp className="size-4 text-success" aria-hidden />
+              ) : (
+                <TrendingDown className="size-4 text-destructive" aria-hidden />
+              )}
             </div>
             <div className="min-w-0 flex-1">
               <span className="text-muted-foreground block text-xs uppercase tracking-wider">

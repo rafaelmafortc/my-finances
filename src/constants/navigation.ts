@@ -1,15 +1,10 @@
-import {
-  ArrowUpDown,
-  FileChartColumn,
-  Layers2,
-  TrendingUp,
-} from 'lucide-react';
+import { ArrowUpDown, Layers2, ScrollText, TrendingUp } from 'lucide-react';
 
 export const NAVIGATION = [
   {
     name: 'Extrato',
     href: '/statement',
-    icon: FileChartColumn,
+    icon: ScrollText,
   },
   {
     name: 'Fixos',
