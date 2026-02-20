@@ -1,6 +1,7 @@
 import { PageShell } from '@/components/layout/page-shell';
 import { getCategories } from '@/features/categories';
 import {
+  FixedSummary,
   FixedTransactionsTable,
   IncomeCommitmentChart,
   getFixedTransactions,
@@ -17,6 +18,7 @@ export default async function Page() {
       title="Gastos Fixos"
       subtitle="Acompanhe quanto seus gastos fixos comprometem sua renda mensal"
     >
+      <FixedSummary fixedTransactions={fixedTransactions} />
       <IncomeCommitmentChart fixedTransactions={fixedTransactions} />
       <FixedTransactionsTable
         fixedTransactions={fixedTransactions}

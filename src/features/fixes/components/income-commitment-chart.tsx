@@ -2,8 +2,6 @@
 
 import { useMemo } from 'react';
 
-import { AlertTriangle } from 'lucide-react';
-
 import { HalfDonutChart } from '@/components/charts/half-donut-chart';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { formatCurrencyBR } from '@/utils/format';
@@ -53,8 +51,6 @@ export function IncomeCommitmentChart({
     ].filter((d) => d.value > 0);
   }, [totalExpenses, available]);
 
-  const showHighCommitmentWarning = percentage > 30;
-
   if (totalIncome === 0) {
     return (
       <Card>
@@ -82,21 +78,6 @@ export function IncomeCommitmentChart({
             total={totalIncome}
             centerLabel={() => `${percentage.toFixed(0)}%`}
           />
-          {showHighCommitmentWarning && (
-            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 rounded-md border border-warning/30 bg-warning/10 px-3 py-2 mt-4 text-xs text-warning w-full">
-              <AlertTriangle className="size-4 shrink-0" aria-hidden />
-              <div className="flex-1">
-                <span className="font-medium block sm:inline">
-                  Comprometimento de renda elevado.{' '}
-                </span>
-                <span className="font-base">
-                  Idealmente, tente manter seus gastos fixos abaixo de 30% da
-                  sua renda para ter margem suficiente para investimentos, lazer
-                  e imprevistos.
-                </span>
-              </div>
-            </div>
-          )}
         </div>
       </CardContent>
     </Card>

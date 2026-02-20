@@ -22,14 +22,12 @@ export default async function Page() {
       subtitle="Gerencie sua carteira e alocação de ativos"
       actions={<TotalPatrimony />}
     >
-      <div className="space-y-6">
-        <EmergencyReserveCard transactions={transactions} />
-        <InvestmentsTable
-          investments={investments}
-          investmentClasses={investmentClasses}
-        />
-        <InvestmentsByClass investments={investments} />
-      </div>
+      <EmergencyReserveCard transactions={transactions} />
+      <InvestmentsByClass investments={investments} />
+      <InvestmentsTable
+        investments={investments}
+        investmentClasses={investmentClasses}
+      />
     </PageShell>
   );
 }

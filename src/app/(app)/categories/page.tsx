@@ -14,10 +14,8 @@ export default async function Page() {
 
   return (
     <PageShell title="Categorias" subtitle="Gerencie suas categorias">
-      <div className="space-y-6">
-        <CategoriesTable categories={categories} />
-        <InvestmentClassesTable investmentClasses={investmentClasses} />
-      </div>
+      <CategoriesTable categories={categories} />
+      <InvestmentClassesTable investmentClasses={investmentClasses} />
     </PageShell>
   );
 }
