@@ -1,16 +1,10 @@
 'use client';
 
-import { useMemo, useState } from 'react';
+import { useMemo } from 'react';
 
+import { PeriodFilter } from '@/components/layout/period-filter';
 import { PageShell } from '@/components/layout/page-shell';
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { MONTHS } from '@/constants/months';
+import { usePeriodFilter } from '@/hooks/use-period-filter';
 import type { Transaction } from '@/features/statement';
 
 import { EmergencyReserveCard } from './emergency-reserve-card';
@@ -21,18 +15,8 @@ type DashboardPageProps = {
   transactions: Transaction[];
 };
 
-function getLatestTransactionDate(transactions: Transaction[]): Date | null {
-  if (transactions.length === 0) return null;
-
-  return transactions.reduce((latest, current) => {
-    const latestDate = new Date(latest.date);
-    const currentDate = new Date(current.date);
-    return currentDate > latestDate ? current : latest;
-  }).date;
-}
-
 export function DashboardPage({ transactions }: DashboardPageProps) {
-  const now = new Date();
+  const { month, year, setMonth, setYear } = usePeriodFilter();
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -45,69 +29,31 @@ export function DashboardPage({ transactions }: DashboardPageProps) {
     }
 
     if (years.size === 0) {
-      years.add(now.getFullYear());
+      years.add(new Date().getFullYear());
     }
 
     return Array.from(years).sort((a, b) => a - b);
-  }, [transactions, now]);
-
-  const latestDate = useMemo(
-    () => getLatestTransactionDate(transactions) ?? now,
-    [transactions, now]
-  );
-
-  const [selectedYear, setSelectedYear] = useState(
-    latestDate.getFullYear().toString()
-  );
-  const [selectedMonth, setSelectedMonth] = useState(
-    latestDate.getMonth().toString()
-  );
+  }, [transactions]);
 
   const filteredTransactions = useMemo(() => {
-    const year = Number(selectedYear);
-    const month = Number(selectedMonth);
+    const y = Number(year);
+    const m = Number(month);
 
     return transactions.filter((t) => {
       const d = new Date(t.date);
       if (Number.isNaN(d.getTime())) return false;
-      return d.getFullYear() === year && d.getMonth() === month;
+      return d.getFullYear() === y && d.getMonth() === m;
     });
-  }, [transactions, selectedYear, selectedMonth]);
+  }, [transactions, year, month]);
 
   const actions = (
-    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2 w-full sm:w-auto">
-      <Select
-        value={selectedMonth}
-        onValueChange={(value) => setSelectedMonth(value)}
-      >
-        <SelectTrigger size="sm" className="w-full sm:w-auto">
-          <SelectValue placeholder="Mês" />
-        </SelectTrigger>
-        <SelectContent>
-          {MONTHS.map((month) => (
-            <SelectItem key={month.value} value={month.value}>
-              {month.label}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-
-      <Select
-        value={selectedYear}
-        onValueChange={(value) => setSelectedYear(value)}
-      >
-        <SelectTrigger size="sm" className="w-full sm:w-auto">
-          <SelectValue placeholder="Ano" />
-        </SelectTrigger>
-        <SelectContent>
-          {availableYears.map((year) => (
-            <SelectItem key={year} value={year.toString()}>
-              {year}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
-    </div>
+    <PeriodFilter
+      month={month}
+      year={year}
+      availableYears={availableYears}
+      onMonthChange={setMonth}
+      onYearChange={setYear}
+    />
   );
 
   return (
