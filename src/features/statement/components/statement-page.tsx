@@ -1,22 +1,39 @@
 'use client';
 
-import { useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import { PeriodFilter } from '@/components/layout/period-filter';
 import { PageShell } from '@/components/layout/page-shell';
 import { usePeriodFilter } from '@/hooks/use-period-filter';
 import type { Category } from '@/features/categories';
 
+import { getDayChecks } from '../actions/day-check';
+import type { DayCheck } from '../types/day-check';
 import type { Transaction } from '../types/transaction';
 import { TransactionsTable } from './transactions-table';
 
 type StatementPageProps = {
   transactions: Transaction[];
   categories: Category[];
+  initialDayChecks: DayCheck[];
 };
 
-export function StatementPage({ transactions, categories }: StatementPageProps) {
+export function StatementPage({
+  transactions,
+  categories,
+  initialDayChecks,
+}: StatementPageProps) {
   const { month, year, setMonth, setYear } = usePeriodFilter();
+  const [dayChecks, setDayChecks] = useState<DayCheck[]>(initialDayChecks);
+
+  const refreshDayChecks = useCallback(async () => {
+    const checks = await getDayChecks(Number(year), Number(month));
+    setDayChecks(checks);
+  }, [year, month]);
+
+  useEffect(() => {
+    refreshDayChecks();
+  }, [refreshDayChecks]);
 
   const availableYears = useMemo(() => {
     const years = new Set<number>();
@@ -67,6 +84,8 @@ export function StatementPage({ transactions, categories }: StatementPageProps) 
         categories={categories}
         selectedMonth={month}
         selectedYear={year}
+        dayChecks={dayChecks}
+        onDayCheckToggled={refreshDayChecks}
       />
     </PageShell>
   );

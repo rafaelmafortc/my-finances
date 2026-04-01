@@ -1,11 +1,22 @@
 import { getCategories } from '@/features/categories';
-import { StatementPage, getTransactions } from '@/features/statement';
+import {
+  StatementPage,
+  getDayChecks,
+  getTransactions,
+} from '@/features/statement';
 
 export default async function Page() {
-  const [transactions, categories] = await Promise.all([
+  const [transactions, categories, dayChecks] = await Promise.all([
     getTransactions(),
     getCategories(),
+    getDayChecks(new Date().getFullYear(), new Date().getMonth()),
   ]);
 
-  return <StatementPage transactions={transactions} categories={categories} />;
+  return (
+    <StatementPage
+      transactions={transactions}
+      categories={categories}
+      initialDayChecks={dayChecks}
+    />
+  );
 }

@@ -34,19 +34,29 @@ model Session {
 }
 
 model User {
-  id                String             @id @default(cuid())
-  name              String?
-  email             String?            @unique
-  emailVerified     DateTime?
-  image             String?
-  totalPatrimony    Decimal?           @db.Decimal(12, 2)
-  accounts          Account[]
-  categories        Category[]
-  fixedTransactions FixedTransaction[]
-  investments       Investment[]
-  investmentClasses InvestmentClass[]
-  sessions          Session[]
-  transactions      Transaction[]
+  id                 String              @id @default(cuid())
+  name               String?
+  email              String?             @unique
+  emailVerified      DateTime?
+  image              String?
+  totalPatrimony     Decimal?            @db.Decimal(12, 2)
+  accounts           Account[]
+  categories         Category[]
+  fixedTransactions  FixedTransaction[]
+  investments        Investment[]
+  investmentClasses  InvestmentClass[]
+  sessions           Session[]
+  statementDayChecks StatementDayCheck[]
+  transactions       Transaction[]
+}
+
+model StatementDayCheck {
+  id     String   @id @default(cuid())
+  date   DateTime
+  userId String
+  user   User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([userId, date])
 }
 
 model Category {
