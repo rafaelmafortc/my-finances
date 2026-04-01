@@ -10,9 +10,8 @@ import {
 } from 'lucide-react';
 
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
+import type { Transaction } from '@/features/statement';
 import { formatCurrencyBR } from '@/utils/format';
-
-import type { Transaction } from '../types/transaction';
 
 function sumByType(transactions: Transaction[], type: 'INCOME' | 'EXPENSE') {
   return transactions

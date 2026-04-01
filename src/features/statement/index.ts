@@ -1,6 +1,4 @@
 export * from './actions/transaction';
-export * from './components/expenses-by-category';
-export * from './components/period-summary';
 export * from './components/statement-page';
 export * from './components/transactions-table';
 export * from './components/transaction-dialog';

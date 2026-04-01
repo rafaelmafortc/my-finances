@@ -2,7 +2,8 @@
 
 import { useMemo, useState } from 'react';
 
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Plus } from 'lucide-react';
+import Link from 'next/link';
 
 import {
   PieChart,
@@ -13,12 +14,12 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import {
   Empty,
+  EmptyContent,
   EmptyDescription,
   EmptyHeader,
   EmptyTitle,
 } from '@/components/ui/empty';
-
-import type { Transaction } from '../types/transaction';
+import type { Transaction } from '@/features/statement';
 
 type CategoryExpense = PieChartDataItem & {
   subcategories?: PieChartDataItem[];
@@ -134,6 +135,11 @@ export function ExpensesByCategory({
                 Cadastre sua primeira transação para acompanhar suas despesas.
               </EmptyDescription>
             </EmptyHeader>
+            <EmptyContent>
+              <Button size="sm" variant="outline" icon={Plus} asChild>
+                <Link href="/statement">Nova transação</Link>
+              </Button>
+            </EmptyContent>
           </Empty>
         ) : (
           <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-2">

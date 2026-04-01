@@ -1,6 +1,17 @@
-import { ArrowUpDown, Layers2, ScrollText, TrendingUp } from 'lucide-react';
+import {
+  ArrowUpDown,
+  Layers2,
+  PieChart,
+  ScrollText,
+  TrendingUp,
+} from 'lucide-react';
 
 export const NAVIGATION = [
+  {
+    name: 'Dashboard',
+    href: '/dashboard',
+    icon: PieChart,
+  },
   {
     name: 'Extrato',
     href: '/statement',
