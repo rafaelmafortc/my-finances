@@ -1,7 +1,7 @@
 import { PageShell } from '@/components/layout/page-shell';
 import { getInvestmentClasses } from '@/features/categories';
+import { EmergencyReserveCard } from '@/features/dashboard';
 import {
-  EmergencyReserveCard,
   InvestmentsByClass,
   InvestmentsTable,
   TotalPatrimony,

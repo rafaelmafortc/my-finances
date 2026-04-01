@@ -17,7 +17,8 @@ Apply this skill when the user:
 
 1. **Get changes**: Run `git diff --cached` to see staged changes only.
 2. **Infer convention**: Run `git log --oneline -15` to observe the project's commit message format.
-3. **Generate commit**: Produce a single-line commit that matches the convention.
+3. **Verify build**: Run `pnpm build` before committing. If there are errors, fix them before proceeding.
+4. **Generate commit**: Produce a single-line commit that matches the convention.
 
 ## Commit Convention (this project)
 
