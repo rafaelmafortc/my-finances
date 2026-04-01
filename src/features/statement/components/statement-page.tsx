@@ -12,6 +12,7 @@ import {
 } from '@/components/ui/select';
 import { MONTHS } from '@/constants/months';
 import type { Category } from '@/features/categories';
+import { EmergencyReserveCard } from '@/features/investments';
 
 import type { Transaction } from '../types/transaction';
 import { ExpensesByCategory } from './expenses-by-category';
@@ -122,6 +123,7 @@ export function StatementPage({
       actions={actions}
     >
       <PeriodSummary transactions={filteredTransactions} />
+      <EmergencyReserveCard transactions={transactions} />
       <ExpensesByCategory transactions={filteredTransactions} />
       <TransactionsTable
         transactions={filteredTransactions}

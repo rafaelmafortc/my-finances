@@ -15,7 +15,7 @@ export default async function Page() {
   return (
     <PageShell title="Categorias" subtitle="Gerencie suas categorias">
       <CategoriesTable categories={categories} />
-      <InvestmentClassesTable investmentClasses={investmentClasses} />
+      {/* <InvestmentClassesTable investmentClasses={investmentClasses} /> */}
     </PageShell>
   );
 }
