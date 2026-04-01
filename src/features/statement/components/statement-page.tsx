@@ -65,6 +65,8 @@ export function StatementPage({ transactions, categories }: StatementPageProps) 
       <TransactionsTable
         transactions={filteredTransactions}
         categories={categories}
+        selectedMonth={month}
+        selectedYear={year}
       />
     </PageShell>
   );

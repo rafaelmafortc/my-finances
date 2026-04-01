@@ -61,9 +61,13 @@ import { TransactionDialog } from './transaction-dialog';
 export function TransactionsTable({
   transactions,
   categories,
+  selectedMonth,
+  selectedYear,
 }: {
   transactions: Transaction[];
   categories: Category[];
+  selectedMonth: string;
+  selectedYear: string;
 }) {
   const [deleteDialogOpen, setDeleteDialogOpen] = useState(false);
   const [transactionToDeleteId, setTransactionToDeleteId] = useState<
@@ -87,15 +91,14 @@ export function TransactionsTable({
   };
 
   const handleApplyFixes = async () => {
-    if (transactions.length === 0) return;
-    const d = new Date(transactions[0].date);
-    const year = d.getFullYear();
-    const month = d.getMonth();
     setApplyingFixes(true);
     try {
       const { applyFixedTransactionsToMonth } =
         await import('@/features/fixes/actions/fixed-transaction');
-      await applyFixedTransactionsToMonth(year, month);
+      await applyFixedTransactionsToMonth(
+        Number(selectedYear),
+        Number(selectedMonth)
+      );
     } catch (err) {
       const errorMessage =
         err instanceof Error ? err.message : 'Erro ao aplicar transações fixas';
