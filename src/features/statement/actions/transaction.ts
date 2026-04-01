@@ -18,7 +18,7 @@ export async function getTransactions() {
   const list = await prisma.transaction.findMany({
     where: { userId },
     include: { category: true },
-    orderBy: { date: 'desc' },
+    orderBy: { date: 'asc' },
   });
   return list.map((t) => ({
     id: t.id,

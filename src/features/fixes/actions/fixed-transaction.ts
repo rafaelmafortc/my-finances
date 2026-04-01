@@ -17,7 +17,7 @@ export async function getFixedTransactions() {
   const list = await prisma.fixedTransaction.findMany({
     where: { userId },
     include: { category: true },
-    orderBy: [{ type: 'asc' }, { dayOfMonth: 'asc' }],
+    orderBy: [{ dayOfMonth: 'asc' }],
   });
   return list.map((t) => ({
     id: t.id,
