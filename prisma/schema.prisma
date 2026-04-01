@@ -13,15 +13,14 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String? @db.Text
-  access_token      String? @db.Text
+  refresh_token     String?
+  access_token      String?
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String? @db.Text
+  id_token          String?
   session_state     String?
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user              User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([provider, providerAccountId])
 }
@@ -40,19 +39,14 @@ model User {
   email             String?            @unique
   emailVerified     DateTime?
   image             String?
+  totalPatrimony    Decimal?           @db.Decimal(12, 2)
   accounts          Account[]
-  sessions          Session[]
-  transactions      Transaction[]
   categories        Category[]
   fixedTransactions FixedTransaction[]
-  investmentClasses InvestmentClass[]
   investments       Investment[]
-  totalPatrimony    Decimal?           @db.Decimal(12, 2)
-}
-
-enum TransactionType {
-  INCOME
-  EXPENSE
+  investmentClasses InvestmentClass[]
+  sessions          Session[]
+  transactions      Transaction[]
 }
 
 model Category {
@@ -60,8 +54,8 @@ model Category {
   name              String
   userId            String
   user              User               @relation(fields: [userId], references: [id], onDelete: Cascade)
-  transactions      Transaction[]
   fixedTransactions FixedTransaction[]
+  transactions      Transaction[]
 
   @@unique([userId, name])
 }
@@ -74,9 +68,9 @@ model Transaction {
   type        TransactionType
   categoryId  String
   userId      String
-  isFixed     Boolean         @default(false)
   createdAt   DateTime        @default(now())
-  category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  isFixed     Boolean         @default(false)
+  category    Category        @relation(fields: [categoryId], references: [id])
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -90,7 +84,7 @@ model FixedTransaction {
   dayOfMonth  Int
   createdAt   DateTime        @default(now())
   updatedAt   DateTime        @default(now()) @updatedAt
-  category    Category        @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  category    Category        @relation(fields: [categoryId], references: [id])
   user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
@@ -106,8 +100,8 @@ model InvestmentClass {
   id          String       @id @default(cuid())
   name        String
   userId      String
-  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   investments Investment[]
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, name])
 }
@@ -121,6 +115,11 @@ model Investment {
   userId            String
   createdAt         DateTime        @default(now())
   updatedAt         DateTime        @default(now()) @updatedAt
-  investmentClass   InvestmentClass @relation(fields: [investmentClassId], references: [id], onDelete: Restrict)
+  investmentClass   InvestmentClass @relation(fields: [investmentClassId], references: [id])
   user              User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
 }
