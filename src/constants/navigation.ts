@@ -22,11 +22,11 @@ export const NAVIGATION = [
     href: '/fixes',
     icon: ArrowUpDown,
   },
-  // {
-  //   name: 'Investimentos',
-  //   href: '/investments',
-  //   icon: TrendingUp,
-  // },
+  {
+    name: 'Investimentos',
+    href: '/investments',
+    icon: TrendingUp,
+  },
   {
     name: 'Categorias',
     href: '/categories',
