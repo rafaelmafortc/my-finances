@@ -98,9 +98,7 @@ export function TransactionsTable({
     string | null
   >(null);
   const [applyingFixes, setApplyingFixes] = useState(false);
-  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(
-    new Set()
-  );
+  const [expandedGroups, setExpandedGroups] = useState<Set<string>>(new Set());
 
   const checkedDateKeys = useMemo(() => {
     return new Set(dayChecks.map((dc) => dc.date));
@@ -166,18 +164,15 @@ export function TransactionsTable({
   const handleApplyFixes = async () => {
     setApplyingFixes(true);
     try {
-      const { applyFixedTransactionsToMonth } = await import(
-        '@/features/fixes/actions/fixed-transaction'
-      );
+      const { applyFixedTransactionsToMonth } =
+        await import('@/features/fixes/actions/fixed-transaction');
       await applyFixedTransactionsToMonth(
         Number(selectedYear),
         Number(selectedMonth)
       );
     } catch (err) {
       const errorMessage =
-        err instanceof Error
-          ? err.message
-          : 'Erro ao aplicar transações fixas';
+        err instanceof Error ? err.message : 'Erro ao aplicar transações fixas';
       toast.error(errorMessage);
     } finally {
       setApplyingFixes(false);
@@ -186,18 +181,18 @@ export function TransactionsTable({
 
   return (
     <Card>
-      <CardHeader className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <CardTitle>Transações</CardTitle>
+      <CardHeader className="flex w-full min-w-0 flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+        <CardTitle className="min-w-0 shrink">Transações</CardTitle>
         {transactions.length > 0 && (
-          <CardAction>
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center">
+          <CardAction className="w-full min-w-0 justify-self-stretch sm:w-auto sm:justify-self-end">
+            <div className="flex max-w-full min-w-0 flex-row flex-nowrap items-stretch gap-2 overflow-x-auto sm:items-center sm:overflow-visible">
               <Button
                 size="sm"
                 variant="ghost"
                 icon={Calendar}
                 onClick={handleApplyFixes}
                 isLoading={applyingFixes}
-                className="w-full sm:w-auto"
+                className="min-w-0 shrink-0 whitespace-nowrap text-xs sm:text-sm"
               >
                 Cadastrar fixos
               </Button>
@@ -208,7 +203,7 @@ export function TransactionsTable({
                     size="sm"
                     variant="outline"
                     icon={Plus}
-                    className="w-full sm:w-auto"
+                    className="min-w-0 shrink-0 whitespace-nowrap text-xs sm:text-sm"
                   >
                     Nova transação
                   </Button>
@@ -232,14 +227,14 @@ export function TransactionsTable({
               </EmptyDescription>
             </EmptyHeader>
             <EmptyContent>
-              <div className="flex flex-col gap-2 sm:flex-row">
+              <div className="flex max-w-full min-w-0 flex-row flex-nowrap items-stretch justify-center gap-2 overflow-x-auto">
                 <Button
                   size="sm"
                   variant="ghost"
                   icon={Calendar}
                   onClick={handleApplyFixes}
                   isLoading={applyingFixes}
-                  className="w-full sm:w-auto"
+                  className="min-w-0 shrink-0 whitespace-nowrap text-xs sm:text-sm"
                 >
                   Cadastrar fixos
                 </Button>
@@ -250,7 +245,7 @@ export function TransactionsTable({
                       size="sm"
                       variant="outline"
                       icon={Plus}
-                      className="w-full sm:w-auto"
+                      className="min-w-0 shrink-0 whitespace-nowrap text-xs sm:text-sm"
                     >
                       Nova transação
                     </Button>
@@ -265,16 +260,25 @@ export function TransactionsTable({
         ) : (
           <>
             {/* Mobile Grouped View */}
-            <div className="md:hidden space-y-3 w-full">
+            <div className="w-full min-w-0 space-y-3 md:hidden">
               {dateGroups.map((group) => {
                 const isExpanded = expandedGroups.has(group.dateKey);
                 return (
-                  <div key={group.dateKey} className="w-full">
-                    <button
-                      type="button"
+                  <div key={group.dateKey} className="w-full min-w-0">
+                    {/* div+role: <button> não pode conter o Checkbox (Radix usa <button>) */}
+                    <div
+                      role="button"
+                      tabIndex={0}
+                      aria-expanded={isExpanded}
                       onClick={() => toggleGroup(group.dateKey)}
+                      onKeyDown={(e) => {
+                        if (e.key === 'Enter' || e.key === ' ') {
+                          e.preventDefault();
+                          toggleGroup(group.dateKey);
+                        }
+                      }}
                       className={cn(
-                        'flex w-full items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors',
+                        'flex w-full min-w-0 flex-row flex-nowrap cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-left transition-colors outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:ring-offset-background',
                         group.isChecked
                           ? 'border-l-2 border-l-emerald-500 bg-emerald-500/5'
                           : 'border-border bg-muted/40 hover:bg-muted/60'
@@ -309,10 +313,10 @@ export function TransactionsTable({
                       >
                         {group.label}
                       </span>
-                      <span className="shrink-0 text-xs text-muted-foreground">
+                      <span className="shrink-0 text-xs text-muted-foreground tabular-nums">
                         {group.transactions.length}
                       </span>
-                    </button>
+                    </div>
 
                     {isExpanded && (
                       <div className="mt-2 space-y-2 pl-2">
@@ -323,7 +327,7 @@ export function TransactionsTable({
                           >
                             <div className="flex items-start justify-between gap-2">
                               <div className="flex-1 min-w-0">
-                                <p className="font-medium text-sm truncate">
+                                <p className="wrap-break-word font-medium text-sm">
                                   {t.description}
                                 </p>
                               </div>
@@ -420,7 +424,7 @@ export function TransactionsTable({
             </div>
 
             {/* Desktop Grouped Table View */}
-            <div className="hidden md:block">
+            <div className="hidden min-w-0 md:block">
               <Table>
                 <TableHeader>
                   <TableRow>
