@@ -95,9 +95,11 @@ export function PeriodSummary({
                 Margem para gastos (75%)
               </span>
               <span
-                className={`mt-0.5 block text-base font-semibold tabular-nums`}
+                className={`mt-0.5 block text-base font-semibold tabular-nums ${
+                  spendingMargin < 0 ? 'text-destructive' : ''
+                }`}
               >
-                R$ {formatCurrencyBR(spendingMargin >= 0 ? spendingMargin : 0)}
+                R$ {formatCurrencyBR(spendingMargin)}
               </span>
             </div>
           </div>

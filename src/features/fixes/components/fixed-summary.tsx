@@ -83,9 +83,12 @@ export function FixedSummary({
               <span className="text-muted-foreground block text-xs uppercase tracking-wider">
                 Margem para saída (30%)
               </span>
-              <span className="mt-0.5 block text-base font-semibold tabular-nums">
-                R${' '}
-                {formatCurrencyBR(marginForExpenses >= 0 ? marginForExpenses : 0)}
+              <span
+                className={`mt-0.5 block text-base font-semibold tabular-nums ${
+                  marginForExpenses < 0 ? 'text-destructive' : ''
+                }`}
+              >
+                R$ {formatCurrencyBR(marginForExpenses)}
               </span>
             </div>
           </div>
